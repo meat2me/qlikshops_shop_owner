@@ -1,0 +1,30 @@
+@import "src/assets/scss/app-variables";
+@import "src/assets/scss/functions";
+
+.left-side-bar {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 20vw;
+  min-width: 200px;
+  background-image: linear-gradient(to top left, #0f2972, $primary)
+}
+
+.left-nav-item {
+  padding: 10px 20px;
+  color: white;
+}
+
+.active-nav {
+  padding: 10px 20px;
+  color: $primary !important;
+  background-color: white;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.left-side-bar {
+  .active {
+    @extend .active-nav;
+  }
+}

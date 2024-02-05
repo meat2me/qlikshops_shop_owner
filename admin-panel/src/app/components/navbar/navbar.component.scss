@@ -1,0 +1,42 @@
+.nav-breadcrumb {
+  span {
+    padding: 2px 20px;
+    background: var(--dark);
+    border-radius: 8px;
+    color: white;
+    margin-right: 10px;
+    font-size: 13px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .nav-breadcrumb-item {
+    &::after {
+      content: '/';
+      margin-right: 10px;
+    }
+
+    span {
+      background: var(--dark) !important;
+
+      &.disabled {
+        cursor: default;
+        text-decoration: none;
+        background: var(--info) !important;
+      }
+    }
+  }
+
+  .nav-breadcrumb-item:last-child {
+    &::after {
+      content: '';
+    }
+
+    span {
+      background: var(--primary) !important;
+    }
+  }
+}

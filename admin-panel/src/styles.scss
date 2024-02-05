@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import "admin-panel.scss";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap");
+
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+.main-container {
+  // background: url("assets/icons/bg.png") no-repeat;
+  // // background-position-x: right;
+  // background-position-y: bottom;
+  // background-size: 50%;
+}
+
+.c-pointer {
+  cursor: pointer;
+}
+
+.c-ban {
+  cursor: not-allowed;
+}
+
+.direction-left {
+  direction: ltr;
+}
+
+.outline-none {
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.accordion>.card {
+  overflow: inherit;
+}

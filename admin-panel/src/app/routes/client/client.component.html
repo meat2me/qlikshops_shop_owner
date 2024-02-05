@@ -1,0 +1,69 @@
+<div class="client container p-4 direction-right">
+  <div class="row bg-light-gray rounded">
+    <div class="col-12 p-4">
+      <div class="search-section">
+        <div class="d-flex align-items-stretch">
+          <div class="col-12 col-md-6">
+            <div class="input-wrapper">
+              <input class="form-control direction-right"
+                     type="text"
+                     [(ngModel)]="searchTerm"
+                     (keyup.enter)="onSearch()"
+                     placeholder="{{'clients.label' | translate}}">
+              <i class="fa fa-search right-icon text-primary"
+                 aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <button class="btn btn-primary px-4 h-100 p-0 mx-2"
+                    (click)="onSearch()">
+              {{'clients.btn_search' | translate}}
+            </button>
+            <button class="btn btn-info px-4 p-0 h-100 mx-2"
+                    (click)="onClear()">
+              {{'clients.btn_clear' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr class="bg-primary">
+      <div class="table-section p-2">
+        <table class="table rounded">
+          <thead>
+            <tr>
+              <th class="direction-right"
+                  scope="col">{{ 'clients.client_name' | translate}}</th>
+              <th class="direction-right"
+                  scope="col">{{ 'clients.phone' | translate}}</th>
+              <th class="text-center"
+                  scope="col direction-right">{{ 'clients.orders' | translate}}</th>
+              <th class="direction-right"
+                  scope="col">{{ 'clients.total_payment' | translate}}</th>
+              <th scope="lol"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of data|paginate: tableOptions; trackBy:trackById">
+              <td class="align-middle direction-right">{{client.first_name}} {{client.last_name}}</td>
+              <td class="align-middle direction-right">{{client.phone_num}}</td>
+              <td class="align-middle text-center direction-right">{{client.num_of_orders}}</td>
+              <td class="align-middle direction-right">
+                {{currency}} {{client.order_total | number}}
+              </td>
+              <td class="align-middle">
+                <a [routerLink]="['/order/clients/shop-page/details', client.client_id]"
+                   target="_blank"
+                   class="btn btn-primary px-5">
+                  {{'purchase-detail.btn_client_detail' | translate}}
+                  </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr class="bg-primary">
+      <app-table-footer [tableOptions]="tableOptions"
+                        [items]="data"></app-table-footer>
+    </div>
+  </div>
+</div>

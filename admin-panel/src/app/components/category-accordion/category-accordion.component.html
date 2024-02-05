@@ -1,0 +1,34 @@
+<accordion>
+  <accordion-group panelClass="customGroup" [(isOpen)]="cat.isOpen">
+    <div class="parent-item d-flex align-items-center pl-3" [class.active]="cat == selected" accordion-heading
+      [routerLink]="isAdmin ? [] : ['/content/items/', location]" [queryParams]="isAdmin ? [] : { category: cat.name}"
+      type="button" (click)="selectEmitter.emit(cat)">
+      <ng-container *ngIf="!isRTL;else rtl">
+        <div class="col-auto font-weight-bold" [style.padding-left.px]="paddingLeft">{{cat.name}}</div>
+      </ng-container>
+      <ng-template #rtl>
+        <div class="col-auto font-weight-bold" [style.padding-right.px]="paddingLeft">{{cat.name}}</div>
+      </ng-template>
+      <i *ngIf="cat.children?.length" class="col-auto px-0 fa " [class.fa-angle-down]="cat.isOpen"
+        [class.fa-angle-right]="!cat.isOpen" aria-hidden="true"></i>
+      <div class="col-auto ml-auto">
+        <img *ngIf="!isRecipe" class="icon" unselectable="on" [src]="cat.image">
+        <p *ngIf="isRecipe">{{cat?.created_on | date:'dd/MM/y'}}</p>
+      </div>
+    </div>
+    <ng-container *ngFor="let child of cat.children">
+
+      <app-category-accordion [level]="level+1" [cat]="child" [selected]="selected" [selectEmitter]="selectEmitter">
+      </app-category-accordion>
+      <!-- <div class="d-flex align-items-center child-item"
+           (click)="selectItem(child)"
+           [class.active]="child === selected">
+        <div class="col-auto">{{child.name}}</div>
+        <div class="col-auto ml-auto">
+          <img class="icon"
+               src="/assets/icons/dog-icon.png">
+        </div>
+      </div> -->
+    </ng-container>
+  </accordion-group>
+</accordion>

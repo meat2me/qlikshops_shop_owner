@@ -1,0 +1,35 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "linux": {
+        "runtimeExecutable": "/usr/bin/brave-browser",
+        "runtimeArgs": [
+          "--remote-debugging-port=9222",
+          "--user-data-dir=/tmp/chrome-debug"
+        ],
+        "userDataDir": true,
+      },
+      "postDebugTask": "Terminate All Tasks",
+      "port": 9222,
+      "name": "Launch Brave against localhost",
+      "urlFilter": "https?://localhost:4200/.*",
+      "url": "http:/localhost:4200/*",
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach to Brave",
+      "urlFilter": "http://localhost:4200/*",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    }
+  ]
+}

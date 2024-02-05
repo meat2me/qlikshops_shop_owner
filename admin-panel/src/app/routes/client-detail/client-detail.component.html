@@ -1,0 +1,90 @@
+<div class="account-setting p-4 direction-right">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-12 bg-light-gray rounded py-3">
+        <div class="m-2 px-2 p-4 bg-super-light rounded">
+          <div class="d-flex">
+            <label class="col-3 col-lg-2">{{'client-details.first_name' | translate}}</label>
+            <div class="col-auto font-weight-bold">{{clientDetail.first_name}}</div>
+          </div>
+          <div class="d-flex mt-2">
+            <label class="col-3 col-lg-2">{{'client-details.last_name' | translate}}</label>
+            <div class="col-auto font-weight-bold">{{clientDetail.last_name}}</div>
+          </div>
+          <div class="d-flex mt-2">
+            <label class="col-3 col-lg-2">{{'client-details.address' | translate}}</label>
+            <div class="col-auto font-weight-bold">{{clientDetail.address}}</div>
+          </div>
+          <div class="d-flex mt-2">
+            <label class="col-3 col-lg-2">{{'client-details.phone_number' | translate}}</label>
+            <div class="col-auto font-weight-bold">{{clientDetail.phone_num}}</div>
+          </div>
+          <div class="d-flex mt-2">
+            <label class="col-3 col-lg-2">{{'client-details.email' | translate}}</label>
+            <div class="col-auto font-weight-bold">{{clientDetail.email}}</div>
+          </div>
+          <div class="d-flex align-items-center mt-2">
+            <label class="col-3 col-lg-2"
+                   for="comment">{{'client-details.comment' | translate}}</label>
+            <div class="col-6">
+              <input type="text"
+                     [formControl]="commentCtrl"
+                     class="form-control"
+                     id="comment">
+            </div>
+            <div class="col-3 col-lg-1 pl-1">
+              <button class="form-control btn-primary py-1"
+                      (click)="saveComment()">{{ 'client-details.save' | translate }}</button>
+            </div>
+          </div>
+          <div class="d-flex mt-2">
+            <label class="col-3 col-lg-2"
+                   for="message">{{'client-details.msg_client' | translate}}</label>
+            <div hidden class="col-9 col-lg-6">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox"
+                       class="custom-control-input"
+                       [formControl]="customMessCtrl"
+                       id="message">
+                <label class="custom-control-label"
+                       for="message">{{clientDetail.client_message_prefix}}</label>
+              </div>
+            </div>
+
+          </div>
+          <div class="d-flex">
+            <div class="col-3 col-lg-2"></div>
+            <div class="col-9 col-lg-6 mt-1">
+              <textarea placeholder="{{'client-details.write_msg' | translate}}"
+                        class="w-100 h-100-px form-control"
+                        [formControl]="messageCtrl"></textarea>
+              <button style="bottom: 10px; right: 30px;"
+                      (click)="sendMessage()"
+                      class="position-absolute btn btn-primary px-4 py-1">{{'client-details.send' | translate }}</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="">
+          <hr class="bg-primary">
+          <div class="m-2 px-4">
+            <div class="d-flex">
+              <div class="col-3 col-lg-2">
+                {{'client-details.number_orders' | translate}}
+              </div>
+              <div class="col-auto font-weight-bold">{{clientDetail.num_of_orders}}</div>
+            </div>
+            <div class="d-flex mt-2">
+              <div class="col-3 col-lg-2">
+                {{'client-details.total_order_price' | translate}}
+              </div>
+              <div class="col-auto font-weight-bold"> {{currency}} {{clientDetail.order_total}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

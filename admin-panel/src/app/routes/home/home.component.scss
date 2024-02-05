@@ -1,0 +1,15 @@
+@import "src/assets/scss/app-variables";
+
+.dashboard {
+  .dashboard-title {
+    border-left: 5px solid $primary;
+    line-height: 1;
+  }
+}
+
+.word-break {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}

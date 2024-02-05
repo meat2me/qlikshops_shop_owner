@@ -1,0 +1,347 @@
+<div class="order-detail p-4 direction-right">
+  <div class="container bg-light-gray rounded pb-4">
+    <div class="row p-4">
+      <div class="order-info col-12">
+        <div class="p-0">
+          <i class="far fa-clock mr-2 text-primary"></i>
+          {{ "purchase-detail.time" | translate }}:
+          <span class="font-weight-bold">
+            {{ orderTime }}
+          </span>
+        </div>
+        <div class="p-0 text-left text-lg-right">
+          <span class="text-secondary"
+            >{{ "purchase.order_id" | translate }}:
+          </span>
+          <span class="font-weight-bold"> {{ orderDetail?.order_id }}</span>
+        </div>
+        <div class="p-0 text-left text-lg-right">
+          <span class="text-secondary"
+            >{{ "purchase-detail.item" | translate }}:
+          </span>
+          <span class="font-weight-bold"> {{ orderDetail?.num_of_items }}</span>
+        </div>
+        <div class="p-0 text-left text-lg-right">
+          <span class="text-secondary"
+            >{{ "purchase-detail.total" | translate }}:
+          </span>
+          <span class="font-weight-bold"> {{ orderDetail?.total_price }}</span>
+        </div>
+        <div class="p-0 text-left text-lg-right">
+          <span class="text-secondary"
+            >{{ "purchase-detail.payment_by" | translate }}:
+          </span>
+          <span class="font-weight-bold">
+            {{ orderDetail?.payment_type }}
+          </span>
+        </div>
+      </div>
+      <hr class="bg-primary w-100" />
+      <div
+        [class.btn-active]="isNew || orderDetail?.status == 2"
+        class="col-20 btn btn-light"
+        (click)="confirmChangeStatus(2)"
+      >
+        <i class="fas fa-plus mx-sm-2"></i>
+        <span class="d-none d-sm-inline text-uppercase">{{
+          "purchase-detail.new" | translate
+        }}</span>
+      </div>
+      <div
+        [class.btn-active]="isProcessing || orderDetail?.status == 3"
+        class="col-20 btn btn-light"
+        (click)="confirmChangeStatus(3)"
+      >
+        <i class="fas fa-spinner mx-sm-2"></i>
+        <span class="d-none d-sm-inline text-uppercase">{{
+          "purchase-detail.processing" | translate
+        }}</span>
+      </div>
+      <div
+        [class.btn-active]="isReady || orderDetail?.status == 4"
+        class="col-20 btn btn-light"
+        (click)="confirmChangeStatus(4)"
+      >
+        <i class="fas fa-circle mx-sm-2"></i>
+        <span class="d-none d-sm-inline text-uppercase">{{
+          "purchase-detail.ready" | translate
+        }}</span>
+      </div>
+      <div
+        [class.btn-active]="isShipped || orderDetail?.status == 5"
+        class="col-20 btn btn-light"
+        (click)="confirmChangeStatus(5)"
+      >
+        <i class="fas fa-check mx-sm-2"></i>
+        <span class="d-none d-sm-inline text-uppercase">{{
+          "purchase-detail.shipped" | translate
+        }}</span>
+      </div>
+      <div
+        [class.btn-active]="isCancelled || orderDetail?.status == 6"
+        class="col-20 btn btn-light"
+        (click)="confirmChangeStatus(6)"
+      >
+        <i class="fas fa-times mx-sm-2"></i>
+        <span class="d-none d-sm-inline text-uppercase">{{
+          "purchase-detail.cancelled" | translate
+        }}</span>
+      </div>
+    </div>
+    <div class="row m-2 px-2 py-4 client-info bg-super-light rounded">
+      <div class="col-12 col-md-6 col-lg-6">
+        <h5 class="pl-2 font-weight-bold">
+          {{ "purchase-detail.client_info" | translate }}
+        </h5>
+      </div>
+      <div
+        *ngIf="orderDetail"
+        class="col-12 col-md-6 col-lg-6 text-left text-lg-right"
+      >
+        <a
+          target="_blank"
+          [routerLink]="[
+            '/order/clients/shop-page/details',
+            orderDetail.client_id
+          ]"
+          routerLinkActive="router-link-active"
+          class="btn btn-primary py-1 px-3"
+          >{{ "purchase-detail.btn_client_detail" | translate }}</a
+        >
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 py-2">
+        {{ "purchase-detail.name" | translate }}:
+        <span class="px-4 font-weight-bold">
+          {{ orderDetail?.client_name }}
+        </span>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 py-2">
+        {{ "purchase-detail.phone" | translate }}:
+        <span class="px-4 font-weight-bold">
+          {{ orderDetail?.phone_num }}
+        </span>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 py-2">
+        {{ "purchase-detail.address" | translate }}:
+        <span class="px-4 font-weight-bold">
+          {{ orderDetail?.address }}
+        </span>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 py-2">
+        {{ "purchase-detail.email" | translate }}:
+        <span class="px-4 font-weight-bold">
+          {{ orderDetail?.email }}
+        </span>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6 py-2">
+        {{ "purchase-detail.address_notes" | translate }}:
+        <span class="px-4 font-weight-bold">
+          {{ orderDetail?.address_notes }}
+        </span>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12 py-2">
+        {{ "purchase-detail.delivery_time" | translate }}:
+        <span class="px-4 font-weight-bold">
+          <ng-container *ngIf="orderDetail?.is_pickup != 1">
+            {{ orderDetail?.delivery_slot }}
+          </ng-container>
+          <ng-container *ngIf="orderDetail?.is_pickup == 1">
+            {{ "purchase.pick_up" | translate }}
+          </ng-container>
+          <ng-container
+            *ngIf="orderDetail?.delivery_time && orderDetail?.is_pickup == 1"
+          >
+            {{ orderDetail?.delivery_time | date: "dd/MM/yyyy" }}
+          </ng-container>
+        </span>
+      </div>
+      <div class="col-12 col-md-12 col-lg-12 py-2" *ngIf="orderDetail?.branch">
+        {{ "purchase-detail.branch" | translate }}:
+        <span class="px-4 font-weight-bold">
+          {{ orderDetail?.branch }}
+        </span>
+      </div>
+      <div class="col-12 col-lg-2">
+        {{ "purchase-detail.msg_to" | translate }}
+      </div>
+      <div class="col-12 col-lg-10">
+        <form [formGroup]="messageForm" class="">
+          <div class="container">
+            <div class="row">
+              <!-- <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" value="0" formControlName="title"
+                  id="accountStandard" name="accountType">
+                <label class="custom-control-label cursor-pointer my-2 my-md-0"
+                  for="accountStandard">{{getting}}</label>
+              </div> -->
+              <div class="col-12 p-0 mt-2">
+                <textarea
+                  formControlName="message"
+                  [placeholder]="'purchase-detail.msg_label' | translate"
+                  class="w-100 h-100-px form-control"
+                ></textarea>
+                <button
+                  [disabled]="messageForm.invalid"
+                  (click)="sendMessage()"
+                  style="top: -40px; right: 10px"
+                  class="position-relative btn btn-primary px-4 py-1 float-right"
+                >
+                  <i class="fas fa-paper-plane mr-2"></i>
+                  {{ "purchase-detail.btn_send" | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr class="bg-primary w-100" />
+    <span class="ml-2 font-weight-bold">
+      {{ "purchase-detail.client_note" | translate }}:</span
+    >
+    <span class="text-danger font-weight-bold">
+      {{ orderDetail?.order_notes }}
+    </span>
+    <div class="row m-2 rounded client-note bg-super-light">
+      <div class="col-12 px-0">
+        <div class="table-section p-2">
+          <form [formGroup]="itemForm">
+            <table class="table rounded">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">
+                    {{ "purchase-detail.item_name" | translate }}
+                  </th>
+                  <th scope="col">
+                    {{ "purchase-detail.amount" | translate }}
+                  </th>
+                  <th scope="col">
+                    {{ "purchase-detail.actual_amount" | translate }}
+                  </th>
+                  <th scope="col">{{ "purchase-detail.price" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="orderDetail">
+                <ng-container formArrayName="items">
+                  <ng-container
+                    [formGroupName]="i"
+                    *ngFor="
+                      let itemCtrl of itemControls.controls;
+                      let i = index
+                    "
+                  >
+                    <tr>
+                      <th class="text-center item-check-box" scope="row">
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            (change)="reqToProcess$.emit(i)"
+                            type="checkbox"
+                            class="custom-control-input"
+                            [value]="items[i].item_id"
+                            [id]="items[i].item_id"
+                            formControlName="is_processed"
+                          />
+                          <label
+                            class="custom-control-label cursor-pointer"
+                            [for]="items[i].item_id"
+                          ></label>
+                        </div>
+                      </th>
+                      <td class="px-0">
+                        {{ items[i].item_name }}
+                      </td>
+                      <td>
+                        <span style="line-height: 2">{{
+                          items[i].amount
+                        }}</span>
+                      </td>
+                      <td>
+                        <div class="d-flex">
+                          <div class="amount-button">
+                            <button
+                              (click)="
+                                reduction(items[i]);
+                                amountChange$.emit(i);
+                                checkActualAmount(i, items[i].amount)
+                              "
+                              class="btn btn-primary"
+                            >
+                              <i class="fas fa-minus cursor-pointer"></i>
+                            </button>
+                          </div>
+                          <div class="mx-2">
+                            <input
+                              formControlName="actual_amount"
+                              #inputNumber
+                              (click)="
+                                amountChange$.emit(i);
+                                checkActualAmount(i, items[i].amount)
+                              "
+                              (keyup)="
+                                amountChange$.emit(i);
+                                checkActualAmount(i, items[i].amount)
+                              "
+                              [value]="items[i].actual_amount"
+                              class="form-control w-100 h-100"
+                              type="number"
+                              min="0"
+                              onkeypress="return event.charCode > 45"
+                              [step]="items[i].amount_step"
+                              [(ngModel)]="items[i].actual_amount"
+                            />
+                          </div>
+                          <div class="amount-button">
+                            <button
+                              (click)="
+                                increase(items[i]);
+                                amountChange$.emit(i);
+                                checkActualAmount(i, items[i].amount)
+                              "
+                              class="btn btn-primary"
+                            >
+                              <i class="fas fa-plus cursor-pointer"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        {{ setCost(i) | number: "1.2-2" }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        *ngIf="items[i].item_notes"
+                        class="item-note"
+                        colspan="5"
+                      >
+                        {{ "purchase-detail.note" | translate }}:
+                        {{ items[i].item_notes }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+      <div class="col-12 my-2 text-right">
+        <span class="font-weight-bold mr-2">
+          {{ "purchase-detail.total" | translate }}
+        </span>
+        <button
+          [disabled]="isPaying"
+          (click)="makePaymentNotify()"
+          class="btn btn-primary px-4 py-1"
+        >
+          <span>
+            {{ currency }}
+          </span>
+          {{ totalPrice | number: "1.2-2" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

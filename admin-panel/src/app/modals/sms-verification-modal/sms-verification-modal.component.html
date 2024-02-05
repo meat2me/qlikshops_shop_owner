@@ -1,0 +1,26 @@
+<div class="confirm-modal">
+  <div class="modal-header border-0">
+    <h5 style="width: 65%;" class="modal-title font-weight-bold">
+      {{'modal.sms_verification_title' | translate}}
+    </h5>
+    <button type="button" class="close btn pt-1 pr-2" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i style="font-size: 20px;" class="fas fa-times text-white"></i>
+    </button>
+  </div>
+  <div class="modal-body direction-right">
+    <div class="form-group">
+      <label for="sms-code">{{'modal.sms_verification_label' | translate}}</label>
+      <input class="form-control w-75" id="sms-code" name="phone-number" type="text" [(ngModel)]="verifyCode">
+    </div>
+    <p>{{'modal.sms_verification_not_receive_code' | translate}} <span><a (click)="resend()"
+          class="text-primary"><u>{{'modal.sms_verification_resend' | translate}}</u></a></span></p>
+  </div>
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-primary py-1 px-4" (click)="verify()">
+      {{'modal.verify' | translate}}
+    </button>
+    <button type="button" class="btn btn-info py-1 px-4" (click)="activeModal.dismiss()">
+      {{'modal.cancel' | translate}}
+    </button>
+  </div>
+</div>

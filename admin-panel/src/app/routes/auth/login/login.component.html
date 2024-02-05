@@ -1,0 +1,22 @@
+<div class="login-container" style="background-image: linear-gradient(to top left,#003c80, #2a82ca)">
+  <div class="container vh-100 pt-5">
+    <div>
+      <img src="/assets/images/m2m.png" alt="" style="width: 250px;">
+    </div>
+    <div class="body text-white d-flex justify-content-center align-items-center direction-right" style="height: calc(100% - 200px)">
+      <div>
+        <h3 class="py-3">{{'login.title' | translate}}</h3>
+        <p *ngIf="stores">({{stores?.name}} {{'NAME' | translate}})</p>
+        <p class="font-weight-bold">{{'login.description' | translate}}</p>
+        <div class="form-group">
+          <label for="phone-number">{{'login.label' | translate}}</label>
+          <input class="form-control w-50" id="phone-number" name="phone-number" type="text"
+            [formControl]="phoneNumber">
+        </div>
+        <p *ngIf="errors">{{errors}}</p>
+        <button (click)="sendPhone()"
+          class="btn btn-dark w-50 font-weight-bold">{{'login.btn_login' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="add-recipe-modal">
+  <div class="modal-header border-0 direction-right">
+    <h5 style="width: 65%;" class="modal-title direction-right font-weight-bold">
+      {{ (isEdit ? 'recipe.edit_recipe' : 'recipe.new_recipe') | translate}}
+    </h5>
+    <button type="button" class="close btn pt-1 pr-2 m-0" aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')">
+      <i style="font-size: 20px;" class="fas fa-times text-white" [class.text-white]="!isRTL"></i>
+    </button>
+  </div>
+  <form class="direction-right" [formGroup]="form" (ngSubmit)="isEdit ? onEditSubmit() : onCreateSubmit()">
+    <div class="modal-body">
+      <div class="d-flex flex-wrap">
+
+        <div class="col-7 px-0">
+          <div class="form-group">
+            <label class="w-100 direction-right" for="name">{{'recipe.recipe_name' | translate}}</label>
+            <input type="text" class="form-control" id="name" formControlName="name"
+              placeholder="{{'recipe.recipe_name' | translate }}">
+          </div>
+          <div class="form-group">
+            <label class="w-100 direction-right" for="text">{{'recipe.recipe_details' | translate}}</label>
+            <textarea type="text" class="form-control" id="text" formControlName="text" rows="5" placeholder="{{'recipe.recipe_details' | translate }}"></textarea>
+          </div>
+        </div>
+        <div class="col-5">
+          <app-image-input #imageInput [isDeletable]="false" [formGroup]="form"></app-image-input>
+        </div>
+
+        <div class="col-7"></div>
+        <div class="col-5">
+          <p class="mt-2 mb-0 small direction-right">{{'categories.click_select'|translate}}</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer border-0" style="direction: ltr;" [class.justify-content-start]="!isRTL"
+      [class.justify-content-end]="isRTL">
+      <button type="submit" class="btn btn-primary py-1 px-4 px-lg-5">
+        {{(isEdit?'modal.update': 'modal.create') | translate}}
+      </button>
+      <button type="button" class="btn btn-info py-1 px-4 px-lg-5" (click)="activeModal.dismiss('Close click')">
+        {{'modal.cancel' | translate}}
+      </button>
+    </div>
+  </form>
+</div>

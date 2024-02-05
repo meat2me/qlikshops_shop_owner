@@ -1,0 +1,81 @@
+<div class="open-purchase p-4 direction-right">
+  <div class="container bg-light rounded">
+    <div class="row">
+      <div class="col-12 p-4">
+        <div class="search-section">
+          <form [formGroup]="historyForm">
+            <div class="container">
+              <div class="row">
+                <div class="col-12 col-md-2 p-md-0 form-group">
+                  <div class="input-wrapper">
+                    <input class="form-control" placeholder="{{'history.from_date' | translate}}" name="fromDate"
+                      formControlName="fromDate" ngbDatepicker #pickStartedDate="ngbDatepicker">
+                    <i (click)="pickStartedDate.toggle()"
+                      class="fa fa-calendar-alt right-icon text-primary cursor-pointer" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-12 col-md-2 form-group">
+                  <div class="input-wrapper">
+                    <input class="form-control" placeholder="{{'history.to_date' | translate}}" name="toDate"
+                      formControlName="toDate" ngbDatepicker #pickEndedDate="ngbDatepicker">
+                    <i (click)="pickEndedDate.toggle()"
+                      class="fa fa-calendar-alt right-icon text-primary cursor-pointer" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4 form-group">
+                  <div class="input-wrapper">
+                    <input formControlName="keyWord" class="form-control" type="text"
+                      placeholder="{{'clients.label' | translate}}">
+                    <i class="fa fa-search right-icon text-primary" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-12 col-md-2 form-group">
+                  <button (click)="searchingByDate()" class="btn btn-primary px-4 py-1 w-100">
+                    {{'clients.btn_search' | translate}}
+                  </button>
+                </div>
+                <div class="col-12 col-md-2 p-md-0 form-group">
+                  <button (click)="clearForm()" class="btn btn-info px-4 py-1 w-100">
+                    {{'clients.btn_clear' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <hr class="bg-primary">
+        <div class="table-section p-2">
+          <table class="table rounded">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col" class="text-center">{{ 'purchase.order_id' | translate}}</th>
+                <th scope="col">{{ 'purchase.name' | translate}}</th>
+                <th scope="col">{{ 'purchase.address' | translate}}</th>
+                <th class="text-center" scope="col">{{ 'purchase.num_items' | translate}}</th>
+                <th scope="col">{{ 'purchase.order_total' | translate}}</th>
+                <th class="text-right" scope="col">{{ 'purchase.order_time' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr (click)="openDetail(open.order_id)" *ngFor="let open of openOrders | paginate: tableOptions">
+                <th style="width: 70px;" scope="row">
+                  <img *ngIf="open?.is_cancelled == 1" class="icon-banner ribbon" src="assets/icons/cancel.png"
+                    alt="new_icon">
+                </th>
+                <td class="align-middle text-center"> {{open?.order_id}} </td>
+                <td class="align-middle"> {{open?.client_name}} </td>
+                <td class="align-middle"> {{open?.address}} </td>
+                <td class="align-middle text-center"> {{open?.num_of_items}} </td>
+                <td class="align-middle">{{open?.order_total}} </td>
+                <td class="align-middle text-right"> {{open?.order_time}} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr class="bg-primary">
+        <app-table-footer [tableOptions]="tableOptions" [items]="openOrders"></app-table-footer>
+      </div>
+    </div>
+  </div>
+</div>

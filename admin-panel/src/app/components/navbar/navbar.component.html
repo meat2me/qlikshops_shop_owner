@@ -1,0 +1,47 @@
+<div class="d-flex">
+  <div class="col-10 mx-auto text-center mt-3">
+    <h1 *ngIf="userType == 1" class="mb-0 text-center">
+      {{'ADMIN' | translate}}
+    </h1>
+    <div *ngIf="userType == 3">
+      <h1 class="mb-0 text-center">
+        {{store?.name}}
+      </h1>
+      <label>
+        {{'NAME' | translate}}
+      </label>
+    </div>
+  </div>
+  <div hidden class="col-2 mt-4">
+    <img class="w-100 c-pointer"
+         [src]="store?.logo_image"
+         alt="">
+  </div>
+</div>
+<div class="container">
+  <div class="d-flex nav-breadcrumb">
+    <div class="nav-breadcrumb-item"
+         *ngFor="let breadcrumb of breadCrumbSub | async">
+      <span *ngIf="!breadcrumb.unclickable"
+            [routerLink]="[breadcrumb.url]">
+        <!-- {{navItem.text === '' ? 'Home' : navItem.text}} -->
+        {{breadcrumb.label | translate}}
+      </span>
+      <span *ngIf="breadcrumb.unclickable" class="disabled">
+        <!-- {{navItem.text === '' ? 'Home' : navItem.text}} -->
+        {{breadcrumb.label | translate}}
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- {{breadCrumbSub | async | json}} -->
+<!-- <ol class="breadcrumb">
+  <li *ngFor="let breadcrumb of breadcrumbs$ || null | async"
+      class="breadcrumb-item">
+    <a class="text-dark"
+       [routerLink]="[breadcrumb.url]">
+      {{ breadcrumb.label }}
+    </a>
+  </li>
+</ol> -->

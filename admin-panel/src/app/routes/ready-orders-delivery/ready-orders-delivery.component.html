@@ -1,0 +1,59 @@
+<div class="open-purchase p-4 direction-right">
+  <div class="container bg-light-gray rounded">
+    <div class="row">
+      <div class="col-12 p-4">
+        <div class="search-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-6 p-0">
+                <div class="input-wrapper">
+                  <input class="form-control" type="text" [(ngModel)]="terms"
+                    placeholder="{{'clients.label' | translate}}">
+                  <i class="fa fa-search right-icon text-primary" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 p-0 text-right text-lg-left mt-2 mt-md-0">
+                <button (click)="searchOrders()" class="btn btn-primary px-4 py-1 mx-2">
+                  {{'clients.btn_search' | translate}}
+                </button>
+                <button (click)="clearSearch()" class="btn btn-info px-4 py-1 mx-lg-0">
+                  {{'clients.btn_clear' | translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="bg-primary">
+        <div class="table-section p-2">
+          <table class="table rounded">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">{{ 'purchase.order_id' | translate}}</th>
+                <th scope="col">{{ 'purchase.name' | translate}}</th>
+                <th scope="col">{{ 'purchase.address' | translate}}</th>
+                <th class="text-center" scope="col">{{ 'purchase.num_items' | translate}}</th>
+                <th scope="col">{{ 'purchase.order_total' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr (click)="openDetail(ready?.order_id)" *ngFor="let ready of searchOrder | paginate: tableOptions">
+                <td class="align-middle text-center"> {{ready?.order_id}} </td>
+                <td class="align-middle"> {{ready?.client_name}} </td>
+                <td class="align-middle"> {{ready?.address}} </td>
+                <td class="align-middle text-center"> {{ready?.num_of_items}} </td>
+                <td class="align-middle"> {{ready?.order_total}} </td>
+                <td class="align-middle text-right">
+                  <button (click)="setToShipped($event, ready.order_id)" class="btn btn-primary">
+                    {{ 'purchase-detail.shipped' | translate}}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr class="bg-primary">
+        <app-table-footer [tableOptions]="tableOptions" [items]="searchOrder"></app-table-footer>
+      </div>
+    </div>
+  </div>
+</div>

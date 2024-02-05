@@ -1,0 +1,21 @@
+.notification {
+    .ngb-tp {
+        button {
+            display: none;
+        }
+    }
+
+    .input-wrapper {
+        input {
+            height: auto;
+        }
+    }
+
+    .custom-select {
+        direction: ltr !important;
+    }
+
+    .ngb-dp-arrow-btn {
+        display: none;
+    }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="146.03" height="159.336" viewBox="0 0 146.03 159.336">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.988" y1="1.008" x2="0.375" y2="-0.258" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#236eaa"/>
+      <stop offset="1" stop-color="#000763"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1" transform="translate(-359.136)">
+    <path id="Path_1" data-name="Path 1" d="M457.932,0H409.6l4.724,3.964,2.5,2.1,7.766,6.518L475.381,55.2l.411.344,8.226,6.9,1.441,1.21V0H457.932Z" transform="translate(19.708)" fill="url(#linear-gradient)"/>
+    <path id="Path_2" data-name="Path 2" d="M318.692,31.722c-.041.058-.084.115-.13.171a3.774,3.774,0,0,1-5.306.56L284.226,8.964l-.159-.13-6.013-4.87L273.15,0h11.99l4.9,3.964,6.013,4.87.159.13,21.779,17.623A3.771,3.771,0,0,1,318.692,31.722Z" transform="translate(103.32)" fill="url(#linear-gradient)"/>
+    <path id="Path_3" data-name="Path 3" d="M403.723,12.449l-.1.13-.031.041a3.771,3.771,0,0,1-5.308.558l-5.207-4.214-.161-.13-6.013-4.87L382,0h12l9.036,7.312a3.776,3.776,0,0,1,.688,5.137Z" transform="translate(24.428)" fill="url(#linear-gradient)"/>
+    <path id="Path_4" data-name="Path 4" d="M616.493,0l13.014,10.523a1.864,1.864,0,0,1,.339,2.542c-.019.029-.041.058-.063.084a1.864,1.864,0,0,1-1.443.693,1.845,1.845,0,0,1-1.174-.416L610.55,0Z" transform="translate(-132.91)" fill="url(#linear-gradient)"/>
+    <path id="Path_5" data-name="Path 5" d="M252.791,20.591a1.407,1.407,0,0,1-1.984.192L236.443,8.964l-.156-.13-5.919-4.87L225.55,0h4.438l4.81,3.964,5.919,4.87.159.13,11.72,9.645a1.409,1.409,0,0,1,.195,1.982Z" transform="translate(133.586)" fill="url(#linear-gradient)"/>
+    <path id="Path_6" data-name="Path 6" d="M603.929,285.945v3.687l-37.843-31.938a1.409,1.409,0,0,1,.928-2.485,1.4,1.4,0,0,1,.89.332Z" transform="translate(-98.763 -144.124)" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="27.275" height="1.818" rx="0.909" transform="matrix(0.773, 0.634, -0.634, 0.773, 369.451, 140.629)" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="27.275" height="1.818" rx="0.909" transform="translate(501.49 112.238) rotate(-140.6)" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_3" data-name="Rectangle 3" width="27.275" height="1.818" rx="0.909" transform="translate(446.54 74.271) rotate(-140.6)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

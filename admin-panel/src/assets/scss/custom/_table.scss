@@ -1,0 +1,64 @@
+@import "src/assets/scss/app-variables";
+@import "src/assets/scss/breakpoints";
+
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 15px;
+    background: transparent;
+    @include smobile {
+        width: 650px !important;
+    }
+
+    @include lg {
+        width: 100% !important;
+    }
+
+    thead {
+        tr {
+            color: $secondary;
+        }
+    }
+    tbody {
+        tr {
+            cursor: pointer;
+            &:hover {
+                background-color: $lightWhite;
+                transition-duration: 0.3s;
+            }
+        }
+    }
+    th,
+    td {
+        padding: 0.5rem !important;
+        border: none !important;
+    }
+}
+
+.table-section {
+    overflow-x: scroll;
+    background: rgba(255, 255, 255, 0.7)!important;
+
+    @include lg {
+        overflow: hidden;
+    }
+}
+
+.icon-banner {
+    position: relative;
+    width: 13px;
+    left: 12px;
+    top: -7px;
+    transform: scale(2.5);
+}
+
+.mini-text {
+    transform: rotate(-50deg);
+    -ms-transform: rotate(-50deg);
+    -webkit-transform: rotate(-50deg);
+    color: white;
+    font-size: 13px;
+    position: relative;
+    top: -8px;
+    right: 12px;
+    display: inline-block;
+}

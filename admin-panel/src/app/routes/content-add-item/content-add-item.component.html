@@ -1,0 +1,382 @@
+<div class="account-setting p-4 direction-right">
+  <form [formGroup]="form" (ngSubmit)="isEdit ? onEditSubmit() : onSubmit()">
+    <div class="container-fluid bg-light-gray rounded pt-3 pb-5">
+      <div class="row">
+        <div class="col-2 mt-4 order-12 sticky-flex">
+          <div class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              formControlName="is_in_stock"
+              id="in_stock"
+            />
+            <label class="custom-control-label" for="in_stock">{{
+              "content-add-item.in_stock" | translate
+            }}</label>
+          </div>
+          <button class="btn btn-primary w-100 mt-3" type="submit">
+            {{ "content-add-item.save" | translate }}
+          </button>
+          <button
+            class="btn btn-info w-100 mt-3"
+            (click)="onEditCancel()"
+            type="button"
+          >
+            {{ "content-add-item.cancel" | translate }}
+          </button>
+          <button
+            *ngIf="isEdit && isAdmin"
+            class="btn btn-danger w-100 mt-3"
+            type="button"
+            (click)="onDeleteItem()"
+            [disabled]="validValues?.is_deletable == 0"
+          >
+            {{ "content-add-item.delete" | translate }}
+          </button>
+        </div>
+        <div class="main col-10">
+          <section class="contact-section mx-2">
+            <div class="px-2 py-4 bg-super-light rounded">
+              <div class="d-flex align-items-center">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label
+                    class="mb-0"
+                    [class.required]="!isRTL"
+                    [class.required-rtl]="isRTL"
+                    for="name"
+                    >{{ "content-add-item.name" | translate }}
+                  </label>
+                </div>
+                <div class="col-7">
+                  <input
+                    class="form-control"
+                    type="text"
+                    formControlName="name"
+                    id="name"
+                    [readonly]="!isAdmin"
+                  />
+                </div>
+                <div class="col-auto"></div>
+              </div>
+              <!-- Brand -->
+              <div class="d-flex align-items-center mt-3">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for="brand"
+                    >{{ "content-add-item.brand" | translate }}
+                  </label>
+                </div>
+                <div class="col-7">
+                  <input
+                    class="form-control"
+                    type="text"
+                    formControlName="brand"
+                    id="brand"
+                    [readonly]="!isAdmin"
+                  />
+                </div>
+                <div class="col-auto"></div>
+              </div>
+              <!-- End Brand -->
+              <!-- units -->
+              <div class="d-flex mt-3">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label
+                    class="mb-0"
+                    [class.required]="!isRTL"
+                    [class.required-rtl]="isRTL"
+                    for="units"
+                    >{{ "content-add-item.units" | translate }}
+                  </label>
+                </div>
+                <div class="col-7">
+                  <ng-select
+                    id="units"
+                    placeholder="{{ 'content-add-item.select' | translate }}"
+                    notFoundText="Not found"
+                    [items]="validValues?.units"
+                    bindValue="value"
+                    formControlName="unit"
+                    [readonly]="!isAdmin"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+
+              <!-- units-end -->
+
+              <!-- units-price -->
+              <div class="d-flex align-items-center mt-3">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label
+                    class="mb-0"
+                    [class.required]="!isRTL"
+                    [class.required-rtl]="isRTL"
+                    for="price_per_unit"
+                    >{{ "content-add-item.price_per_unit" | translate }}
+                  </label>
+                </div>
+                <div class="d-flex align-items-center col-8 col-md-7">
+                  <div class="col-auto col-md-10 px-0">
+                    <input
+                      class="form-control"
+                      id="price_per_unit"
+                      formControlName="price"
+                      [min]="0"
+                      pattern="^(?:[1-9]\d*|0)?(?:\.\d+)?$"
+                      type="number"
+                    />
+                  </div>
+                  <div class="col-auto mx-auto">
+                    <label class="m-0">{{ validValues?.currency }}</label>
+                  </div>
+                </div>
+                <div class="d-none d-md-block col-1"></div>
+              </div>
+              <!-- units-price-end -->
+
+              <!--sale price-->
+              <div class="d-flex align-items-center mt-3">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      formControlName="sale_price_check"
+                      id="price_check"
+                    />
+                    <label class="custom-control-label" for="price_check"
+                      >{{ "content-add-item.sale_price" | translate }}
+                    </label>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center col-8 col-md-7">
+                  <div class="col-auto col-md-10 px-0">
+                    <input
+                      class="form-control"
+                      formControlName="sale_price"
+                      type="number"
+                    />
+                  </div>
+                  <div class="col-auto mx-auto">
+                    <label class="m-0">{{ validValues?.currency }}</label>
+                  </div>
+                </div>
+                <div class="d-none d-md-block col-1"></div>
+              </div>
+              <!--sale price end-->
+
+              <!-- fixed weight grams -->
+              <div class="d-flex mt-3">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for="description"
+                    >{{ "content-add-item.fixed_weight_gram" | translate }}
+                  </label>
+                </div>
+                <div class="col-8 col-md-7">
+                  <input
+                    class="form-control"
+                    id="fixed-weight-gram"
+                    formControlName="fixed_weight_gram"
+                    [min]="0"
+                    pattern="^(?:[1-9]\d*|0)?(?:\.\d+)?$"
+                    type="number"
+                  />
+                </div>
+                <div class="d-none d-md-block col-1"></div>
+              </div>
+              <!-- fixed weight grams -->
+
+              <!-- description -->
+              <div class="d-flex mt-3">
+                <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for="description"
+                    >{{ "content-add-item.description" | translate }}
+                  </label>
+                </div>
+                <div class="col-8 col-md-7">
+                  <textarea
+                    class="form-control"
+                    id="description"
+                    formControlName="description"
+                    type="text"
+                    [readonly]="!isAdmin"
+                  ></textarea>
+                </div>
+                <div class="d-none d-md-block col-1"></div>
+              </div>
+              <!-- ~description -->
+
+              <div class="d-flex mt-3">
+                <div class="d-none d-md-block col-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for="">{{
+                    "content-add-item.images" | translate
+                  }}</label>
+                </div>
+                <div class="col-8 col-md-7 d-flex">
+                  <ng-container
+                    [formArrayName]="isEdit ? 'new_image' : 'image'"
+                  >
+                    <div class="col-2">
+                      <app-image-input [formGroup]="form" [blocked]="!isAdmin">
+                      </app-image-input>
+                    </div>
+                    <div class="col d-flex align-items-center" *ngIf="isAdmin">
+                      {{ "content-add-item.click_select" | translate }}
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="d-none d-md-block col-1"></div>
+              </div>
+              <!-- categories -->
+              <div class="d-flex mt-3">
+                <div class="d-none d-md-block col-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for=""
+                    >{{ "content-add-item.categories" | translate }}
+                  </label>
+                </div>
+                <div class="col-8 col-md-7">
+                  <ng-container formArrayName="categories">
+                    <div
+                      [formGroupName]="i"
+                      *ngFor="
+                        let item of categoryArrCtrl.controls;
+                        let i = index
+                      "
+                      class="d-flex mt-3 align-items-center justify-content-between"
+                      [class.mt-3]="i"
+                    >
+                      <div class="col-auto col-md-10 col-lg-11 pl-0">
+                        <app-tree-input
+                          formControlName="category_id"
+                          bindValue="category_id"
+                          [placeholder]="'content-add-item.select' | translate"
+                          [nodeData]="categories || null"
+                          [isAdmin]="isAdmin"
+                        >
+                        </app-tree-input>
+                        <!-- <ng-select class=""
+                                   placeholder="{{'content-add-item.select' | translate}}"
+                                   notFoundText="Not found"
+                                   [items]="[]"
+                                   bindLabel="value"
+                                   formControlName="category_id">
+                        </ng-select> -->
+                      </div>
+                      <div class="col-auto px-0" *ngIf="isAdmin">
+                        <button
+                          type="button"
+                          [disabled]="categoryArrCtrl.length === 1"
+                          (click)="deleteCategory(i)"
+                          class="btn btn-danger btn-sm"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      *ngIf="isAdmin"
+                      type="button"
+                      [disabled]="categoryArrCtrl.invalid"
+                      (click)="pushCategory()"
+                      class="btn btn-primary mt-3 px-4 py-1"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </ng-container>
+                </div>
+                <div class="d-none d-md-block col-1"></div>
+              </div>
+              <!-- ~categories -->
+              <div class="d-flex mt-3">
+                <div class="d-none d-md-block col-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for=""
+                    >{{ "content-add-item.options" | translate }}
+                  </label>
+                </div>
+                <ng-container formArrayName="list_options">
+                  <div class="col-8 col-md-8 custom-control custom-checkbox">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div
+                          id="option-checkbox"
+                          [formGroupName]="i"
+                          *ngFor="
+                            let itemOpt of optionsArrCtrl.controls;
+                            let i = index
+                          "
+                          class="col-6 mb-2"
+                        >
+                          <input
+                            type="checkbox"
+                            formControlName="option_check"
+                            class="custom-control-input"
+                            [value]="listOptions[i].name"
+                            [id]="listOptions[i].id"
+                          />
+                          <label
+                            class="custom-control-label cursor-pointer"
+                            [for]="listOptions[i].id"
+                            >{{ listOptions[i].name }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <!-- <div class="d-none d-md-block col-1"></div> -->
+              </div>
+
+              <div *ngIf="listStores.length !== 0" class="d-flex mt-3">
+                <div class="d-none d-md-block col-1 col-lg-2"></div>
+                <div class="col-4 col-md-3 col-lg-2">
+                  <label class="mb-0" for=""
+                    >{{ "content-add-item.assign_store" | translate }}
+                  </label>
+                </div>
+                <ng-container formArrayName="stores">
+                  <div
+                    id="store-checkbox"
+                    class="col-8 col-md-8 custom-control custom-checkbox"
+                  >
+                    <div
+                      id="option-checkbox"
+                      [formGroupName]="i"
+                      *ngFor="
+                        let storeCtrl of storeControls.controls;
+                        let i = index
+                      "
+                      class="col-6 mb-2"
+                    >
+                      <input
+                        type="checkbox"
+                        formControlName="is_available"
+                        class="custom-control-input"
+                        id="stores-{{ i }}"
+                      />
+                      <label
+                        class="custom-control-label cursor-pointer"
+                        for="stores-{{ i }}"
+                        >{{ listStores[i].name }}
+                      </label>
+                    </div>
+                  </div>
+                </ng-container>
+                <!-- <div class="d-none d-md-block col-1"></div> -->
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

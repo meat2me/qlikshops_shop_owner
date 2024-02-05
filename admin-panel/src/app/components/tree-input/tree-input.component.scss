@@ -1,0 +1,137 @@
+// :host {
+//   position: relative;
+// }
+
+.ng-arrow-up {
+  border-width: 0 5px 5px;
+}
+
+.tree-select-container {
+  height: 36px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: flex;
+  outline: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  color: #333;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  min-height: 36px;
+  align-items: center;
+}
+
+.tree-value-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-flex: 1;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: 1;
+}
+
+.tree-placeholder {
+  color: #999;
+}
+
+.tree-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-input {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 5px;
+  left: 0;
+  padding-left: 10px;
+  padding-right: 50px;
+
+  input {
+    box-sizing: content-box;
+    background: none;
+    border: 0;
+    display: none;
+    box-shadow: none;
+    outline: 0;
+    cursor: default;
+    width: 100%;
+    top: 5px;
+    left: 0;
+    padding-right: 50px;
+  }
+}
+
+.tree-arrow-wrapper {
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 25px;
+  padding-right: 5px;
+
+  .tree-arrow {
+    pointer-events: none;
+    display: inline-block;
+    height: 0;
+    width: 0;
+    position: relative;
+    border-color: #999 transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 2.5px;
+  }
+}
+
+.tree-dropdown-panel.tree-select-bottom {
+  top: 100%;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-color: #e6e6e6;
+  margin-top: -1px;
+}
+
+
+.tree-dropdown-panel {
+  box-sizing: border-box;
+  position: absolute;
+  opacity: 1;
+  // display: none;
+  width: 100%;
+  z-index: 1040;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tree-dropdown-panel {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  left: 0;
+}
+
+.tree-dropdown-panel .scroll-host-items {
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tree-dropdown-panel .tree-dropdown-panel-items {
+  display: block;
+  height: auto;
+  box-sizing: border-box;
+  max-height: 240px;
+  overflow-y: auto;
+}
+

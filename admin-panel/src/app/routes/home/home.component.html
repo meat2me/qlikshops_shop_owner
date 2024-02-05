@@ -1,0 +1,119 @@
+<div class="dashboard p-4">
+  <!-- <button (click)="out()">log out</button> -->
+  <div *ngIf="data" class="container bg-light-gray rounded">
+    <div class="row">
+      <div class="col-12 p-4">
+        <hr class="bg-primary w-100" />
+      </div>
+
+      <div class="col-xl-8 col-lg-7 col-12 mb-4 direction-right">
+        <div class="store-status p-4 bg-super-light rounded">
+          <h5 class="font-weight-bold my-2">
+            {{ "dashboard.store_status" | translate }}
+          </h5>
+          <p>
+            {{ "dashboard.desc" | translate }}
+          </p>
+          <button
+            *ngIf="data.is_online"
+            class="btn btn-primary w-100 font-weight-bold"
+          >
+            <i class="fas fa-wifi"></i>
+            {{ "dashboard.online" | translate }}
+          </button>
+          <button
+            *ngIf="!data.is_online"
+            class="btn btn-danger w-100 font-weight-bold"
+          >
+            <i class="fas fa-user-slash"></i>
+            {{ "dashboard.offline" | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-5 col-12 mb-4 direction-right">
+        <div class="statistical p-4 bg-super-light rounded h-100">
+          <h1 class="font-weight-bold mt-4 word-break">
+            <i class="fas fa-file mr-2 text-primary"></i>
+            {{ data.open_orders }}
+          </h1>
+          <p class="text-primary m-0">
+            {{ "dashboard.open_orders" | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-xl-6 col-lg-6 col-12 mb-4 direction-right">
+        <div class="statistical p-4 bg-super-light rounded">
+          <h1 class="font-weight-bold mt-4 word-break">
+            <i class="fas fa-cubes mr-2 text-primary"></i>
+            {{ data.total_ordes }}
+          </h1>
+          <p class="text-primary m-0">
+            {{ "dashboard.total_orders" | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-xl-6 col-lg-6 col-12 mb-4 direction-right">
+        <div class="statistical p-4 bg-super-light rounded">
+          <h1 class="font-weight-bold mt-4 word-break">
+            <span class="text-primary">
+              {{ currency }}
+            </span>
+            {{ data.total_ordes_cost }}
+          </h1>
+          <p class="text-primary m-0">
+            {{ "dashboard.total_orders_cost" | translate }}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-12 mb-4 direction-right">
+        <div class="statistical p-4 bg-super-light rounded">
+          <div class="container">
+            <div class="row">
+              <div class="col-5 p-0">
+                <h1 class="font-weight-bold mt-4 word-break">
+                  <i class="fas fas fa-user text-primary mr-2"></i>
+                  {{ data.total_clients }}
+                </h1>
+                <p class="text-primary m-0">
+                  {{ "dashboard.total_clients" | translate }}
+                </p>
+              </div>
+              <div class="col-3 p-0">
+                <img
+                  class="w-100"
+                  style="height: 110px; object-fit: contain"
+                  src="assets/images/return.svg"
+                  alt="#"
+                />
+              </div>
+              <div class="col-4 text-center p-0">
+                <h1 class="font-weight-bold mt-4 word-break">
+                  {{ data.returning_clients }}
+                </h1>
+                <p class="text-primary m-0">
+                  {{ "dashboard.returning_clients" | translate }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-12 mb-4 direction-right">
+        <div class="chart p-4 bg-super-light rounded">
+          <h5 class="font-weight-bold">
+            {{ "dashboard.general" | translate }}
+          </h5>
+          <app-rate-chart
+            *ngIf="data"
+            [clients]="clientsPerMonth"
+            [orders]="ordersPerMonth"
+          ></app-rate-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

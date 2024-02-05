@@ -1,0 +1,20 @@
+<div class="notify-modal">
+    <div class="modal-header border-0">
+      <h5 style="width: 65%;" class="modal-title font-weight-bold">
+      {{title | translate}}
+      </h5>
+      <button type="button" class="close btn pt-1 pr-2" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i style="font-size: 20px;" class="fas fa-times text-white"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="text-primary">
+        {{content | translate}}
+      </p>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-primary py-1 px-4" (click)="close()">
+        {{ 'modal.OK' | translate }}
+      </button>
+    </div>
+  </div>

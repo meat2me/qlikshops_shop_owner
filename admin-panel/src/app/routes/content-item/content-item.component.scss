@@ -1,0 +1,18 @@
+img.item-image {
+  height: 4rem;
+  width: 8rem;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #adb5bd;
+}
+
+::ng-deep {
+  ng-select {
+
+    .ng-placeholder,
+    .ng-value-label {
+      margin-right: 10px;
+      font-size: 0.8rem !important;
+    }
+  }
+}

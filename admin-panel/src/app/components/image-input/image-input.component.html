@@ -1,0 +1,20 @@
+<ng-container [formGroup]="controlContainer.control || formGroup">
+  <input #file appUpload class="d-none" accept="image/*" (onFiles)="onLoad($event)" type="file">
+  <input #decoded class="d-none" [formControlName]="formImageDataName" type="text">
+  <input #name class="d-none" [formControlName]="formImageName" type="text">
+  <div appDnd accept="image/*" class="w-100 h-100 position-relative d-flex align-items-center justify-content-between"
+    (onFileDrop)="blocked?onBlock.emit():  onLoad($event) ">
+    <img *ngIf="tempImg||decoded.value" class="preview-img" style="object-fit: cover;" [src]="tempImg||decoded.value"
+      alt="" role="button" (click)="blocked?onBlock.emit(): file.click()">
+    <a role="button" *ngIf="isDeletable && (tempImg||decoded.value) && !blocked" (click)="rmImage()"
+      class="btn-close position-absolute d-flex align-items-center justify-content-center btn-info rounded-circle"
+      style="height: 25px; width: 25px;"><i class="fa fa-times" aria-hidden="true"></i>
+    </a>
+    <div *ngIf="!(tempImg || decoded.value)" role="button"
+      class="draggable-area d-flex align-items-center justify-content-around w-100 h-100 py-3"
+      (click)="blocked? onBlock.emit(): file.click()">
+      <i *ngIf="!decoded.value" class="fas fa-file-import fa-lg text-primary">
+      </i>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,34 @@
+<div class="open-purchase p-4 direction-right">
+    <div class="container bg-light-gray rounded">
+        <div class="row">
+            <div class="col-12 p-4">
+                <div class="search-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 p-0">
+                                <h5 class="font-weight-bold">
+                                    {{ 'navigation.monthly_report' | translate}}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="bg-primary">
+                <div class="table-section p-2">
+                    <table *ngIf="data" class="table rounded">
+                        <tbody>
+                            <tr *ngFor="let report of data">
+                                <td *ngFor="let col of report; let i = index" class="align-middle">
+                                    <span [class.font-weight-bold]="i === 0 || (i === 1 && isAdminReport === true)">
+                                        {{col}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="bg-primary">
+            </div>
+        </div>
+    </div>
+</div>

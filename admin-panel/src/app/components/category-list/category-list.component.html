@@ -1,0 +1,5 @@
+<ng-container *ngFor="let cat of data">
+  <app-category-accordion [selected]="selectedItem" [selectEmitter]="selectedItemChange" [cat]="cat"
+    [isRecipe]="isRecipe">
+  </app-category-accordion>
+</ng-container>

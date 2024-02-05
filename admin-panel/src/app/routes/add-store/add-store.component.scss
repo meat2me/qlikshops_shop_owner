@@ -1,0 +1,32 @@
+.add-store {
+    .card {
+        border: none !important;
+    }
+
+    .card-header {
+        border: none !important;
+        padding: 0 !important;
+        background: rgba(230, 230, 230, 0.7) !important;
+
+        .fa-caret-right {
+            font-size: 1em;
+            transition: transform 200ms;
+            margin-right:8px;
+            margin-left: 2px;
+          }
+    }
+
+    .ngb-tp {
+        button {
+            display: none;
+        }
+    }
+
+    .custom-select {
+        direction: ltr !important;
+    }
+
+    .ngb-dp-arrow-btn {
+        display: none;
+    }
+}

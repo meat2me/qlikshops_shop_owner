@@ -1,0 +1,53 @@
+.client-note {
+
+  .checkbox label::before,
+  .checkbox label::after {
+    top: -8px !important;
+    left: 10px !important;
+  }
+}
+
+.order-detail {
+  :lang(he) {
+
+    .custom-checkbox,
+    .custom-radio {
+      .custom-control-input~.custom-control-label {
+
+        &::before,
+        &::after {
+          right: 0 !important;
+        }
+      }
+    }
+  }
+
+  .item-check-box {
+    width: 150px;
+  }
+
+  :lang(he) {
+    .item-note {
+      padding-right: 155px !important;
+      position: relative;
+    }
+  }
+
+  :lang(en) {
+    .item-note {
+      padding-left: 155px !important;
+      position: relative;
+    }
+  }
+}
+
+.order-info {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.amount-button {
+  display: grid;
+  place-items: center;
+}

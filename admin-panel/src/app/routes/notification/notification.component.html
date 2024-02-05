@@ -1,0 +1,118 @@
+<div class="notification p-4 direction-right">
+  <div class="container bg-light-gray rounded py-4">
+
+    <form [formGroup]="notifyForm">
+      <div class="row m-2 px-2 py-4 client-info bg-super-light rounded">
+        <div class="col-12 col-lg-2">
+          <label for="" class="font-weight-bold">
+            {{'notification.msg' | translate}}
+          </label>
+        </div>
+        <div class="col-12 col-lg-10">
+          <textarea formControlName="message" [placeholder]="'purchase-detail.msg_label' | translate"
+            class="w-100 h-100-px form-control" name="" id=""></textarea>
+        </div>
+        <div class="col-12 col-lg-2 mt-4">
+          <label for="" class="font-weight-bold"> {{'notification.send_time' | translate}}</label>
+        </div>
+        <div class="col-6 col-lg-2 mt-4">
+          <div class="custom-control custom-radio">
+            <input (click)="disableDateChoose()" type="radio" class="custom-control-input" [value]="0"
+              formControlName="send_on" id="now" name="send_on">
+            <label class="custom-control-label cursor-pointer my-2 my-md-0" for="now">
+              {{'notification.now' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2 mt-4">
+          <div class="custom-control custom-radio">
+            <input (click)="enableDateChoose()" type="radio" class="custom-control-input" [value]="1"
+              formControlName="send_on" id="on" name="send_on">
+            <label class="custom-control-label cursor-pointer my-2 my-md-0" for="on">
+              {{'notification.on' | translate}}</label>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3 mt-4 pr-0">
+          <div class="input-wrapper">
+            <input class="form-control" placeholder="{{'notification.choose_date' | translate}}"
+              formControlName="date_picker" ngbDatepicker #pickDate="ngbDatepicker">
+            <i (click)="pickDate.toggle()" class="fa fa-calendar-alt right-icon text-primary cursor-pointer"
+              aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3 mt-4 direction-left">
+          <div class="time-picker">
+            <ngb-timepicker formControlName="time_picker">
+            </ngb-timepicker>
+          </div>
+        </div>
+        <ng-container *ngIf="user_type == 1">
+          <div class="col-12 col-lg-2 mt-4">
+            <label for="" class="font-weight-bold"> {{'notification.audience' | translate}}</label>
+          </div>
+          <div class="col-6 col-lg-2 mt-4">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" [value]="3" formControlName="audience" id="all"
+                name="audience">
+              <label class="custom-control-label cursor-pointer my-2 my-md-0" for="all">
+                {{'notification.shop_owner' | translate}}</label>
+            </div>
+          </div>
+          <div class="col-6 col-lg-8 mt-4">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" [value]="4"
+                formControlName="audience" id="member" name="audience">
+              <label class="custom-control-label cursor-pointer my-2 my-md-0" for="member">
+                {{'notification.clients' | translate}}</label>
+            </div>
+          </div>
+        </ng-container>
+        <div class="col-12 col-lg-3 mt-4">
+          <button [disabled]="notifyForm.invalid" [class.c-ban]="notifyForm.invalid" (click)="sendNotification()"
+            class="w-100 btn btn-primary">
+            {{'notification.send' | translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+    <hr class="bg-primary w-100">
+    <div class="row m-2 rounded client-note bg-super-light">
+      <div class="col-12 px-0">
+        <div class="table-section p-2">
+          <table class="table rounded">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"> {{'notification.msg' | translate}}</th>
+                <th scope="col"> {{'notification.date' | translate}}</th>
+                <th *ngIf="user_type == 1" style="width: 100px" scope="col"> {{'notification.audience' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let notify of notifications | paginate: tableOptions">
+                <th style="width: 5%;" class="text-center" scope="row">
+                  <i (click)="confirmDelete(notify.notification_id)" *ngIf="notify?.is_sent == 0"
+                    class="fas fa-times text-danger"></i>
+                  <i *ngIf="notify?.is_sent == 1" class="fas fa-check text-primary"></i>
+                </th>
+                <td style="widows: 65%;" style=" word-break: break-all">
+                  {{notify?.message}}
+                </td>
+                <td class="direction-left" style="width: 20%;">
+                  {{notify?.send_on}}
+                </td>
+                <td *ngIf="user_type == 1" style="width: 20%" class="width-100px">
+                  <span *ngIf="notify?.audience == 1">All</span>
+                  <span *ngIf="notify?.audience == 2">Members</span>
+                  <span *ngIf="notify?.audience == 3"> {{'notification.shop_owner' | translate}}</span>
+                  <span *ngIf="notify?.audience == 4"> {{'notification.clients' | translate}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <hr class="bg-primary w-100">
+    <app-table-footer [tableOptions]="tableOptions" [items]="notifications"> </app-table-footer>
+  </div>
+</div>

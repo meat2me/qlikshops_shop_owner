@@ -1,0 +1,29 @@
+@import"app-variables";
+
+::ng-deep ngb-accordion.accordion {
+  > .card {
+    border: none;
+    background: none;
+    padding: none;
+
+    overflow: visible;
+  }
+
+  .card-header {
+    margin-bottom: 0;
+    padding: 0;
+    background-color: transparent;
+
+    .fa-caret-right {
+      font-size: 1em;
+      transition: transform 200ms;
+      margin-right:8px;
+      margin-left: 2px;
+    }
+  }
+
+  .card-body {
+    padding: 0;
+    // background-color: $super-light-color;
+  }
+}

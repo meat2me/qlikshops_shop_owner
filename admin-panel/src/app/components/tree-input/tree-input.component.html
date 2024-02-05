@@ -1,0 +1,59 @@
+<div #main
+     class="tree-container"
+     style="outline: none!important; position: relative;"
+     [tabIndex]="2"
+     (blur)="onBlur()">
+
+  <!-- <ng-select [items]="[1,2,4,4]">
+
+  </ng-select> -->
+
+  <div (click)="main.click();this.onToggle();"
+       class="tree-select-container">
+    <div class="tree-value-container direction-right">
+      <div *ngIf="selectedNode;else notSelected"
+           class="tree-value">
+        <span>{{selectedNode[bindLabel]}}</span>
+      </div>
+      <ng-template #notSelected>
+        <div class="tree-placeholder">
+          <span class="tree-value-label">{{placeholder}}</span>
+        </div>
+      </ng-template>
+      <div class="tree-input">
+        <!-- <input fil> -->
+      </div>
+    </div>
+    <span class="tree-arrow-wrapper">
+      <span class="tree-arrow"></span></span>
+  </div>
+  <div class="tree-dropdown-panel tree-select-bottom direction-right"
+       [style.display]="show?'initial':'none'"
+       >
+    <div class="tree-dropdown-panel-items scroll-host">
+      <div>
+        <ng-container *ngIf="nodeData.length != undefined; else isObject">
+          <app-tree-node *ngFor="let data of nodeData"
+                         [nodeData]="data"
+                         [bindLabel]="bindLabel"
+                         [bindValue]="bindValue"
+                         [selectedValue]="selectedValue"
+                         [selectedNode]="selectedNode"
+                         (setInitNode)="selectedNode = $event"
+                         [selectEmitter]="selectEmitter"></app-tree-node>
+        </ng-container>
+        <ng-template #isObject>
+          <app-tree-node [nodeData]="nodeData"
+                         [bindLabel]="bindLabel"
+                         [bindValue]="bindValue"
+                         [selectedValue]="selectedValue"
+                         [selectedNode]="selectedNode"
+                         (setInitNode)="selectedNode = $event"
+                         [selectEmitter]="selectEmitter"></app-tree-node>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+
+</div>

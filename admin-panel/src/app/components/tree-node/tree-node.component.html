@@ -1,0 +1,24 @@
+<div class="tree-option direction-right"
+     [class.tree-option-selected]="isSelected"
+     [ngStyle]="isRTL ? rightStyle: leftStyle"
+     role="button"
+     (click)="selectEmitter.emit(nodeData)">
+  <span class="tree-option-label">{{nodeData[bindLabel]}}</span>
+</div>
+
+<ng-container *ngIf="nodeData&& nodeData[bindChildren]?.length"
+              class="tree-nodes">
+  <app-tree-node *ngFor="let nodeData of nodeData[bindChildren];"
+                 [bindLabel]="bindLabel"
+                 [bindValue]="bindValue"
+                 [bindChildren]="bindChildren"
+                 [selectedValue]="selectedValue"
+                 [level]="level+1"
+                 [paddingStep]="paddingStep"
+                 [nodeData]="nodeData"
+                 [selectedNode]="selectedNode"
+                 [setInitNode]="setInitNode"
+                 [selectEmitter]="selectEmitter">
+    <!-- [selectedNode]="selectedNode" -->
+  </app-tree-node>
+</ng-container>

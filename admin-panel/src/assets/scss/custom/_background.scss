@@ -1,0 +1,13 @@
+@import "app-variables";
+
+.bg-light-gray {
+    background-color:  rgba(230, 230, 230, 0.7) !important;
+}
+
+.bg-primary {
+    background-color: $primary !important;
+}
+
+.bg-super-light {
+    background: $super-light-color!important;
+}

@@ -1,0 +1,590 @@
+<div class="store-setting p-4">
+  <form [formGroup]="storeForm">
+    <div class="container  bg-light-gray rounded pt-3 pb-5">
+      <div class="row">
+        <div class="col-5 col-md-3  direction-right">
+          <h5 class="font-weight-bold">
+            {{'store-setting.store_status' | translate}}
+          </h5>
+        </div>
+        <div class="col-7 col-md-9 text-right text-md-center  direction-right">
+          <button [class.btn-primary]="storeStatus == 1" [class.btn-danger]="storeStatus == 0"
+            class="w-50 btn text-uppercase">
+            <span *ngIf="storeStatus == 1">
+              <i class="fas fa-wifi"></i> {{'store-setting.live' | translate}}
+            </span>
+            <span *ngIf="storeStatus == 0">
+              <i class="fas fa-user-slash"></i> {{'store-setting.off' | translate}}
+            </span>
+          </button>
+        </div>
+
+        <div class="col-12 col-md-2 mt-4 order-12 sticky-flex  direction-right">
+          <button class="btn btn-primary w-100">{{'store-setting.save' | translate}}</button>
+          <button (click)="confirmCancel()" class="btn btn-info w-100 mt-3">{{'store-setting.cancel' |
+            translate}}</button>
+          <button *ngIf="storeStatus == 1" (click)="goOffline()"
+            class="btn btn-danger w-100 mt-3">{{'store-setting.go_offline' | translate}}</button>
+          <button *ngIf="storeStatus == 0" (click)="goOnline()"
+            class="btn btn-primary w-100 mt-3">{{'store-setting.go_online' | translate}}</button>
+        </div>
+        <div class="main col-12 col-md-10">
+          <section class="general-info-section m-2 direction-right">
+            <ngb-accordion #acc="ngbAccordion" activeIds="general-info">
+              <ngb-panel id="general-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold" (click)="acc.toggle('general-info')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.general_info' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.name' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="name" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.about' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea formControlName="about" id="" class="h-100-px w-100 form-control"></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.language' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7 position-static">
+                        <ng-select class="" [clearable]="false" placeholder="Location" [items]="languages"
+                          bindLabel="label" [clearable]="false" formControlName="language" name="language">
+                        </ng-select>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.currency' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="currency" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.store_category' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <ng-select [clearable]="false" class="" [items]="storeCategories" bindLabel="label"
+                          formControlName="category">
+                        </ng-select>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="theme-section m-2 direction-right">
+            <ngb-accordion #acc_theme="ngbAccordion" activeIds="theme-info">
+              <ngb-panel id="theme-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold" (click)="acc_theme.toggle('theme-info')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.look_feel' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="update-logo">{{'store-setting.logo' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-5 col-md-5 text-center">
+                        <img style="width: 60px;" [src]="logoPreview" alt="imgUpload">
+                        <input class="d-none" #upFile type="file" name="logo" id="update-logo"
+                          (change)="readFile($event)">
+                      </div>
+                      <div class="col-3 col-lg-2">
+                        <label class="cursor-pointer float-right font-weight-bold text-primary m-0" for="file"
+                          (click)="changeLogo()">{{'store-setting.change_logo' | translate}}</label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.theme' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <ng-select [clearable]="false" class="" placeholder="Themes" [items]="themes" bindLabel="label"
+                          formControlName="theme">
+                        </ng-select>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.prefix_label' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="msg_prefix" type="text">
+                        <label class="mb-0" for="">{{'store-setting.prefix' | translate}}</label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="theme-section m-2 direction-right">
+
+            <ngb-accordion #acc_unit="ngbAccordion" activeIds="units-info">
+              <ngb-panel id="units-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold" (click)="acc_unit.toggle('units-info')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.unit' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-12 col-md-9 col-lg-9 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.unit_label' | translate}}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <ng-container formArrayName="units">
+                        <div class="col-12 col-md-9 p-0 p-sm-2">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div [formGroupName]="i" *ngFor="let unitCtrl of unitControls.controls; let i =index"
+                                class="col-3 custom-control custom-checkbox">
+                                <input type="checkbox" formControlName="is_active" class="custom-control-input"
+                                  id="units-{{i}}">
+                                <label class="custom-control-label cursor-pointer" for="units-{{i}}">
+                                  {{units[i].unit_name}}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                    <div class="d-flex align-items-center mt-4">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-12 col-md-9 col-lg-9 pl-md-6">
+                        <label class="mb-0 font-weight-bold" for="update-logo">{{'store-setting.custom_unit' |
+                          translate}}
+                        </label>
+                        <label class="mb-0" for="update-logo">{{'store-setting.custom_unit_label' | translate}}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <ng-container formArrayName="custom_units">
+                        <div class="col-12 col-md-9 p-0 p-sm-2">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div [formGroupName]="i"
+                                *ngFor="let customUnitCtrl of customUnitControls.controls; let i =index"
+                                class="col-3 mb-2 custom-control custom-checkbox">
+                                <input type="checkbox" formControlName="is_active" class="custom-control-input"
+                                  id="customUnit-{{i}}">
+                                <label class="custom-control-label cursor-pointer" for="customUnit-{{i}}"> <input
+                                    formControlName="unit_name" style="height: 25px;" class="w-100 form-control"
+                                    type="text">
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="contact-info-section m-2 direction-right">
+            <ngb-accordion #acc_contact="ngbAccordion" activeIds="contact-info">
+              <ngb-panel id="contact-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold" (click)="acc_contact.toggle('contact-info')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.contact_info' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.street' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="street" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.city' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="city" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.province' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="province" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.country' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7 position-static">
+                        <ng-select class="" [clearable]="false" placeholder="Country" [items]="countries" bindLabel=""
+                          formControlName="country_code">
+                        </ng-select>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.phone' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="phone" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.email' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="email" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="service-info-section m-2 direction-right">
+            <ngb-accordion #acc_service="ngbAccordion" activeIds="service-info">
+              <ngb-panel id="service-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold" (click)="acc_service.toggle('service-info')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.service' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.opening_hours' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea formControlName="open_hours" id="" class="h-100-px w-100 form-control"></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-12 col-md-9 custom-control custom-checkbox">
+                        <input type="checkbox" id="has_take_away" class="custom-control-input"
+                          formControlName="has_take_away">
+                        <label class="custom-control-label cursor-pointer"
+                          for="has_take_away">{{'store-setting.take_away' | translate}}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-12 col-md-9 custom-control custom-checkbox">
+                        <input type="checkbox" id="has_delivery" class="custom-control-input"
+                          formControlName="has_delivery">
+                        <label class="custom-control-label cursor-pointer" for="has_delivery">{{'store-setting.delivery'
+                          | translate}}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.delivery_hours' | translate}}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea formControlName="delivery_hours" class="h-100-px w-100 form-control"></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.delivery_cost' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="delivery_cost" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1">{{currency}}</div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.minimum_order_for_free' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="min_order_for_free_delivery" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1">{{currency}}</div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.distribution_area' | translate}}</label></div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="distribution_area" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="store-option-section m-2">
+            <ngb-accordion #store_option="ngbAccordion" activeIds="store-option">
+              <ngb-panel id="store-option">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold direction-right"
+                    (click)="store_option.toggle('store-option')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.store_options' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+
+                    <div class="d-flex align-items-center mt-3 direction-right">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-12 col-md-9 custom-control custom-checkbox">
+                        <input formControlName="general_discount_active" (change)="allowSetDiscount()" type="checkbox"
+                          id="set_discount" class="custom-control-input">
+                        <label class="custom-control-label cursor-pointer"
+                          for="set_discount">{{'store-setting.set_discount' | translate}}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-12 col-md-2">
+                        <label class="mb-0" for="from_date_discount">{{'store-setting.from_date_discount' |
+                          translate}}</label>
+                      </div>
+                      <div class="col-12 col-md-4 ">
+                        <div class="input-wrapper">
+                          <input class="form-control" placeholder="{{'notification.choose_date' | translate}}"
+                            formControlName="general_discount_from" [minDate]="currentTime" ngbDatepicker
+                            #pickFromDate="ngbDatepicker">
+                          <i (click)="pickFromDate.toggle()"
+                            class="fa fa-calendar-alt right-icon text-primary cursor-pointer" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-3 direction-left">
+                        <div class="time-picker">
+                          <ngb-timepicker formControlName="general_discount_from_time">
+                          </ngb-timepicker>
+                        </div>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-12 col-md-2">
+                        <label class="mb-0" for="to_date_discount">{{'store-setting.to_date_discount' |
+                          translate}}</label>
+                      </div>
+                      <div class="col-12 col-md-4 ">
+                        <div class="input-wrapper">
+                          <input class="form-control" placeholder="{{'notification.choose_date' | translate}}"
+                            formControlName="general_discount_to" ngbDatepicker #pickToDate="ngbDatepicker">
+                          <i (click)="pickToDate.toggle()"
+                            class="fa fa-calendar-alt right-icon text-primary cursor-pointer" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-3 direction-left">
+                        <div class="time-picker">
+                          <ngb-timepicker formControlName="general_discount_to_time">
+                          </ngb-timepicker>
+                        </div>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3 direction-right">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.minimum_order' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="general_discount_min_order" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1">
+                        {{currency}}
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3 direction-right">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{'store-setting.discount' | translate}}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input class="form-control" formControlName="general_discount_percent" type="text">
+                      </div>
+                      <div class="d-none d-md-block col-1">%</div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="payment-option-section m-2 direction-right">
+            <ngb-accordion #acc_payment="ngbAccordion" activeIds="payment-info">
+              <ngb-panel id="payment-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5 role="button" class="mb-0 font-weight-bold" (click)="acc_payment.toggle('payment-info')">
+                    <i class="fas fa-caret-right text-primary" [class.fa-rotate-90]="opened"></i>
+                    {{'store-setting.payment_options' | translate}}
+                  </h5>
+                  <hr class="mt-1 bg-primary">
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <ng-container formArrayName="payment_opts">
+                        <div class="col-12 col-md-9 custom-control custom-checkbox">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div [formGroupName]="i"
+                                *ngFor="let paymentOptCtrl of paymentOptsControls.controls; let i = index"
+                                class="col-12 mb-2">
+                                <input type="checkbox" formControlName="is_active" class="custom-control-input"
+                                  [value]="paymentOptions[i].name" [id]="paymentOptions[i].name">
+                                <label class="custom-control-label cursor-pointer"
+                                  [for]="paymentOptions[i].name">{{paymentOptions[i].name}} </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

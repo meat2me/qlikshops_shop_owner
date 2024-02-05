@@ -1,0 +1,63 @@
+<pagination-template #p="paginationApi"
+                     [id]="tableOptions.id"
+                     [maxSize]="maxSize"
+                     (pageChange)="tableOptions.currentPage=$event">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="col-auto">
+      <ng-container *ngIf="items.length; else noResult">
+        <ng-container *ngIf="p.isLastPage() && remainEntries; else notLastPage">
+          <p *ngIf="isRTL"
+             class="h6 m-0">{{'pagination.show' | translate}} {{'pagination.of' | translate}} {{remainEntries}}
+            {{items.length}} {{'pagination.entries' | translate }}</p>
+          <p *ngIf="!isRTL"
+             class="h6 m-0">{{'pagination.show' | translate}} {{remainEntries}} {{'pagination.of' | translate}}
+            {{items.length}} {{'pagination.entries' | translate }}</p>
+        </ng-container>
+        <ng-template #notLastPage>
+          <p *ngIf="isRTL" class="h6 m-0">{{'pagination.show' | translate}} {{'pagination.of' | translate}} {{tableOptions.itemsPerPage}}
+             {{items.length}} {{'pagination.entries' | translate }}</p>
+          <p *ngIf="!isRTL" class="h6 m-0">{{'pagination.show' | translate}} {{tableOptions.itemsPerPage}}
+            {{'pagination.of' | translate}} {{items.length}} {{'pagination.entries' | translate }}</p>
+        </ng-template>
+      </ng-container>
+      <ng-template #noResult>
+        <p class="h6 m-0">0 entries</p>
+      </ng-template>
+    </div>
+    <div class="d-flex align-items-center">
+
+      <span class="col-auto mx-2 p-0 pagination-previous"
+            [class.disabled]="p.isFirstPage()">
+        <a *ngIf="!p.isFirstPage()"
+           role="button"
+           (click)="p.previous()">
+          <i class="fa fa-angle-left"
+             aria-hidden="true"></i> </a>
+      </span>
+
+      <span class="col-auto mx-1 p-0"
+            *ngFor="let page of p.pages"
+            [class.current]="p.getCurrent() === page.value">
+        <button class="btn btn-default mx-1 py-0 px-2"
+                (click)="p.setCurrent(page.value)"
+                *ngIf="p.getCurrent() !== page.value">
+          <small>{{ page.label }}</small>
+        </button>
+        <button class="btn btn-primary mx-1 py-0 px-2"
+                *ngIf="p.getCurrent() === page.value">
+          <small>{{ page.label }}</small>
+        </button>
+      </span>
+
+      <span class="pagination-next"
+            [class.disabled]="p.isLastPage()">
+        <a *ngIf="!p.isLastPage()"
+           (click)="p.next()"
+           role="button">
+          <i class="fa fa-angle-right"
+             aria-hidden="true"></i>
+        </a>
+      </span>
+    </div>
+  </div>
+</pagination-template>

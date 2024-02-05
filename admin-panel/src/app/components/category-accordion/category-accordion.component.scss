@@ -1,0 +1,72 @@
+$parent-pd-y : 0.2rem;
+$child-pd-y: $parent-pd-y;
+$parent-pl: 0.3rem;
+$child-pl: $parent-pl;
+$icon-height: 2.0rem;
+
+%active-item {
+  &.active {
+    background: var(--info);
+    border-radius: 0.2rem;
+  }
+}
+
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.customGroup {
+
+
+  &.card {
+    background: none;
+    border: none;
+  }
+
+
+  .card-header {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .card-body {
+    flex: none;
+    padding: 0px;
+    min-height: 0;
+    // padding-left: 3rem;
+  }
+
+  .parent-item {
+    @extend %active-item;
+    padding: $child-pd-y 0.25rem;
+  }
+
+  .child-item {
+    @extend %active-item;
+    @extend .cursor-pointer;
+    padding: $child-pd-y $child-pl $child-pd-y 4.25rem;
+  }
+
+
+  .fa-angle-down,
+  .fa-angle-rigth {
+    font-size: 1.2rem;
+  }
+}
+
+i.disabled {
+  color: var(--info) !important;
+  cursor: default;
+}
+
+.icon {
+  height: $icon-height;
+  user-select: none;
+  height: 2rem;
+  width: 4rem;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #adb5bd;
+}

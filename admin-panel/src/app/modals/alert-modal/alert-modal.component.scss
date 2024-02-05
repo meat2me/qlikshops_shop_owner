@@ -1,0 +1,11 @@
+@import "src/assets/scss/app-variables";
+
+.alert-modal {
+  background: url("assets/images/modal.svg") no-repeat;
+  background-size: 35%;
+  background-position: top right;
+
+  .modal-title {
+    border-bottom: 2px solid $primary;
+  }
+}

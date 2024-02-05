@@ -1,0 +1,59 @@
+<div class="open-purchase p-4 direction-right">
+  <div class="container bg-light-gray rounded">
+    <div class="row">
+      <div class="col-12 p-4">
+        <div class="search-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-2 p-0">
+                <button [routerLink]="['/store/admin-page/add-store']" routerLinkActive="router-link-active"  class="btn btn-primary px-4 py-1 mx-2 w-100">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                  {{'store.add_new' | translate}}
+                </button>
+              </div>
+              <div class="col-12 col-md-5">
+                <div class="input-wrapper">
+                  <input class="form-control" type="text" [(ngModel)]="terms"
+                    placeholder="{{'store.label' | translate}}">
+                  <i class="fa fa-search right-icon text-primary" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 p-0 text-right text-lg-left mt-2 mt-md-0">
+                <button (click)="searchStores()" class="btn btn-primary px-4 py-1 mx-2">
+                  {{'clients.btn_search' | translate}}
+                </button>
+                <button (click)="clearSearch()" class="btn btn-info px-4 py-1 mx-lg-0">
+                  {{'clients.btn_clear' | translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="bg-primary">
+        <div class="table-section p-2">
+          <table *ngIf="searchStore" class="table rounded">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'store.name' | translate}}</th>
+                <th scope="col">{{ 'store.address' | translate}}</th>
+                <th scope="col" class="text-center">{{ 'store.active' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr (click)="openOwnerStore(store.sotre_id)" *ngFor="let store of searchStore | paginate: tableOptions">
+                <td class="align-middle"> {{store?.name}} </td>
+                <td class="align-middle"> {{store?.address}} </td>
+                <td class="align-middle text-center">
+                  <i *ngIf="store?.is_online == 1" class="fas fa-check text-primary"></i>
+                  <i *ngIf="store?.is_online == 0" class="fas fa-times text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr class="bg-primary">
+        <app-table-footer [tableOptions]="tableOptions" [items]="searchStore"></app-table-footer>
+      </div>
+    </div>
+  </div>
+</div>

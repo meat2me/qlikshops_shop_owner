@@ -1,0 +1,31 @@
+.tree-option {
+  padding: 8px 10px;
+
+  &.tree-option-marked,
+  &:hover {
+    background-color: #f5faff;
+    color: #333;
+  }
+
+  &.tree-option-selected,
+  &.tree-option.tree-option-selected.tree-option-marked {
+    color: #333;
+    background-color: #ebf5ff;
+
+    .tree-option-label {
+      font-weight: 600;
+    }
+
+  }
+}
+
+$padding-nodes: 10px;
+
+.tree-nodes {
+  padding-left: $padding-nodes;
+
+  &:lang(he) {
+    padding-left: initial;
+    padding-right: $padding-nodes;
+  }
+}

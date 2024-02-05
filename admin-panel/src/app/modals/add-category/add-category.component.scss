@@ -1,0 +1,20 @@
+@import "src/assets/scss/app-variables";
+
+.add-category-modal {
+  background: url("assets/images/modal.svg") no-repeat;
+  background-size: 35%;
+  background-position: top right;
+
+  .modal-title {
+    border-bottom: 2px solid $primary;
+  }
+
+  #has-note-checkbox {
+    right: 0 !important;
+    z-index: 1 !important;
+  }
+
+  .has-note-label {
+    right: 1.5rem !important;
+  }
+}

@@ -1,0 +1,126 @@
+<div class="content-item container p-4 direction-right">
+  <div class="row bg-light-gray rounded">
+    <div class="col-12 p-4">
+      <div
+        class="d-flex justify-content-between align-items-center"
+        *ngIf="isAdmin"
+      >
+        <div class="px-0 col-auto">
+          <a
+            role="button"
+            routerLink="add-item"
+            class="btn btn-primary px-4 px-lg-5"
+            style="direction: ltr"
+            target="_blank"
+          >
+            <i class="fa fa-plus" aria-hidden="true"> </i>
+            {{ "content-item.new_item" | translate }}
+          </a>
+        </div>
+      </div>
+      <div class="d-flex align-items-stretch mt-3">
+        <div class="col-3 px-0">
+          <ng-select
+            id="categories-filter"
+            [items]="listCategories"
+            placeholder="{{ 'content-add-item.categories' | translate }}"
+            (change)="onCategoriesChange($event)"
+            bindLabel="name"
+            bindValue="name"
+          >
+          </ng-select>
+        </div>
+        <div class="col-6">
+          <div class="input-wrapper">
+            <input
+              class="form-control"
+              type="text"
+              [(ngModel)]="searchTerm"
+              placeholder="{{ 'content-item.search_box' | translate }}"
+            />
+            <i
+              class="fa fa-search right-icon text-primary"
+              aria-hidden="true"
+            ></i>
+          </div>
+        </div>
+        <div class="col-auto px-0">
+          <button
+            class="btn btn-primary px-4 h-100 p-0 mx-2"
+            (click)="search()"
+          >
+            {{ "content-item.search" | translate }}
+          </button>
+          <button class="btn btn-info px-4 p-0 h-100 mx-2" (click)="reset()">
+            {{ "content-item.clear" | translate }}
+          </button>
+        </div>
+      </div>
+      <hr class="bg-primary" />
+      <div class="table-section p-2">
+        <table class="table rounded">
+          <thead>
+            <tr>
+              <th scope="col">{{ "content-item.item_name" | translate }}</th>
+              <th scope="col">{{ "content-item.category" | translate }}</th>
+              <th class="text-center" scope="col">
+                {{ "content-item.image" | translate }}
+              </th>
+              <th class="text-center" scope="col">
+                {{ "content-item.in_stock" | translate }}
+              </th>
+              <th class="text-center" scope="col" *ngIf="!isAdmin">
+                {{ "content-item.is_available" | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of searcher.result | paginate: tableOptions">
+              <td class="align-middle">
+                <a [routerLink]="['edit-item', item.item_id]" target="_blank">{{
+                  item.name
+                }}</a>
+              </td>
+              <td class="align-middle">
+                <span *ngFor="let category of item.categories; last as isLast"
+                  >{{ category.category_name
+                  }}<span *ngIf="!isLast">, </span></span
+                >
+              </td>
+              <td class="align-middle text-center">
+                <img class="item-image" [src]="item.image || tempImage" />
+              </td>
+              <td class="align-middle text-center">
+                <i
+                  role="button"
+                  (click)="toggleItemSubj.next(item)"
+                  *ngIf="item.is_in_stock"
+                  class="fas fa-check fa-lg text-primary"
+                ></i>
+                <i
+                  role="button"
+                  *ngIf="!item.is_in_stock"
+                  (click)="toggleItemSubj.next(item)"
+                  class="fas fa-times fa-lg text-danger"
+                ></i>
+              </td>
+              <td class="align-middle text-center" *ngIf="!isAdmin">
+                <i
+                  *ngIf="item.is_available"
+                  class="fas fa-check fa-lg text-primary"
+                ></i>
+                <i
+                  *ngIf="!item.is_available"
+                  class="fas fa-times fa-lg text-danger"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr class="bg-primary" />
+      <app-table-footer [tableOptions]="tableOptions" [items]="searcher.result">
+      </app-table-footer>
+    </div>
+  </div>
+</div>

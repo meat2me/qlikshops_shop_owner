@@ -1,0 +1,21 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
+  "cSpell.words": [
+    "creaditcard",
+    "creditcard",
+    "deletable",
+    "downlevel",
+    "esnext",
+    "forin",
+    "localstorage",
+    "Manu",
+    "ngrx",
+    "paypal",
+    "Resizer",
+    "rtls",
+    "Serv",
+    "unclickable"
+  ]
+}

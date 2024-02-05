@@ -1,0 +1,267 @@
+<div class="account-setting container p-4 direction-right">
+  <div class="row">
+
+    <form class="col-12"
+          [formGroup]="accountForm"
+          (ngSubmit)="onSubmit()">
+      <div class="container-fluid bg-light-gray rounded pt-3 pb-5">
+        <div class="row">
+          <div class="col-2 mt-4 order-12 sticky-flex">
+            <button class="btn btn-primary w-100">{{'account-setting.save' | translate}}</button>
+            <button class="btn btn-info w-100 mt-3"
+                    (click)="onCancel()"
+                    type="button">{{'account-setting.cancel' | translate}}</button>
+            <button class="btn btn-info w-100 mt-3"
+                    (click)="logout()"
+                    type="button">{{'account-setting.logout' | translate}}</button>
+          </div>
+          <div class="main col-10">
+            <section class="contact-section mx-2">
+              <h5 class="circle font-weight-bold">{{'account-setting.contact_info' | translate}}</h5>
+              <hr class="mt-1 bg-primary">
+
+              <div class="px-2 py-4 bg-super-light rounded">
+                <div class="d-flex align-items-center">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4 col-md-3 col-lg-2">
+                    <label class="mb-0 w-100"
+                           for="">{{'account-setting.first_name' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-8 col-md-7">
+                    <input class="form-control"
+                           type="text"
+                           formControlName="contact_first_name">
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4 col-md-3 col-lg-2">
+                    <label class="mb-0 w-100"
+                           for="">{{'account-setting.last_name' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-8 col-md-7">
+                    <input class="form-control"
+                           formControlName="contact_last_name"
+                           type="text">
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-1 col-lg-2"></div>
+                  <div class="col-4 col-md-3 col-lg-2">
+                    <label class="mb-0 w-100"
+                           for="">{{'account-setting.email' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-8 col-md-7">
+                    <input class="form-control"
+                           type="email"
+                           formControlName="contact_email">
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-1 col-lg-2"></div>
+                  <div class="col-4 col-md-3 col-lg-2">
+                    <label class="mb-0 w-100"
+                           for="">{{'account-setting.phone_number' | translate}}</label></div>
+                  <div class="col-8 col-md-7">
+                    <input class="form-control"
+                           type="text"
+                           formControlName="phone_num">
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+
+                </div>
+              </div>
+            </section>
+
+            <section class="plan-services-section mx-2 mt-3">
+              <h5 class="circle font-weight-bold">{{'account-setting.plan_service' | translate}}</h5>
+              <hr class="mt-1 bg-primary">
+
+              <div class="px-2 py-4 bg-super-light rounded">
+                <div class="d-flex align-items-center">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4">
+                    <label class="mb-0 w-100"
+                           for="">{{'account-setting.account_type' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-radio">
+                      <input type="radio"
+                             class="custom-control-input"
+                             [value]="0"
+                             id="accountStandard"
+                             formControlName="is_pro_account">
+                      <label class="custom-control-label"
+                             for="accountStandard">{{'account-setting.standard' | translate}}</label>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-radio">
+                      <input type="radio"
+                             class="custom-control-input"
+                             id="accountPro"
+                             formControlName="is_pro_account"
+                             [value]="1">
+                      <label class="custom-control-label"
+                             for="accountPro">{{'account-setting.pro' | translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4">
+                    <label class="mb-0 w-100"
+                           for="">{{'account-setting.payment_plan' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-radio">
+                      <input type="radio"
+                             class="custom-control-input"
+                             id="monthly"
+                             formControlName="is_monthly_payment_plan"
+                             [value]="0">
+                      <label class="custom-control-label"
+                             for="monthly">{{'account-setting.monthly' | translate}}</label>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-radio">
+                      <input type="radio"
+                             class="custom-control-input"
+                             formControlName="is_monthly_payment_plan"
+                             id="yearly"
+                             [value]="1">
+                      <label class="custom-control-label"
+                             for="yearly">{{'account-setting.yearly' | translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-1 col-lg-2"></div>
+                  <div class="col-auto">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox"
+                             class="custom-control-input"
+                             formControlName="accept_credit_card"
+                             id="accept-credit">
+                      <label class="custom-control-label"
+                             for="accept-credit">{{'account-setting.accept_credit_card' | translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-1 col-lg-2"></div>
+                  <div class="col-auto">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox"
+                             class="custom-control-input"
+                             formControlName="has_private_domain"
+                             id="private-store">
+                      <label class="custom-control-label w-100"
+                             for="private-store">{{'account-setting.set_store_private' | translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-1 col-lg-2"></div>
+                  <div class="col-auto">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox"
+                             class="custom-control-input"
+                             id="private-store"
+                             formControlName="has_private_domain">
+                      <label
+                             class="custom-control-label hide-switch">{{'account-setting.private_domain' | translate}}</label>
+                    </div>
+                  </div>
+                  <div class="col-8 col-md-7">
+                    <input class="form-control"
+                           formControlName="private_domain"
+                           type="text">
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-1 col-lg-2"></div>
+                  <div class="col-auto">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox"
+                             class="custom-control-input"
+                             formControlName="has_integration_with_inventory"
+                             id="integration">
+                      <label class="custom-control-label"
+                             for="integration">{{'account-setting.integration' | translate}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="plan-services-section mx-2 mt-3">
+              <h5 class="circle font-weight-bold">{{'account-setting.payment' | translate}}</h5>
+              <hr class="mt-1 bg-primary">
+              <div class="px-2 py-4 bg-super-light rounded">
+                <div class="d-flex align-items-center">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4">
+                    <label class="mb-0"
+                           for="">{{'account-setting.total_price' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-3">
+                    <p class="m-0 h5 font-weight-bold">{{accountInfo?.next_payment_amount}}</p>
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+                </div>
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4">
+                    <label class="mb-0"
+                           for="">{{'account-setting.next_payment_due' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-3">
+                    <p class="m-0 h5 font-weight-bold">{{accountInfo?.next_payment_date}}</p>
+                  </div>
+                  <div class="d-none d-md-block col-1"></div>
+                </div>
+
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4">
+                    <label class="mb-0"
+                           for="">{{'account-setting.payment_by' | translate}}
+                    </label>
+                  </div>
+                  <div class="col-auto">
+                    <label>{{accountInfo?.payment_by}}</label>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-center mt-3">
+                  <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                  <div class="col-4"></div>
+                  <div class="col-auto">
+                    <button type="button" class="btn btn-primary">{{'account-setting.setup_payment' | translate}}</button>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

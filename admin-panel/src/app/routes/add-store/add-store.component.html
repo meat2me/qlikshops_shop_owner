@@ -1,0 +1,500 @@
+<div class="add-store p-4">
+  <form [formGroup]="storeForm">
+    <div class="container bg-light-gray rounded pt-3 pb-5">
+      <div class="row">
+        <div class="col-12 col-md-12 direction-right">
+          <h5 class="font-weight-bold">
+            {{ "add-store.add_shop_title" | translate }}
+          </h5>
+        </div>
+
+        <div class="col-12 col-md-2 mt-4 order-12 sticky-flex direction-right">
+          <button (click)="onAddStore()" class="btn btn-primary w-100">
+            {{ "store-setting.save" | translate }}
+          </button>
+          <button (click)="confirmCancel()" class="btn btn-info w-100 mt-3">
+            {{ "store-setting.cancel" | translate }}
+          </button>
+        </div>
+
+        <div class="main col-12 col-md-10">
+          <section class="general-info-section m-2 direction-right">
+            <ngb-accordion #acc="ngbAccordion" activeIds="general-info">
+              <ngb-panel id="general-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5
+                    role="button"
+                    class="mb-0 font-weight-bold"
+                    (click)="acc.toggle('general-info')"
+                  >
+                    <i
+                      class="fas fa-caret-right text-primary"
+                      [class.fa-rotate-90]="opened"
+                    ></i>
+                    {{ "add-store.shop_owner_info" | translate }}
+                  </h5>
+                  <hr class="mt-1 bg-primary" />
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "add-store.first_name" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: Paul"
+                          class="form-control"
+                          formControlName="owner_first_name"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "add-store.last_name" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: Henderson"
+                          class="form-control"
+                          formControlName="owner_last_name"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "add-store.phone" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: +972525550xxx"
+                          class="form-control"
+                          formControlName="owner_phone"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "add-store.email" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: paulhanderson@mail.com"
+                          class="form-control"
+                          formControlName="owner_email"
+                          type="email"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="shop-info-section m-2 direction-right">
+            <ngb-accordion #acc_shop_info="ngbAccordion" activeIds="shop-info">
+              <ngb-panel id="shop-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5
+                    role="button"
+                    class="mb-0 font-weight-bold"
+                    (click)="acc_shop_info.toggle('shop-info')"
+                  >
+                    <i
+                      class="fas fa-caret-right text-primary"
+                      [class.fa-rotate-90]="opened"
+                    ></i>
+                    {{ "add-store.shop_info" | translate }}
+                  </h5>
+                  <hr class="mt-1 bg-primary" />
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "add-store.store_code" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: 789456"
+                          class="form-control"
+                          formControlName="store_code"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "add-store.store_name" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: My Store"
+                          class="form-control"
+                          formControlName="store_name"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "store-setting.about" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea
+                          formControlName="about"
+                          id="about_store"
+                          class="h-100-px w-100 form-control"
+                        ></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "store-setting.street" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: 4 Hamefalssim"
+                          class="form-control"
+                          formControlName="street"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "store-setting.city" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: Petach Tikva"
+                          class="form-control"
+                          formControlName="city"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{
+                          "store-setting.phone" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: +972525556666"
+                          class="form-control"
+                          formControlName="store_phone"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{
+                          "store-setting.email" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          placeholder="Ex: my.store@dsbshops.com"
+                          class="form-control"
+                          formControlName="store_email"
+                          type="email"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "store-setting.image_white" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <img
+                          *ngIf="logoWhite"
+                          style="width: 60px"
+                          [src]="logoWhite"
+                          alt="logo-white"
+                        />
+                        <input
+                          class="d-none"
+                          #upLogoWhite
+                          type="file"
+                          name="logo"
+                          id="update-logo"
+                          (change)="readFileLogoWhite($event)"
+                        />
+                        <label
+                          class="cursor-pointer float-right font-weight-bold text-primary m-0"
+                          for="file"
+                          (click)="uploadWhiteLogo()"
+                          >{{ "store-setting.change_logo" | translate }}</label
+                        >
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-top mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "store-setting.image_black" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <img
+                          *ngIf="logoBlack"
+                          style="width: 60px"
+                          [src]="logoBlack"
+                          alt="logo-black"
+                        />
+                        <input
+                          class="d-none"
+                          #upLogoBlack
+                          type="file"
+                          name="logo"
+                          id="update-logo"
+                          (change)="readFileLogoBlack($event)"
+                        />
+                        <label
+                          class="cursor-pointer float-right font-weight-bold text-primary m-0"
+                          for="file"
+                          (click)="uploadBlackLogo()"
+                          >{{ "store-setting.change_logo" | translate }}</label
+                        >
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+
+          <section class="service-info-section m-2 direction-right">
+            <ngb-accordion #acc_service="ngbAccordion" activeIds="service-info">
+              <ngb-panel id="service-info">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <h5
+                    role="button"
+                    class="mb-0 font-weight-bold"
+                    (click)="acc_service.toggle('service-info')"
+                  >
+                    <i
+                      class="fas fa-caret-right text-primary"
+                      [class.fa-rotate-90]="opened"
+                    ></i>
+                    {{ "store-setting.service" | translate }}
+                  </h5>
+                  <hr class="mt-1 bg-primary" />
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="px-2 py-4 bg-super-light rounded">
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="open_hours"
+                          >{{ "store-setting.opening_hours" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea
+                          placeholder="Ex: Sun - Thu: 09:00 - 18:00"
+                          formControlName="open_hours"
+                          id="open_hours"
+                          class="h-100-px w-100 form-control"
+                        ></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div
+                        class="col-12 col-md-9 custom-control custom-checkbox"
+                      >
+                        <input
+                          type="checkbox"
+                          id="has_take_away"
+                          class="custom-control-input"
+                          formControlName="has_take_away"
+                        />
+                        <label
+                          class="custom-control-label cursor-pointer"
+                          for="has_take_away"
+                          >{{ "store-setting.take_away" | translate }}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-md-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="take_away_hours"
+                          >{{ "store-setting.take_away_hours" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea
+                          placeholder=""
+                          formControlName="take_away_hours"
+                          id="take_away_hours"
+                          class="h-100-px w-100 form-control"
+                        ></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div
+                        class="col-12 col-md-9 custom-control custom-checkbox"
+                      >
+                        <input
+                          type="checkbox"
+                          id="has_delivery"
+                          class="custom-control-input"
+                          formControlName="has_delivery"
+                        />
+                        <label
+                          class="custom-control-label cursor-pointer"
+                          for="has_delivery"
+                          >{{ "store-setting.delivery" | translate }}
+                        </label>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for=""
+                          >{{ "store-setting.delivery_hours" | translate }}
+                        </label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <textarea
+                          formControlName="delivery_hours"
+                          class="h-100-px w-100 form-control"
+                        ></textarea>
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{
+                          "store-setting.delivery_cost" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          class="form-control"
+                          formControlName="delivery_cost"
+                          type="number"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1">₪</div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{
+                          "store-setting.minimum_order_for_free" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          class="form-control"
+                          formControlName="min_order_for_free_delivery"
+                          type="number"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1">₪</div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{
+                          "store-setting.distribution_area" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          class="form-control"
+                          formControlName="distribution_area"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </section>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
