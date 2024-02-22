@@ -12,4 +12,9 @@ export interface OwnerItem {
   category_name: string;
   image: string;
   is_available: number;
+  price: number;
+  categories: [{
+    category_id: number;
+    category_name: string;
+  }];
 }

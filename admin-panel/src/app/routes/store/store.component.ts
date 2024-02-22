@@ -17,7 +17,7 @@ export class StoreComponent implements OnInit {
     this.tableOptions = {
       id: 'table',
       currentPage: 0,
-      itemsPerPage: 5,
+      itemsPerPage: 15,
     };
   }
 
@@ -41,7 +41,7 @@ export class StoreComponent implements OnInit {
       this.searchStore = this.stores.filter(isMatch);
       this.tableOptions.currentPage = 1;
     }
-    this.terms == '' ? (this.searchStore = this.stores) : '';
+    this.terms === '' ? (this.searchStore = this.stores) : '';
   }
 
   openOwnerStore(store_id) {

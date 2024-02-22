@@ -93,7 +93,7 @@ export class NotificationComponent implements OnInit {
     this.store_id = localStorage.getItem('STORE_ID');
     this.route.paramMap.subscribe((params) => {
       const location = params.get('location');
-      if (location == 'shop-page') {
+      if (location === 'shop-page') {
         this.storeService.getSidebarChange(true);
         this.user_type = 3;
       }
@@ -133,7 +133,7 @@ export class NotificationComponent implements OnInit {
     this.notifyForm.patchValue({
       audience: parseInt(this.audience),
     });
-    if (this.send_on == 1) {
+    if (this.send_on === 1) {
       const strDate = new Date(
         this.notifyForm.value.date_picker.year,
         this.notifyForm.value.date_picker.month,
@@ -142,7 +142,7 @@ export class NotificationComponent implements OnInit {
       const milliseconds = strDate.valueOf();
       const tempDate = moment(milliseconds).format('YYYY[-]MM[-]DD');
 
-      if (this.notifyForm.value.time_picker.minute.toString().length == 1) {
+      if (this.notifyForm.value.time_picker.minute.toString().length === 1) {
         this.notifyForm.value.time_picker.minute =
           '0' + this.notifyForm.value.time_picker.minute;
       }
@@ -153,12 +153,12 @@ export class NotificationComponent implements OnInit {
         send_on: this.customTime,
       });
     }
-    if (this.send_on == 0) {
+    if (this.send_on === 0) {
       this.notifyForm.patchValue({
         send_on: '',
       });
     }
-  };
+  }
 
   errorNotify() {
     const modalRef = this.modalService.open(AlertModalComponent, {
@@ -189,12 +189,12 @@ export class NotificationComponent implements OnInit {
 
   sendNotification = async () => {
     await this.modifyData();
-    if (this.user_type == 1) {
+    if (this.user_type === 1) {
       this.notificationService
         .adminSendNotification(this.message, this.send_on, this.audience)
         .subscribe(
           (res: any) => {
-            if (res.rc == 0) {
+            if (res.rc === 0) {
               this.getNotification();
               this.successNotify();
               this.notifyForm.patchValue({
@@ -212,7 +212,7 @@ export class NotificationComponent implements OnInit {
         .ownerSendNotification(this.store_id, this.message, this.send_on)
         .subscribe(
           (res: any) => {
-            if (res.rc == 0) {
+            if (res.rc === 0) {
               this.getNotification();
               this.successNotify();
               this.notifyForm.patchValue({
@@ -226,13 +226,13 @@ export class NotificationComponent implements OnInit {
           }
         );
     }
-  };
+  }
 
   deleteNotification(id) {
     this.notificationService
       .deleteNotification(id, this.user_type, this.store_id)
       .subscribe((res: any) => {
-        if (res.rc == 0) {
+        if (res.rc === 0) {
           this.getNotification();
           this.successNotify();
         }

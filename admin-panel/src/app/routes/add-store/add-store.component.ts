@@ -56,6 +56,7 @@ export class AddStoreComponent implements OnInit {
       store_email: new FormControl(null, Validators.required),
       open_hours: new FormControl(null, Validators.required),
       take_away_hours: new FormControl(null, Validators.required),
+      distribution_hours: new FormControl(null, Validators.required),
       has_take_away: new FormControl(false, Validators.required),
       has_delivery: new FormControl(false, Validators.required),
       delivery_hours: new FormControl(null, Validators.required),

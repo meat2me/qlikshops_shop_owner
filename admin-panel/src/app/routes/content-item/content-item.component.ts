@@ -66,20 +66,20 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const location = params.get('location');
-      if (location == 'shop-page') {
+      if (location === 'shop-page') {
         this.storeService.getSidebarChange(true);
         this.isAdmin = false;
         this.storeId = localStorage.getItem('STORE_ID').toString();
       }
     });
-    this._getAllCategories()
+    this._getAllCategories();
     this.route.queryParams.subscribe(query => {
       this.categoryFilter = query.category;
     });
     super.ngOnInit();
     this.fetchData();
     this.addToggleEvent();
-    window.addEventListener("storage", this.message_receive.bind(this));
+    window.addEventListener('storage', this.message_receive.bind(this));
   }
 
   fetchData() {
@@ -88,6 +88,8 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
       this.itemServ.getAdminItems()
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => {
+          console.log('res 1');
+          console.log(res);
           this.data = res.items;
           this.searcher.init(this.data, { fields: ['name', 'categories'] });
         });
@@ -97,7 +99,7 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
         .subscribe((res) => {
           this.data = res.items;
           if (this.categoryFilter) {
-            this.listItem = this.data.filter((d: any) => d.category_name == this.categoryFilter);
+            this.listItem = this.data.filter((d: any) => d.category_name === this.categoryFilter);
             this.searcher.init(this.listItem, { fields: ['name', 'categories'] });
           } else {
             this.searcher.init(this.data, { fields: ['name', 'categories'] });
@@ -138,13 +140,13 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
           this.data = res.items;
           localStorage.removeItem('itemId');
           localStorage.removeItem('deleteItem');
-        })
+        });
     }
 
   }
 
   reset() {
-    if (this.searchTerm == '' && this.categoryFilter) {
+    if (this.searchTerm === '' && this.categoryFilter) {
       this.searcher.init(this.data, { fields: ['name', 'categories'] });
     } else {
       this.searchTerm = '';
@@ -158,9 +160,9 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res: any) => {
           if (!res?.categories) {
-            return
+            return;
           }
-          this.listCategories = res.categories
+          this.listCategories = res.categories;
         });
     }
     else {
@@ -168,19 +170,19 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res: any) => {
           if (!res?.categories) {
-            return
+            return;
           }
-          this.listCategories = res.categories
+          this.listCategories = res.categories;
         });
     }
   }
 
   public onCategoriesChange(event: any): void {
     if (!event?.name) {
-      this.searcher.reset()
+      this.searcher.reset();
     }
     const { name } = event;
-    this.searcher.search(name)
+    this.searcher.search(name);
 
   }
 }

@@ -30,7 +30,7 @@ export class SmsVerificationModalComponent implements OnInit {
 
   verify() {
     this.authSer.verifySMSCode(this.countryCode, this.phone, this.verifyCode).subscribe((res: any) => {
-      if (res.rc == 0) {
+      if (res.rc === 0) {
         if (res.is_registered) {
           this.store.dispatch(new Login(res));
         } else {

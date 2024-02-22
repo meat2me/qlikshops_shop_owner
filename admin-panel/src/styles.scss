@@ -5,8 +5,20 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap");
 
+//body {
+//  font-family: "Nunito", sans-serif;
+//}
+
+
+@font-face {
+  font-family: 'Danidin-SemiBoldFont';
+  src: url('/assets/fonts/Danidin-SemiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Danidin-SemiBoldFont', sans-serif;
 }
 
 .main-container {

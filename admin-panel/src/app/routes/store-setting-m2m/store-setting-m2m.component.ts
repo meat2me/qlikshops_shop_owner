@@ -52,6 +52,7 @@ export class StoreSettingM2mComponent implements OnInit {
       open_hours: new FormControl(null, Validators.required),
       has_take_away: new FormControl(false, Validators.required),
       take_away_hours: new FormControl(null, Validators.required),
+      distribution_hours: new FormControl(null, Validators.required),
       extra_notification_phones: new FormControl(null, Validators.required),
       branches: new FormControl(null, Validators.required),
       has_delivery: new FormControl(false, Validators.required),
@@ -99,6 +100,10 @@ export class StoreSettingM2mComponent implements OnInit {
 
   get distributionArrCtrl() {
     return this.storeForm.get('distribution_array') as FormArray;
+  }
+
+  get deliveryTerms() {
+    return this.storeForm.get('delivery_terms');
   }
 
   get firstName() {
@@ -183,6 +188,14 @@ export class StoreSettingM2mComponent implements OnInit {
     return this.storeForm.get('has_creditcard_pay');
   }
 
+  get has_take_away() {
+    return this.storeForm.get('has_take_away');
+  }
+
+  get has_delivery() {
+    return this.storeForm.get('has_delivery');
+  }
+
   get has_distribution_array() {
     return this.storeForm.get('has_distribution_array');
   }
@@ -201,7 +214,7 @@ export class StoreSettingM2mComponent implements OnInit {
     return this.storeForm.get('delivery_hours');
   }
   get isAdmin(): boolean {
-    return this.user_type == 1;
+    return this.user_type === 1;
   }
 
   constructor(
@@ -221,27 +234,27 @@ export class StoreSettingM2mComponent implements OnInit {
 
     this.route.paramMap.subscribe((params) => {
       const location = params.get('location');
-      if (location == 'shop-page') {
+      if (location === 'shop-page') {
         this.storeService.getSidebarChange(true);
       }
     });
 
-    this.has_distribution_array.valueChanges.subscribe((val) => {
-      if (val) {
-        this.delivery_hours.disable();
-        this.deliverySlotSizeHours.disable();
-        this.delivery_cost.disable();
-        this.min_order_for_free_delivery.disable();
-      } else {
-        this.delivery_hours.enable();
-        this.deliverySlotSizeHours.enable();
-        this.delivery_cost.enable();
-        this.min_order_for_free_delivery.enable();
-      }
-    });
+    // this.has_distribution_array.valueChanges.subscribe((val) => {
+    //   if (val) {
+    //     this.delivery_hours.disable();
+    //     this.deliverySlotSizeHours.disable();
+    //     this.delivery_cost.disable();
+    //     this.min_order_for_free_delivery.disable();
+    //   } else {
+    //     this.delivery_hours.enable();
+    //     this.deliverySlotSizeHours.enable();
+    //     this.delivery_cost.enable();
+    //     this.min_order_for_free_delivery.enable();
+    //   }
+    // });
 
     this.user_type = this.authService.getUserType();
-    if (this.user_type == 3) {
+    if (this.user_type === 3) {
       this.disableInfoChange();
       this.canUploadFile = false;
     }
@@ -266,11 +279,17 @@ export class StoreSettingM2mComponent implements OnInit {
       second: 0,
     };
 
-    this.storeService.getStoreInfo(this.store_id).subscribe((res: any) => {
+    this.storeService.getStoreInfo(this.store_id).subscribe(async (res: any) => {
+      await (res !== undefined);
+      console.log(res.delivery_terms.length);
+      console.log(res);
+      // const m = res.delivery_terms.split('\t-\t');
       this.originData = res;
       this.storeStatus = res.is_online;
       this.storeForm.patchValue({
         ...res,
+        has_delivery: res.has_delivery === 1 ? true : false,
+        delivery_terms: res.delivery_terms,
         image_logo_white: res.white_logo,
         image_logo_black: res.black_logo,
         general_discount_from: res.general_discount_active
@@ -287,6 +306,9 @@ export class StoreSettingM2mComponent implements OnInit {
           : hour,
       });
       this.patchDistributionArray(res.distribution_array);
+      // console.log(m[1]);
+      // console.log(JSON.parse(m[1]));
+      // this.patchDistributionArray(JSON.parse(m[1]));
       this.allowSetDiscount();
     });
   }
@@ -323,8 +345,8 @@ export class StoreSettingM2mComponent implements OnInit {
     const distributionArrCtrl = this.distributionArrCtrl;
     distributionArrCtrl.clear();
     array.forEach((d, i) => {
-      distributionArrCtrl.setControl(i, this.createDistributionArrayItem(d));
-    });
+        distributionArrCtrl.setControl(i, this.createDistributionArrayItem(d));
+      });
   }
 
   convertTime(timeStr, type) {
@@ -341,15 +363,19 @@ export class StoreSettingM2mComponent implements OnInit {
       second: 0,
     };
 
-    if (type == 0) {
+    if (type === 0) {
       return date;
     }
-    if (type == 1) {
+    if (type === 1) {
       return time;
     }
   }
 
   onUpdateStore = async () => {
+    // console.log( JSON.parse(JSON.stringify(this.distributionArrCtrl.value)));
+    console.log( this.distributionArrCtrl.value);
+    console.log( JSON.stringify( this.distributionArrCtrl.value ));
+    console.log( this.has_delivery.value);
     if (
       this.compareDate(
         this.from_date.value,
@@ -360,6 +386,10 @@ export class StoreSettingM2mComponent implements OnInit {
     ) {
       const req = {
         ...this.storeForm.value,
+        distribution_array: this.distributionArrCtrl.value,
+        has_delivery: this.has_delivery.value ? 1 : 0,
+        // delivery_terms: this.deliveryTerms.value + '\t-\t' + JSON.stringify(this.distributionArrCtrl.value),
+        delivery_terms: this.deliveryTerms.value,
         image_logo_white:
           this.originData.image_logo_white ===
           this.storeForm.value.image_logo_white
@@ -382,17 +412,19 @@ export class StoreSettingM2mComponent implements OnInit {
         delete req.image_logo_white;
       this.originData.black_logo === this.storeForm.value.image_logo_black &&
         delete req.image_logo_black;
+      console.log(req.distribution_area);
       this.storeService
         .updateStore(req, this.store_id, this.user_type)
         .subscribe(
           (res: any) => {
-            if (res.rc == 0) {
+            console.log(res);
+            if (res.rc === 0) {
               this.changeSavedModal();
               this.storeService.getNavChange(true);
             }
           },
           (err) => {
-            if (err.rc == 507) {
+            if (err.rc === 507) {
               this.removeUnitError();
               this.router.navigate(['/home']);
             }
@@ -401,7 +433,7 @@ export class StoreSettingM2mComponent implements OnInit {
     } else {
       this.dateValidateError();
     }
-  };
+  }
 
   onCancelUpdate() {
     this.storeForm.patchValue({
@@ -420,7 +452,7 @@ export class StoreSettingM2mComponent implements OnInit {
       this.storeService
         .setStatus(this.store_id, false)
         .subscribe((res: Resp) => {
-          if (res.rc == 0) {
+          if (res.rc === 0) {
             this.successNotify();
             this.storeStatus = 0;
           }
@@ -439,7 +471,7 @@ export class StoreSettingM2mComponent implements OnInit {
       this.storeService
         .setStatus(this.store_id, true)
         .subscribe((res: Resp) => {
-          if (res.rc == 0) {
+          if (res.rc === 0) {
             this.successNotify();
             this.storeStatus = 1;
           }
@@ -481,7 +513,7 @@ export class StoreSettingM2mComponent implements OnInit {
     const utc = moment(strDate).utc();
     const tempDate = moment(utc).format('YYYY[-]MM[-]DD');
     let utcMins = utc.get('minute').toString();
-    if (utcMins.length == 1) {
+    if (utcMins.length === 1) {
       utcMins = '0' + utcMins;
     }
     return `${tempDate} ${utc.get('hour')}:${utcMins}:00`;
@@ -507,13 +539,13 @@ export class StoreSettingM2mComponent implements OnInit {
 
     if (stMilliseconds < ndMilliseconds) {
       return true;
-    } else return false;
+    } else { return false; }
   }
 
   disableInfoChange() {
     this.firstName.disable();
     this.lastName.disable();
-    this.ownerPhone.disable();
+    // this.ownerPhone.disable();
     this.ownerEmail.disable();
     this.storeCode.disable();
     this.storeName.disable();

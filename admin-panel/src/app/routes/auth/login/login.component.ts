@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
         this.storeServ.getStoreInfo(this.store_id).subscribe((res) => {
           this.translatedServ.storedLanguage = 'he';
         });
-        if(this.authSer.getUserType() == 3) {
+        if(this.authSer.getUserType() === 3) {
           this.router.navigate(['/home/owner-page']);
         }
         else {
-          this.router.navigate(['/home/admin-page'])
+          this.router.navigate(['/home/admin-page']);
         }
 
       }

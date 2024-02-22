@@ -191,7 +191,8 @@
     "category": "קטגוריה",
     "image": "תמונה",
     "in_stock": "קיים במלאי",
-    "is_available": "מוצר זמין"
+    "is_available": "מוצר זמין",
+    "price": "מחיר"
   },
   "content-add-item": {
     "basic_info": "מידע בסיסי",

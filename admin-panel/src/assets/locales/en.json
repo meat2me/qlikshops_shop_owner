@@ -190,7 +190,8 @@
     "category": "Category",
     "image": "Image",
     "in_stock": "In Stock",
-    "is_available": "Is Available"
+    "is_available": "Is Available",
+    "price": "Cost"
   },
   "content-add-item": {
     "basic_info": "Basic Information",

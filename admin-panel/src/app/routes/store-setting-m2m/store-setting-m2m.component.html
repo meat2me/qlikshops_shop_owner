@@ -450,6 +450,12 @@
                       <div class="d-none d-md-block col-1"></div>
                     </div>
 
+
+                    <ng-container
+                      *ngIf="
+                        has_take_away.value;
+                      "
+                    >
                     <div class="d-flex align-items-center mt-3">
                       <div class="d-none d-md-block col-md-1 col-lg-2"></div>
                       <div class="col-4 col-md-3 col-lg-2 pl-md-6">
@@ -467,7 +473,7 @@
                       </div>
                       <div class="d-none d-md-block col-1"></div>
                     </div>
-
+                    </ng-container>
                     <!-- Has delivery -->
                     <div class="d-flex align-items-center mt-3">
                       <div class="d-none d-md-block col-1 col-lg-2"></div>
@@ -489,35 +495,14 @@
                       <div class="d-none d-md-block col-1"></div>
                     </div>
                     <!-- End has delivery -->
-                    <!-- Has distribution array -->
-                    <div *ngIf="isAdmin" class="d-flex align-items-center mt-3">
-                      <div class="d-none d-md-block col-1 col-lg-2"></div>
-                      <div
-                        class="col-12 col-md-9 custom-control custom-checkbox"
-                      >
-                        <input
-                          type="checkbox"
-                          id="has_distribution_array"
-                          class="custom-control-input"
-                          formControlName="has_distribution_array"
-                        />
-                        <label
-                          class="custom-control-label cursor-pointer"
-                          for="has_distribution_array"
-                          >{{
-                            "store-setting.has_distribution_array" | translate
-                          }}
-                        </label>
-                      </div>
-                      <div class="d-none d-md-block col-1"></div>
-                    </div>
-                    <!-- End Has distribution array -->
+
+
+
 
                     <!-- Delivery info -->
                     <ng-container
                       *ngIf="
-                        !has_distribution_array.value;
-                        else distributionInfo
+                        has_delivery.value;
                       "
                     >
                       <div class="d-flex align-items-center mt-3">
@@ -594,8 +579,61 @@
                       </div>
                     </ng-container>
                     <!-- End delivery info -->
+
+
+                    <!-- Has distribution array -->
+                    <div *ngIf="isAdmin" class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div
+                        class="col-12 col-md-9 custom-control custom-checkbox"
+                      >
+                        <input
+                          type="checkbox"
+                          id="has_distribution_array"
+                          class="custom-control-input"
+                          formControlName="has_distribution_array"
+                        />
+                        <label
+                          class="custom-control-label cursor-pointer"
+                          for="has_distribution_array"
+                        >{{
+                          "store-setting.has_distribution_array" | translate
+                          }}
+                        </label>
+
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+                    <!-- End Has distribution array -->
+
+                    <ng-container
+                      *ngIf="
+                        !has_distribution_array.value;
+                        else distributionInfo
+                      "
+                    >
+                    </ng-container>
+
+
+                    <div class="d-flex align-items-center mt-3">
+                      <div class="d-none d-md-block col-1 col-lg-2"></div>
+                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                        <label class="mb-0" for="">{{
+                          "store-setting.distribution_area" | translate
+                        }}</label>
+                      </div>
+                      <div class="col-8 col-md-7">
+                        <input
+                          class="form-control"
+                          formControlName="distribution_area"
+                          type="text"
+                        />
+                      </div>
+                      <div class="d-none d-md-block col-1"></div>
+                    </div>
+
                     <!-- Distribution array info -->
-                    <ng-template #distributionInfo>
+                    <ng-template  #distributionInfo>
                       <div class="d-flex align-items-center mt-3">
                         <div class="d-none d-md-block col-1 col-lg-2"></div>
                         <div class="col-12 col-lg-10 col-md-11">
@@ -604,52 +642,52 @@
                             <!-- Cities -->
                             <div class="col-2">
                               <label class="mb-0" for=""
-                                >{{
-                                  "store-setting.distribution_cities"
-                                    | translate
+                              >{{
+                                "store-setting.distribution_cities"
+                                  | translate
                                 }}
                               </label>
                             </div>
                             <!-- Delivery hours -->
                             <div class="col-2">
-                              <label class="mb-0" for=""
-                                >{{
-                                  "store-setting.distribution_hours" | translate
+                              <label class="mb-0" for="distribution_hours"
+                              >{{
+                                "store-setting.distribution_hours" | translate
                                 }}
                               </label>
                             </div>
                             <!-- Slot span time -->
                             <div class="col-2">
                               <label class="mb-0" for=""
-                                >{{
-                                  "store-setting.distribution_slot_size_hours"
-                                    | translate
+                              >{{
+                                "store-setting.distribution_slot_size_hours"
+                                  | translate
                                 }}
                               </label>
                             </div>
                             <!-- Delivery cost -->
                             <div class="col-2">
                               <label class="mb-0" for=""
-                                >{{
-                                  "store-setting.distribution_cost" | translate
+                              >{{
+                                "store-setting.distribution_cost" | translate
                                 }}
                               </label>
                             </div>
                             <!-- Min order cost for distribution -->
                             <div class="col-2">
                               <label class="mb-0" for=""
-                                >{{
-                                  "store-setting.min_order_for_distribution"
-                                    | translate
+                              >{{
+                                "store-setting.min_order_for_distribution"
+                                  | translate
                                 }}
                               </label>
                             </div>
                             <!-- Min order cost for free distribution -->
                             <div class="col-2">
                               <label class="mb-0" for=""
-                                >{{
-                                  "store-setting.min_order_for_free_distribution"
-                                    | translate
+                              >{{
+                                "store-setting.min_order_for_free_distribution"
+                                  | translate
                                 }}
                               </label>
                             </div>
@@ -739,22 +777,6 @@
                     </ng-template>
                     <!-- End distribution array info -->
 
-                    <div class="d-flex align-items-center mt-3">
-                      <div class="d-none d-md-block col-1 col-lg-2"></div>
-                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
-                        <label class="mb-0" for="">{{
-                          "store-setting.distribution_area" | translate
-                        }}</label>
-                      </div>
-                      <div class="col-8 col-md-7">
-                        <input
-                          class="form-control"
-                          formControlName="distribution_area"
-                          type="text"
-                        />
-                      </div>
-                      <div class="d-none d-md-block col-1"></div>
-                    </div>
 
                     <div class="d-flex align-items-center mt-3">
                       <div class="d-none d-md-block col-1 col-lg-2"></div>

@@ -73,6 +73,7 @@ export class AuthService {
   public getUserType() {
     let userType;
     this.store.select(selectAuthState).subscribe((state: any) => {
+      console.log(state);
       if (state.user_type) {
         userType = state.user_type;
       }
@@ -80,6 +81,7 @@ export class AuthService {
     return userType;
   }
 
+  // ba6178384a3ec2ac82a80f946038608f90bc98625cf0c35d4b190165826e33d2 admin
   public isAdmin() {
     if (this.getUserType() === 1) {
       return true;

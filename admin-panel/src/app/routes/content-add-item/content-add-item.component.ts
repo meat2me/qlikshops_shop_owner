@@ -126,7 +126,7 @@ export class ContentAddItemComponent
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const location = params.get('location');
-      if (location == 'shop-page') {
+      if (location === 'shop-page') {
         this.isAdmin = false;
         this.storeId = localStorage.getItem('STORE_ID').toString();
       }
@@ -187,6 +187,7 @@ export class ContentAddItemComponent
         ])
           .pipe(takeUntil(this.destroyed$))
           .subscribe(([categories, item, validValues]) => {
+            console.log(item);
             this.validValues =
               validValues || (item.valid_values as ItemConvertedValidValues);
             this.categories = categories;
@@ -296,7 +297,7 @@ export class ContentAddItemComponent
 
   get formattedItemOpts() {
     return this.optionsArrCtrl.value
-      .filter((x) => x.option_check == true)
+      .filter((x) => x.option_check === true)
       .map((x) => x.id)
       .join(',');
   }

@@ -62,6 +62,7 @@
           <thead>
             <tr>
               <th scope="col">{{ "content-item.item_name" | translate }}</th>
+              <th scope="col"  *ngIf="!isAdmin" >{{ "content-item.price" | translate }}</th>
               <th scope="col">{{ "content-item.category" | translate }}</th>
               <th class="text-center" scope="col">
                 {{ "content-item.image" | translate }}
@@ -81,12 +82,16 @@
                   item.name
                 }}</a>
               </td>
+              <td class="align-middle"  *ngIf="!isAdmin">
+                <div>{{item.price}}</div>
+              </td>
               <td class="align-middle">
                 <span *ngFor="let category of item.categories; last as isLast"
                   >{{ category.category_name
                   }}<span *ngIf="!isLast">, </span></span
                 >
               </td>
+
               <td class="align-middle text-center">
                 <img class="item-image" [src]="item.image || tempImage" />
               </td>

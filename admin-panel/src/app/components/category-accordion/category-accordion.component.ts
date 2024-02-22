@@ -37,7 +37,7 @@ export class CategoryAccordionComponent implements OnInit {
     this.paddingLeft = this.paddingStep * this.level;
     this.route.paramMap.subscribe((params) => {
       this.location = params.get('location');
-      if (this.location == 'shop-page') {
+      if (this.location === 'shop-page') {
         this.isAdmin = false;
       }
     });
