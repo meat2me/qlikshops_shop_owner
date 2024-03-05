@@ -52,6 +52,7 @@ export class StoreService extends BaseService {
   }
 
   getStoreInfo(store_id) {
+    console.log(store_id);
     return this.post<StoreInfo>({ request: 'get_store', store_id }).pipe(
       tap(this.mapSelects)
     );
@@ -63,7 +64,7 @@ export class StoreService extends BaseService {
 
   getDashboard(id?: string): Observable<any> {
     return this.post({ request: 'get_dashboard_data', store_id: id })
-      .pipe(tap(this.mapDashboardData))
+      .pipe(tap(this.mapDashboardData));
   }
 
   private mapDashboardData(res: any) {
@@ -79,17 +80,21 @@ export class StoreService extends BaseService {
   }
 
   updateStore(req, store_id, user_type) {
-    if (user_type == 1) {
+    if (user_type === 1) {
       return this.post({ request: 'update_store', store_id, ...req });
     }
 
-    if (user_type == 3) {
+    if (user_type === 3) {
       return this.post({ request: 'owner_update_store', store_id, ...req });
     }
   }
 
   setStatus(store_id, is_online) {
     return this.post({ request: 'set_store_online', store_id, is_online });
+  }
+
+  removeOwner(user_phone) {
+    return this.post({ request: 'delete_user_owner_store', user_phone});
   }
 }
 

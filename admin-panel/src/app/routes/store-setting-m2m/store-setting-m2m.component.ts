@@ -281,8 +281,8 @@ export class StoreSettingM2mComponent implements OnInit {
 
     this.storeService.getStoreInfo(this.store_id).subscribe(async (res: any) => {
       await (res !== undefined);
-      console.log(res.delivery_terms.length);
-      console.log(res);
+      // console.log(res.delivery_terms.length);
+      // console.log(res);
       // const m = res.delivery_terms.split('\t-\t');
       this.originData = res;
       this.storeStatus = res.is_online;
@@ -442,6 +442,22 @@ export class StoreSettingM2mComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  removeUser() {
+    // const modalRef = this.modalService.open(ConfirmModalComponent, {
+    //   centered: true,
+    // });
+    // modalRef.componentInstance.title = 'modal.go_delete_user_title';
+    // modalRef.componentInstance.content = 'modal.go_delete_user_content';
+    // modalRef.result.then(() => {
+      this.storeService
+        .removeOwner( this.ownerPhone.value).subscribe((res: Resp) => {
+          console.log(res);
+          if (res.rc === 0) {
+        this.successNotify();
+      }});
+    // });
+  }
+
   goOffline() {
     const modalRef = this.modalService.open(ConfirmModalComponent, {
       centered: true,
@@ -545,7 +561,7 @@ export class StoreSettingM2mComponent implements OnInit {
   disableInfoChange() {
     this.firstName.disable();
     this.lastName.disable();
-    // this.ownerPhone.disable();
+    this.ownerPhone.disable();
     this.ownerEmail.disable();
     this.storeCode.disable();
     this.storeName.disable();

@@ -179,6 +179,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       this.orderService
         .sendMsg(this.orderDetail.client_id, msg)
         .subscribe((res: any) => {
+          console.log(res);
           res.rc == 0 ? this.changedSuccessNotify() : null;
           this.messageForm.patchValue({
             message: null,
@@ -351,16 +352,20 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   increase(item: any): number {
-    return (item.actual_amount =
-      (item.actual_amount * 10 + item.amount_step * 10) / 10);
+    item.actual_amount =
+      (item.actual_amount * 10 + item.amount_step * 5) / 10;
+    item.actual_amount = item.actual_amount.toFixed(3);
+    return ( item.actual_amount);
   }
 
   reduction(item: any): number {
-    const temp = (item.actual_amount * 10 - item.amount_step * 10) / 10;
+    const temp = (item.actual_amount * 10 - item.amount_step * 5) / 10;
     if (temp < 0) {
       return;
     } else {
-      return (item.actual_amount = temp);
+      item.actual_amount = temp;
+      item.actual_amount = item.actual_amount.toFixed(3);
+      return (item.actual_amount);
     }
   }
 
