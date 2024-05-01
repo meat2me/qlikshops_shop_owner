@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function mapDash(obj) {\n  let array = [];\n  for (const key in obj) {\n    array.push({\n      month: key,\n      amount: obj[key]\n    });\n  }\n  return array;\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

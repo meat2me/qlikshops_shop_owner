@@ -1,0 +1,1 @@
+{"ast":null,"code":"import * as moment from \"moment\";\nexport function modifyTime(timeStr) {\n  const utcDate = moment(timeStr).utc(true);\n  const localDate = moment(utcDate).local();\n  return moment(localDate).format('DD/MM/YYYY HH:mm');\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function fromObj(obj) {\n  let array = [];\n  for (const key in obj) {\n    array.push({\n      value: key,\n      label: obj[key]\n    });\n  }\n  return array;\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

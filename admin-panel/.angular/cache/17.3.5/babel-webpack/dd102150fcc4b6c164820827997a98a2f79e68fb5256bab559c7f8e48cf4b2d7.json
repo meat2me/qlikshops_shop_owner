@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function truncateBase64(str) {\n  return str.substr(str.indexOf(',') + 1);\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

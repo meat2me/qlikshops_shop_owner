@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { deepClone } from '@utils/deep-clone';\nexport function fieldRemover(filterKeys) {\n  function replacer(key, value) {\n    return filterKeys.includes(key) ? undefined : value;\n  }\n  return o => deepClone(o, replacer);\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

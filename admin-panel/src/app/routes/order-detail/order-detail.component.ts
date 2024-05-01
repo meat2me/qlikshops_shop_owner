@@ -323,6 +323,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             if (!res) {
               return;
             }
+            console.log(res);
             this.resetValue();
             this.isReady = true;
             this.isPaying = false;

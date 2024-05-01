@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { Subject } from 'rxjs';\nexport class BaseComponent {\n  constructor() {\n    this.destroyed$ = new Subject();\n  }\n  ngOnInit() {}\n  ngOnDestroy() {\n    this.destroyed$.next();\n    this.destroyed$.complete();\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function deepClone(a, replacerFunc = null) {\n  return JSON.parse(JSON.stringify(a, replacerFunc));\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
