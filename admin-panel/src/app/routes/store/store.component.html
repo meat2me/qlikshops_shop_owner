@@ -34,9 +34,29 @@
           <table *ngIf="searchStore" class="table rounded">
             <thead>
               <tr>
-                <th scope="col">{{ 'store.name' | translate}}</th>
-                <th scope="col">{{ 'store.address' | translate}}</th>
-                <th scope="col" class="text-center">{{ 'store.active' | translate}}</th>
+
+<!--                <th scope="col" (click)="sortTable('name')" (mouseenter)="setHoveredColumn('name')" (mouseleave)="resetHoveredColumn()">-->
+<!--                  {{ 'store.name' | translate }}-->
+<!--                  <span *ngIf="hoveredColumn === 'name'">-->
+<!--                    <i class="fas" [ngClass]="{'fa-caret-up': isAscendingSort('name'), 'fa-caret-down': !isAscendingSort('name')}"></i>-->
+<!--                  </span>-->
+<!--                </th>-->
+<!--                <th scope="col" (click)="sortTable('address')" (mouseenter)="setHoveredColumn('address')" (mouseleave)="resetHoveredColumn()">-->
+<!--                  {{ 'store.address' | translate }}-->
+<!--                  <span *ngIf="hoveredColumn === 'address'">-->
+<!--                    <i class="fas" [ngClass]="{'fa-caret-up': isAscendingSort('address'), 'fa-caret-down': !isAscendingSort('address')}"></i>-->
+<!--                  </span>-->
+<!--                </th>-->
+<!--                <th scope="col" class="text-center" (click)="sortTable('is_online')" (mouseenter)="setHoveredColumn('is_online')" (mouseleave)="resetHoveredColumn()">-->
+<!--                  {{ 'store.active' | translate }}-->
+<!--                  <span *ngIf="hoveredColumn === 'is_online'">-->
+<!--                    <i class="fas" [ngClass]="{'fa-caret-up': isAscendingSort('is_online'), 'fa-caret-down': !isAscendingSort('is_online')}"></i>-->
+<!--                  </span>-->
+<!--                </th>-->
+
+                <th scope="col">{{ 'store.name' | translate }}</th>
+                <th scope="col" >{{ 'store.address' | translate }}</th>
+                <th scope="col">{{ 'store.active' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -57,3 +77,4 @@
     </div>
   </div>
 </div>
+

@@ -12,6 +12,7 @@ import { PaginationInstance } from 'ngx-pagination';
 export class StoreComponent implements OnInit {
   tableOptions: PaginationInstance;
   stores: Store[] = [];
+  currentSortOrder: string;
   searchStore = this.stores;
   constructor(private storeService: StoreService, private router: Router) {
     this.tableOptions = {
@@ -28,7 +29,31 @@ export class StoreComponent implements OnInit {
       this.searchStore = this.stores;
     });
   }
+   // Assuming searchStore is an array of objects
 
+  // Method to sort the searchStore array by a specific property
+  sortTable(property: string) {
+    if (this.currentSortOrder === property) {
+      this.searchStore.reverse(); // Reverse the array to switch sorting order
+    } else {
+      this.searchStore.sort((a, b) => (a[property] > b[property]) ? 1 : ((b[property] > a[property]) ? -1 : 0));
+    }
+    this.currentSortOrder = property; // Update the current sorting order
+  }
+  isAscendingSort(property: string): boolean {
+    return this.currentSortOrder === property && this.searchStore.length > 1 && this.searchStore[0][property] < this.searchStore[1][property];
+  }
+
+  // Inside your component class
+  hoveredColumn: string = '';
+
+  setHoveredColumn(column: string) {
+    this.hoveredColumn = column;
+  }
+
+  resetHoveredColumn() {
+    this.hoveredColumn = '';
+  }
   public searchStores(): void {
     if (this.terms != null) {
       this.terms = this.terms.trim().toLowerCase();

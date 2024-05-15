@@ -88,8 +88,6 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
       this.itemServ.getAdminItems()
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => {
-          console.log('res 1');
-          console.log(res);
           this.data = res.items;
           this.searcher.init(this.data, { fields: ['name', 'categories'] });
         });

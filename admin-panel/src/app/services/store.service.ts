@@ -52,7 +52,6 @@ export class StoreService extends BaseService {
   }
 
   getStoreInfo(store_id) {
-    console.log(store_id);
     return this.post<StoreInfo>({ request: 'get_store', store_id }).pipe(
       tap(this.mapSelects)
     );

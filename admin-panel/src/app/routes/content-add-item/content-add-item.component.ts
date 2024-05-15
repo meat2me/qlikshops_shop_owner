@@ -100,7 +100,6 @@ export class ContentAddItemComponent
   private sanitizerOwner = fieldRemover([
     'name',
     'unit',
-    'description',
     'categories',
     'image_name',
   ]);
@@ -187,7 +186,6 @@ export class ContentAddItemComponent
         ])
           .pipe(takeUntil(this.destroyed$))
           .subscribe(([categories, item, validValues]) => {
-            console.log(item);
             this.validValues =
               validValues || (item.valid_values as ItemConvertedValidValues);
             this.categories = categories;
@@ -352,7 +350,7 @@ export class ContentAddItemComponent
           });
   }
 
-  onEditSuccess() {
+  onEditSuccess(val) {
     this.alertServ.showChangedSuccess();
     this.form.markAsPristine();
     if (this.isAdmin) {

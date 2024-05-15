@@ -179,7 +179,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       this.orderService
         .sendMsg(this.orderDetail.client_id, msg)
         .subscribe((res: any) => {
-          console.log(res);
           res.rc == 0 ? this.changedSuccessNotify() : null;
           this.messageForm.patchValue({
             message: null,
@@ -323,7 +322,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             if (!res) {
               return;
             }
-            console.log(res);
             this.resetValue();
             this.isReady = true;
             this.isPaying = false;

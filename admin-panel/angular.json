@@ -68,19 +68,19 @@
                 }
               ]
             },
-            "m2m-dev" : {
+            "m2m-dev": {
               "fileReplacements": [
                 {
-                    "replace": "src/environments/environment.ts",
-                    "with": "src/environments/environment.m2m.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.m2m.ts"
                 }
               ]
             },
-            "m2m-prod" : {
+            "m2m-prod": {
               "fileReplacements": [
                 {
-                    "replace": "src/environments/environment.ts",
-                    "with": "src/environments/environment.m2m.prod.ts"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.m2m.prod.ts"
                 }
               ]
             }
@@ -154,5 +154,8 @@
       }
     }
   },
-  "defaultProject": "admin-panel"
+  "defaultProject": "admin-panel",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -73,7 +73,6 @@ export class AuthService {
   public getUserType() {
     let userType;
     this.store.select(selectAuthState).subscribe((state: any) => {
-      console.log(state);
       if (state.user_type) {
         userType = state.user_type;
       }

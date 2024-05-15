@@ -35,7 +35,6 @@ export const initialState: State = {
 export function reducer(state = initialState, action: StateActions.All): any {
     switch (action.type) {
         case StateActions.LOGIN_SUCCESS:
-            console.log(action);
             return {
                 ...state, isAuthenticated: true,
                 token: action.payload.token,

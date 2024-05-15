@@ -69,7 +69,7 @@ export class ItemService extends BaseService {
   }
 
   deleteItem(item_id) {
-    return this.post<Resp>({ request: 'delete_item', item_id })
+    return this.post<Resp>({ request: 'delete_item', item_id });
   }
 
   setStoreItem(req: IUpdateItemReq, store_id?) {

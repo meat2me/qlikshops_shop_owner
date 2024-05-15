@@ -68,11 +68,9 @@ export class ReadyOrdersComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.orderService.setStatus(id, 5).subscribe((res: Resp) => {
-      console.log(res);
       res.rc === 0 ? this.successNotify() : null;
       if (res.rc === 0) {
         this.successNotify();
-        console.log(res);
         this.orderService.getReadyOrders(ReadyOrderFilter.READY_ORDER_PICKUP).subscribe((res) => {
           this.readyOrders = res.orders;
           this.searchOrder = this.readyOrders;

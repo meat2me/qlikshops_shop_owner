@@ -281,9 +281,6 @@ export class StoreSettingM2mComponent implements OnInit {
 
     this.storeService.getStoreInfo(this.store_id).subscribe(async (res: any) => {
       await (res !== undefined);
-      // console.log(res.delivery_terms.length);
-      // console.log(res);
-      // const m = res.delivery_terms.split('\t-\t');
       this.originData = res;
       this.storeStatus = res.is_online;
       this.storeForm.patchValue({
@@ -306,9 +303,6 @@ export class StoreSettingM2mComponent implements OnInit {
           : hour,
       });
       this.patchDistributionArray(res.distribution_array);
-      // console.log(m[1]);
-      // console.log(JSON.parse(m[1]));
-      // this.patchDistributionArray(JSON.parse(m[1]));
       this.allowSetDiscount();
     });
   }
@@ -372,10 +366,6 @@ export class StoreSettingM2mComponent implements OnInit {
   }
 
   onUpdateStore = async () => {
-    // console.log( JSON.parse(JSON.stringify(this.distributionArrCtrl.value)));
-    console.log( this.distributionArrCtrl.value);
-    console.log( JSON.stringify( this.distributionArrCtrl.value ));
-    console.log( this.has_delivery.value);
     if (
       this.compareDate(
         this.from_date.value,
@@ -412,12 +402,10 @@ export class StoreSettingM2mComponent implements OnInit {
         delete req.image_logo_white;
       this.originData.black_logo === this.storeForm.value.image_logo_black &&
         delete req.image_logo_black;
-      console.log(req.distribution_area);
       this.storeService
         .updateStore(req, this.store_id, this.user_type)
         .subscribe(
           (res: any) => {
-            console.log(res);
             if (res.rc === 0) {
               this.changeSavedModal();
               this.storeService.getNavChange(true);
@@ -451,7 +439,6 @@ export class StoreSettingM2mComponent implements OnInit {
     // modalRef.result.then(() => {
       this.storeService
         .removeOwner( this.ownerPhone.value).subscribe((res: Resp) => {
-          console.log(res);
           if (res.rc === 0) {
         this.successNotify();
       }});
