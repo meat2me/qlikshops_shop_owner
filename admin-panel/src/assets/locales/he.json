@@ -180,6 +180,16 @@
     "recipe_name": "שם המתכון",
     "recipe_details": "פרטי המתכון"
   },
+  "distribution-array": {
+    "new_distribution": "הפצה חדשה",
+    "edit_distribution": "עריכת הפצה",
+    "cities": "בחירת ערים למשלוח",
+    "time_placeHolder": "לא נבחרו ימים ושעות",
+    "cities_placeHolder": "לא נבחרו ישובים",
+    "start": "התחלת משלוחים",
+    "end": "סיום משלוחים",
+    "day": "יום"
+  },
   "content-item": {
     "new_item": "מוצר חדש",
     "search_box": "חפש שם, מספר או קטגוריה",

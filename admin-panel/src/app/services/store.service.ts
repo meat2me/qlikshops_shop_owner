@@ -95,6 +95,9 @@ export class StoreService extends BaseService {
   removeOwner(user_phone) {
     return this.post({ request: 'delete_user_owner_store', user_phone});
   }
+  getCities() {
+    return this.post({ request: 'get_all_cities'});
+  }
 }
 
 export interface IUpdateAccountReq {

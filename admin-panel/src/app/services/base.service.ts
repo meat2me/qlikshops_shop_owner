@@ -26,7 +26,14 @@ export class BaseService {
       this.store_id = store_id;
     });
   }
-
+  anypost<T = {}>(url, body, options?) {
+    return this.http.post<T>(url, { ...body }, { ...this.customHeaders, ...options }).pipe(
+      tap((res: any) => {
+        if (res.rc) { throw res; }
+      }),
+      catchError(errResp => this.handleError(errResp))
+    ) as Observable<T>;
+  }
   post<T = {}>(body, options?) {
     return this.http.post<T>(env.URL, { ...body, token: this.token }, { ...this.customHeaders, ...options }).pipe(
       tap((res: any) => {

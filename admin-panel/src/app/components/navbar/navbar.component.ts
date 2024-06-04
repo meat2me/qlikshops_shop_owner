@@ -33,10 +33,19 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.storeService.getStoreMetadata().subscribe((res: any) => {
       this.store = res;
       if (res.currency) {
+        // console.log(res);
         localStorage.setItem('CURRENCY', res.currency);
+        localStorage.setItem('DISCOUNT_CURRENCY', res.currency);
       }
     });
-
+    // this.storeService.getStoreInfo().subscribe((res: any) => {
+    //   this.store = res;
+    //   if (res.currency) {
+    //     console.log(res);
+    //     localStorage.setItem('CURRENCY', res.currency);
+    //     localStorage.setItem('DISCOUNT_CURRENCY', res.currency);
+    //   }
+    // });
   }
 
   ngAfterViewInit() { }

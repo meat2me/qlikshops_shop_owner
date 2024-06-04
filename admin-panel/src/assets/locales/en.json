@@ -179,6 +179,15 @@
     "recipe_name": "Recipe name",
     "recipe_details": "Recipe details"
   },
+  "distribution-array": {
+    "new_distribution": "New distribution",
+    "edit_distribution": "Edit distribution",
+    "cities": "Select cities to distribution",
+    "time_placeHolder": "Hours not selected",
+    "cities_placeHolder": "Cities not selected",
+    "start": "Delivery start",
+    "end": "Delivery ends"
+  },
   "content-item": {
     "new_item": "New Item",
     "search_box": "Search name, number or category",

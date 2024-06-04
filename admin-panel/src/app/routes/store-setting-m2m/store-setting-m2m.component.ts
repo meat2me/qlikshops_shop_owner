@@ -1,21 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertModalComponent } from '@modals/alert-modal/alert-modal.component';
-import { ConfirmModalComponent } from '@modals/confirm-modal/confirm-modal.component';
-import { NotifyModalComponent } from '@modals/notify-modal/notify-modal.component';
-import { Resp } from '@models/resp.model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '@services/auth.service';
-import { StoreService } from '@services/store.service';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AlertModalComponent} from '@modals/alert-modal/alert-modal.component';
+import {ConfirmModalComponent} from '@modals/confirm-modal/confirm-modal.component';
+import {NotifyModalComponent} from '@modals/notify-modal/notify-modal.component';
+import {Resp} from '@models/resp.model';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from '@services/auth.service';
+import {StoreService} from '@services/store.service';
 import * as moment from 'moment';
-
+import {AddRecipeComponent} from '@modals/add-recipe/add-recipe.component';
 @Component({
   selector: 'app-store-setting-m2m',
   templateUrl: './store-setting-m2m.component.html',
@@ -35,6 +29,15 @@ export class StoreSettingM2mComponent implements OnInit {
   currentTime;
   tomorrowTime;
   isDateValid: boolean;
+  distributionCities: string[] = ['City 1', 'City 2', 'City 3', 'City 4', 'City 5', 'City 6', 'City 7', 'City 8', 'City 9'];
+  filteredCities: string[] = [];
+  cityFilterControl = new FormControl('');
+  selectedCities: string[] = [];
+  allCities;
+  citiesSelected;
+  distributionForm = this.formBuilder.group({
+    distribution_cities: this.formBuilder.array([])
+  });
 
   buildStoreForm() {
     this.storeForm = new FormGroup({
@@ -95,8 +98,13 @@ export class StoreSettingM2mComponent implements OnInit {
         { value: null, disabled: true },
         Validators.required
       ),
+      distribution_cities: this.formBuilder.array([])
     });
+
   }
+
+
+
 
   get distributionArrCtrl() {
     return this.storeForm.get('distribution_array') as FormArray;
@@ -193,6 +201,7 @@ export class StoreSettingM2mComponent implements OnInit {
   }
 
   get has_delivery() {
+
     return this.storeForm.get('has_delivery');
   }
 
@@ -217,21 +226,59 @@ export class StoreSettingM2mComponent implements OnInit {
     return this.user_type === 1;
   }
 
+  removeDuplicates(arr: any[]): any[] {
+    return [...new Set(arr)];
+  }
+  getCities() {
+
+    // this.allCities = [
+    //   {item_id: 1, item_text: '1'},
+    //   {item_id: 2, item_text: '2'},
+    //   {item_id: 3, item_text: '3'},
+    //   {item_id: 4, item_text: '4'},
+    //   {item_id: 5, item_text: '5'},
+    //   {item_id: 6, item_text: '6'},
+    //   {item_id: 7, item_text: '7'},
+    //   {item_id: 8, item_text: '8'},
+    //   {item_id: 9, item_text: '9'}
+    //   ];
+    this.storeService
+      .getCities().subscribe( (res: any) => {
+      if (res.rc === 0) {
+        // console.log(res);
+        this.allCities =  res?.result?.records.map((item) => {
+          // return {item_id: index + 1, item_text: item.city_name};
+          return item.שם_ישוב;
+        });
+        this.allCities  = this.removeDuplicates(this.allCities );
+        this.allCities  = this.allCities.sort((a, b) => a.localeCompare(b));
+        this.allCities =  this.allCities.map((item, index) => {
+          return {item_id: index + 1, item_text: item};
+        });
+        // console.log(this.allCities);
+        // this.successNotify();
+      }});
+  }
+
   constructor(
     private storeService: StoreService,
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private translateService: TranslateService
   ) {
+    this.cityFilterControl.valueChanges.subscribe(value => {
+      this.filteredCities = this.filterCities(value);
+    });
     this.buildStoreForm();
   }
 
   ngOnInit(): void {
     this.store_id = localStorage.getItem('STORE_ID');
     this.currency = localStorage.getItem('CURRENCY');
-
     this.route.paramMap.subscribe((params) => {
       const location = params.get('location');
       if (location === 'shop-page') {
@@ -252,7 +299,6 @@ export class StoreSettingM2mComponent implements OnInit {
     //     this.min_order_for_free_delivery.enable();
     //   }
     // });
-
     this.user_type = this.authService.getUserType();
     if (this.user_type === 3) {
       this.disableInfoChange();
@@ -281,11 +327,13 @@ export class StoreSettingM2mComponent implements OnInit {
 
     this.storeService.getStoreInfo(this.store_id).subscribe(async (res: any) => {
       await (res !== undefined);
+      await this.getCities();
       this.originData = res;
       this.storeStatus = res.is_online;
       this.storeForm.patchValue({
         ...res,
         has_delivery: res.has_delivery === 1 ? true : false,
+        has_distribution_array: res.has_distribution_array === 1 ? true : false,
         delivery_terms: res.delivery_terms,
         image_logo_white: res.white_logo,
         image_logo_black: res.black_logo,
@@ -308,23 +356,26 @@ export class StoreSettingM2mComponent implements OnInit {
   }
 
   createDistributionArrayItem(value: any) {
+    const cities_placeHolder = this.translateService.instant('distribution-array.cities_placeHolder');
+    const time_placeHolder = this.translateService.instant('distribution-array.time_placeHolder');
     return this.fb.group({
-      distribution_cities: [value?.distribution_cities, [Validators.required]],
-      distribution_hours: [value?.distribution_hours, [Validators.required]],
+      distribution_cities: [value !== null ? value?.distribution_cities : cities_placeHolder, [Validators.required]],
+      distribution_hours: [value !== null ? value?.distribution_hours : time_placeHolder, [Validators.required]],
       distribution_slot_size_hours: [
-        value?.distribution_slot_size_hours,
+        value !== null ? value?.distribution_slot_size_hours : 2,
         [Validators.required],
       ],
-      distribution_cost: [value?.distribution_cost, [Validators.required]],
+      distribution_cost: [value !== null ? value?.distribution_cost : 50, [Validators.required]],
       min_order_for_distribution: [
-        value?.min_order_for_distribution,
+        value !== null ? value?.min_order_for_distribution : 100,
         [Validators.required],
       ],
       min_order_for_free_distribution: [
-        value?.min_order_for_free_distribution,
+        value !== null ?  value?.min_order_for_free_distribution : 100,
         [Validators.required],
       ],
     });
+
   }
 
   deleteDistribution(i: number) {
@@ -339,8 +390,8 @@ export class StoreSettingM2mComponent implements OnInit {
     const distributionArrCtrl = this.distributionArrCtrl;
     distributionArrCtrl.clear();
     array.forEach((d, i) => {
-        distributionArrCtrl.setControl(i, this.createDistributionArrayItem(d));
-      });
+      distributionArrCtrl.setControl(i, this.createDistributionArrayItem(d));
+    });
   }
 
   convertTime(timeStr, type) {
@@ -399,9 +450,9 @@ export class StoreSettingM2mComponent implements OnInit {
           : null,
       };
       this.originData.white_logo === this.storeForm.value.image_logo_white &&
-        delete req.image_logo_white;
+      delete req.image_logo_white;
       this.originData.black_logo === this.storeForm.value.image_logo_black &&
-        delete req.image_logo_black;
+      delete req.image_logo_black;
       this.storeService
         .updateStore(req, this.store_id, this.user_type)
         .subscribe(
@@ -430,6 +481,48 @@ export class StoreSettingM2mComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  public LoadCities(){
+    return true;
+  }
+  public editCities(index: number) {
+    const modal = this.modalService.open(CitiesSelectedComponent, {
+      centered: true,
+    });
+    // console.log(this.distributionArrCtrl.value[index]);
+    const CityModal = modal.componentInstance as CitiesSelectedComponent;
+    CityModal.allCities = this.allCities;
+    // CityModal.citiesSelected = this.citiesSelected;
+    CityModal.parsItems = this.distributionArrCtrl.value[index].distribution_cities;
+    CityModal.parsTime = this.distributionArrCtrl.value[index].distribution_hours;
+    // CityModal.citiesSelected = this.distributionArrCtrl.value[index].distribution_cities;
+    // addModal.data = this.selectedItem;
+    modal.result.then(res => {
+      if (!res.selectedItems && !res.destributionTime)
+      {
+        return;
+      }
+      if (res.selectedItems) {
+        let newCities = '' ;
+        res.selectedItems.forEach((item, index) => {
+          newCities += item.item_text ;
+          newCities += index <  res.selectedItems.length - 1 ? '\n' : '';
+        });
+        const distributionArray = this.distributionArrCtrl.value;
+        distributionArray[index].distribution_cities = newCities;  // Clear the distribution_cities field
+        this.distributionArrCtrl.at(index).patchValue({
+          distribution_cities: distributionArray[index].distribution_cities
+        });
+      }
+      if (res.destributionTime && res.destributionTime !== ''){
+        const distributionArray = this.distributionArrCtrl.value;
+        distributionArray[index].distribution_hours = res.destributionTime ;  // Clear the distribution_cities field
+        this.distributionArrCtrl.at(index).patchValue({
+          distribution_hours: distributionArray[index].distribution_hours
+        });
+      }
+      modal.close();
+    });
+  }
   removeUser() {
     // const modalRef = this.modalService.open(ConfirmModalComponent, {
     //   centered: true,
@@ -437,9 +530,10 @@ export class StoreSettingM2mComponent implements OnInit {
     // modalRef.componentInstance.title = 'modal.go_delete_user_title';
     // modalRef.componentInstance.content = 'modal.go_delete_user_content';
     // modalRef.result.then(() => {
-      this.storeService
-        .removeOwner( this.ownerPhone.value).subscribe((res: Resp) => {
-          if (res.rc === 0) {
+    this.storeService
+      .removeOwner( this.ownerPhone.value).subscribe((res: Resp) => {
+      console.log(res);
+      if (res.rc === 0) {
         this.successNotify();
       }});
     // });
@@ -608,4 +702,42 @@ export class StoreSettingM2mComponent implements OnInit {
     modalRef.componentInstance.title = 'modal.date_validate_title';
     modalRef.componentInstance.content = 'modal.date_validate_content';
   }
+  getData() {
+    return ['City 1', 'City 2', 'City 3', 'City 4'];
+  }
+
+  onCityToggle(city: string) {
+    const citiesArray = this.distributionForm.get('distribution_cities') as FormArray;
+
+    if (citiesArray.value.includes(city)) {
+      // Remove city if already selected
+      const index = citiesArray.value.indexOf(city);
+      citiesArray.removeAt(index);
+    } else {
+      // Add city if not selected
+      citiesArray.push(this.formBuilder.control(city));
+    }
+  }
+  isSelected(city: string): boolean {
+    return this.selectedCities.includes(city);
+  }
+
+  toggleSelection(city: string): void {
+    if (this.isSelected(city)) {
+      this.selectedCities = this.selectedCities.filter(c => c !== city);
+    } else {
+      this.selectedCities.push(city);
+    }
+  }
+
+  filterCities(filterValue: string): string[] {
+    if (!filterValue) {
+      return this.distributionCities;
+    }
+    const filter = filterValue.toLowerCase();
+    return this.distributionCities.filter(city => city.toLowerCase().includes(filter));
+  }
 }
+
+import {CitiesSelectedComponent} from '@modals/cities-selected/cities-selected.component';
+import {TranslateService} from '@ngx-translate/core';

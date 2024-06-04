@@ -20,6 +20,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslatedService } from '@services/translated.service';
 import { LanguagesLayoutModule } from '@layouts/languages-layout/languages-layout.module';
 import { AuthGuard } from '@core/guards/auth.guard';
+import { CitiesSelectedComponent } from '@modals/cities-selected/cities-selected.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ImageInputModule} from "@components/image-input/image-input.module";
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+
+
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
     return localStorageSync(
@@ -36,7 +43,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CitiesSelectedComponent
   ],
   imports: [
     BrowserModule,
@@ -45,15 +53,21 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainLayoutModule,
     LanguagesLayoutModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    NgMultiSelectDropDownModule.forRoot(),
+    StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot([AuthEffects, StoreEffects]),
     TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
     }),
+    ReactiveFormsModule,
+    ImageInputModule,
+    NgMultiSelectDropDownModule,
+    FormsModule,
+    NgbTimepickerModule,
   ],
   providers: [TranslatedService, AuthGuard, ...interceptors],
   bootstrap: [AppComponent]

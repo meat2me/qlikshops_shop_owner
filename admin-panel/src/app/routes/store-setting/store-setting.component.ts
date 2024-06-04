@@ -64,6 +64,7 @@ export class StoreSettingComponent implements OnInit {
       open_hours: new FormControl(null, Validators.required),
       has_take_away: new FormControl(0, Validators.required),
       has_delivery: new FormControl(0, Validators.required),
+      has_distribution_array: new FormControl(0, Validators.required),
       delivery_hours: new FormControl(null, Validators.required),
       payment_opts: new FormArray([]),
       units: new FormArray([]),

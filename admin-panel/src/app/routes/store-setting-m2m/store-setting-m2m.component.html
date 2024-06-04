@@ -586,7 +586,7 @@
 
 
                     <!-- Has distribution array -->
-                    <div *ngIf="isAdmin" class="d-flex align-items-center mt-3">
+                    <div  class="d-flex align-items-center mt-3">
                       <div class="d-none d-md-block col-1 col-lg-2"></div>
                       <div
                         class="col-12 col-md-9 custom-control custom-checkbox"
@@ -596,6 +596,7 @@
                           id="has_distribution_array"
                           class="custom-control-input"
                           formControlName="has_distribution_array"
+
                         />
                         <label
                           class="custom-control-label cursor-pointer"
@@ -612,32 +613,12 @@
 
                     <ng-container
                       *ngIf="
-                        !has_distribution_array.value;
-                        else distributionInfo
+                        has_distribution_array.value;
                       "
                     >
-                    </ng-container>
-
-
-                    <div class="d-flex align-items-center mt-3">
-                      <div class="d-none d-md-block col-1 col-lg-2"></div>
-                      <div class="col-4 col-md-3 col-lg-2 pl-md-6">
-                        <label class="mb-0" for="">{{
-                          "store-setting.distribution_area" | translate
-                        }}</label>
-                      </div>
-                      <div class="col-8 col-md-7">
-                        <input
-                          class="form-control"
-                          formControlName="distribution_area"
-                          type="text"
-                        />
-                      </div>
-                      <div class="d-none d-md-block col-1"></div>
-                    </div>
 
                     <!-- Distribution array info -->
-                    <ng-template  #distributionInfo>
+
                       <div class="d-flex align-items-center mt-3">
                         <div class="d-none d-md-block col-1 col-lg-2"></div>
                         <div class="col-12 col-lg-10 col-md-11">
@@ -697,7 +678,7 @@
                             </div>
                           </div>
                           <!-- Forms -->
-                          <ng-container formArrayName="distribution_array">
+                          <ng-container  *ngIf="allCities" formArrayName="distribution_array">
                             <div
                               class="row mt-3"
                               [formGroupName]="i"
@@ -707,15 +688,48 @@
                               "
                             >
                               <!-- Cities -->
+
+
                               <div class="col-2">
+<!--                                <div class="col-auto">-->
+<!--                                  <i class="fas fa-lg fa-edit text-primary"-->
+<!--                                     role="button"-->
+<!--                                     -->
+<!--                                     (click)="editCities(i)"-->
+<!--                                     aria-hidden="true"></i>-->
+<!--                                </div>-->
                                 <textarea
+                                  readonly
+                                  (click)="editCities(i)"
                                   formControlName="distribution_cities"
                                   class="h-100-px w-100 form-control"
+                                  style="font-size: 8pt"
                                 ></textarea>
+
                               </div>
+
+<!--                              <div class="col-2">-->
+<!--                                <select formControlName="distribution_cities" class="form-control">-->
+<!--                                  <option value="">Select City</option>-->
+<!--                                  <option *ngFor="let city of distributionCities" [value]="city">{{ city }}</option>-->
+<!--                                </select>-->
+<!--                              </div>-->
+
+<!--                              <div class="col-2">-->
+<!--                                <input type="text" [formControl]="cityFilterControl" class="form-control" placeholder="Search City">-->
+<!--                                <select multiple formControlName="distribution_cities" class="form-control" size="5">-->
+<!--                                  <option *ngFor="let city of filteredCities" [value]="city">-->
+<!--                                      <input type="checkbox">-->
+<!--                                    {{ city }}-->
+<!--                                  </option>-->
+<!--                                </select>-->
+<!--                              </div>-->
+
                               <!-- Delivery hours -->
                               <div class="col-2">
                                 <textarea
+                                  readonly="true"
+                                  (click)="editCities(i)"
                                   formControlName="distribution_hours"
                                   class="h-100-px w-100 form-control"
                                 ></textarea>
@@ -745,21 +759,28 @@
                                 />
                               </div>
                               <!-- Min order cost for free distribution -->
-                              <div
-                                class="col-2 d-flex flex-column justify-content-between align-items-end"
-                              >
+                              <div class="col-2 d-flex flex-column justify-content-between align-items-end">
                                 <input
                                   class="form-control"
                                   formControlName="min_order_for_free_distribution"
                                   type="number"
                                 />
-                                <button
-                                  type="button"
-                                  (click)="deleteDistribution(i)"
-                                  class="btn btn-danger btn-sm"
-                                >
-                                  <i class="fas fa-trash"></i>
-                                </button>
+                                <div style="display: inline-flex; gap: 10px;">
+                                  <button
+                                    type="button"
+                                    (click)="editCities(i)"
+                                    class="btn btn-danger btn-sm"
+                                  >
+                                    <i class="fas fa-edit"></i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    (click)="deleteDistribution(i)"
+                                    class="btn btn-danger btn-sm"
+                                  >
+                                    <i class="fas fa-trash"></i>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </ng-container>
@@ -778,9 +799,27 @@
                         </div>
                         <div class="d-none d-md-block col-1"></div>
                       </div>
-                    </ng-template>
+
                     <!-- End distribution array info -->
 
+                      <div class="d-flex align-items-center mt-3">
+                        <div class="d-none d-md-block col-1 col-lg-2"></div>
+                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">
+                          <label class="mb-0" for="">{{
+                              "store-setting.distribution_area" | translate
+                            }}</label>
+                        </div>
+                        <div class="col-8 col-md-7">
+                          <input
+                            class="form-control"
+                            formControlName="distribution_area"
+                            type="text"
+                          />
+                        </div>
+                        <div class="d-none d-md-block col-1"></div>
+                      </div>
+
+                    </ng-container>
 
                     <div class="d-flex align-items-center mt-3">
                       <div class="d-none d-md-block col-1 col-lg-2"></div>

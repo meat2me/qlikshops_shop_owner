@@ -1,0 +1,41 @@
+@import "src/assets/scss/app-variables";
+
+.cities-selected-modal {
+  //background: url("assets/images/modal.svg") no-repeat;
+  background-size: 100%;
+  background-position: top right;
+  background-color: #ffffff;
+  width: 550px;
+
+  .modal-title {
+    border-bottom: 2px solid $primary;
+  }
+}
+
+
+h3 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+::ng-deep {
+  .is-invalid {
+    .dropdown-btn {
+      border: 1px solid red !important;
+    }
+  }
+  .multiselect-dropdown {
+    .dropdown-btn {
+      .selected-item {
+        &:hover {
+          box-shadow: 1px 1px 2px 0px #5a5a5a !important;
+        }
+      }
+    }
+  }
+}

@@ -29,6 +29,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   isAmountValid: boolean;
   temp;
   currency;
+  FinishCurrency = 20;
   orderTime;
   totalPrice = 0;
   amountChange$ = new EventEmitter();
@@ -146,6 +147,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             this.itemControls.push(this.createItemForm());
           });
           this.itemForm.patchValue({ items: this.items });
+          // console.log( this.orderDetail);
         });
     });
   }
