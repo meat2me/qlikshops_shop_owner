@@ -469,120 +469,130 @@
                       </div>
                       <div class="col-8 col-md-7">
                         <textarea
+                          readonly="true"
+                          (click)="editCities(-1)"
                           placeholder="Ex: Sun - Thu: 09:00 - 18:00"
                           formControlName="take_away_hours"
                           id="take_away_hours"
                           class="h-100-px w-100 form-control"
                         ></textarea>
                       </div>
-                      <div class="d-none d-md-block col-1"></div>
-                    </div>
-                    </ng-container>
-                    <!-- Has delivery -->
-                    <div class="d-flex align-items-center mt-3">
-                      <div class="d-none d-md-block col-1 col-lg-2"></div>
-                      <div
-                        class="col-12 col-md-9 custom-control custom-checkbox"
-                      >
-                        <input
-                          type="checkbox"
-                          id="has_delivery"
-                          class="custom-control-input"
-                          formControlName="has_delivery"
-                        />
-                        <label
-                          class="custom-control-label cursor-pointer"
-                          for="has_delivery"
-                          >{{ "store-setting.delivery" | translate }}
-                        </label>
+                      <div style="display: inline-flex; gap: 10px;">
+                        <button
+                          type="button"
+                          (click)="editCities(-1)"
+                          class="btn btn-danger btn-sm"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
                       </div>
                       <div class="d-none d-md-block col-1"></div>
                     </div>
-                    <!-- End has delivery -->
-
-
-
-
-                    <!-- Delivery info -->
-                    <ng-container
-                      *ngIf="
-                        has_delivery.value;
-                      "
-                    >
-                      <div class="d-flex align-items-center mt-3">
-                        <div class="d-none d-md-block col-1 col-lg-2"></div>
-                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">
-                          <label class="mb-0" for=""
-                            >{{ "store-setting.delivery_hours" | translate }}
-                          </label>
-                        </div>
-                        <div class="col-8 col-md-7">
-                          <textarea
-                            formControlName="delivery_hours"
-                            class="h-100-px w-100 form-control"
-                          ></textarea>
-                        </div>
-                        <div class="d-none d-md-block col-1"></div>
-                      </div>
-                      <!-- Slot Size -->
-                      <div class="d-flex align-items-center mt-3">
-                        <div class="d-none d-md-block col-1 col-lg-2"></div>
-                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">
-                          <label class="mb-0" for="">{{
-                            "store-setting.delivery_slot_size_hours" | translate
-                          }}</label>
-                        </div>
-                        <div class="col-8 col-md-7">
-                          <input
-                            class="form-control"
-                            formControlName="delivery_slot_size_hours"
-                            type="number"
-                          />
-                        </div>
-                        <div class="d-none d-md-block col-1">
-                          {{ currency }}
-                        </div>
-                      </div>
-                      <!-- Delivery cost -->
-                      <div class="d-flex align-items-center mt-3">
-                        <div class="d-none d-md-block col-1 col-lg-2"></div>
-                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">
-                          <label class="mb-0" for="">{{
-                            "store-setting.delivery_cost" | translate
-                          }}</label>
-                        </div>
-                        <div class="col-8 col-md-7">
-                          <input
-                            class="form-control"
-                            formControlName="delivery_cost"
-                            type="number"
-                          />
-                        </div>
-                        <div class="d-none d-md-block col-1">
-                          {{ currency }}
-                        </div>
-                      </div>
-
-                      <div class="d-flex align-items-center mt-3">
-                        <div class="d-none d-md-block col-1 col-lg-2"></div>
-                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">
-                          <label class="mb-0" for="">{{
-                            "store-setting.minimum_order_for_free" | translate
-                          }}</label>
-                        </div>
-                        <div class="col-8 col-md-7">
-                          <input
-                            class="form-control"
-                            formControlName="min_order_for_free_delivery"
-                            type="number"
-                          />
-                        </div>
-                        <div class="d-none d-md-block col-1">
-                          {{ currency }}
-                        </div>
-                      </div>
                     </ng-container>
-                    <!-- End delivery info -->
+
+<!--                    -->
+<!--                    &lt;!&ndash; Has delivery &ndash;&gt;-->
+<!--                    <div class="d-flex align-items-center mt-3">-->
+<!--                      <div class="d-none d-md-block col-1 col-lg-2"></div>-->
+<!--                      <div-->
+<!--                        class="col-12 col-md-9 custom-control custom-checkbox"-->
+<!--                      >-->
+<!--                        <input-->
+<!--                          type="checkbox"-->
+<!--                          id="has_delivery"-->
+<!--                          class="custom-control-input"-->
+<!--                          formControlName="has_delivery"-->
+<!--                        />-->
+<!--                        <label-->
+<!--                          class="custom-control-label cursor-pointer"-->
+<!--                          for="has_delivery"-->
+<!--                          >{{ "store-setting.delivery" | translate }}-->
+<!--                        </label>-->
+<!--                      </div>-->
+<!--                      <div class="d-none d-md-block col-1"></div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; End has delivery &ndash;&gt;-->
+
+<!--                    &lt;!&ndash; Delivery info &ndash;&gt;-->
+<!--                    <ng-container-->
+<!--                      *ngIf="-->
+<!--                        has_delivery.value;-->
+<!--                      "-->
+<!--                    >-->
+<!--                      <div class="d-flex align-items-center mt-3">-->
+<!--                        <div class="d-none d-md-block col-1 col-lg-2"></div>-->
+<!--                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">-->
+<!--                          <label class="mb-0" for=""-->
+<!--                            >{{ "store-setting.delivery_hours" | translate }}-->
+<!--                          </label>-->
+<!--                        </div>-->
+<!--                        <div class="col-8 col-md-7">-->
+<!--                          <textarea-->
+<!--                            formControlName="delivery_hours"-->
+<!--                            class="h-100-px w-100 form-control"-->
+<!--                          ></textarea>-->
+<!--                        </div>-->
+<!--                        <div class="d-none d-md-block col-1"></div>-->
+<!--                      </div>-->
+<!--                      &lt;!&ndash; Slot Size &ndash;&gt;-->
+<!--                      <div class="d-flex align-items-center mt-3">-->
+<!--                        <div class="d-none d-md-block col-1 col-lg-2"></div>-->
+<!--                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">-->
+<!--                          <label class="mb-0" for="">{{-->
+<!--                            "store-setting.delivery_slot_size_hours" | translate-->
+<!--                          }}</label>-->
+<!--                        </div>-->
+<!--                        <div class="col-8 col-md-7">-->
+<!--                          <input-->
+<!--                            class="form-control"-->
+<!--                            formControlName="delivery_slot_size_hours"-->
+<!--                            type="number"-->
+<!--                          />-->
+<!--                        </div>-->
+<!--                        <div class="d-none d-md-block col-1">-->
+<!--                          {{ currency }}-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      &lt;!&ndash; Delivery cost &ndash;&gt;-->
+<!--                      <div class="d-flex align-items-center mt-3">-->
+<!--                        <div class="d-none d-md-block col-1 col-lg-2"></div>-->
+<!--                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">-->
+<!--                          <label class="mb-0" for="">{{-->
+<!--                            "store-setting.delivery_cost" | translate-->
+<!--                          }}</label>-->
+<!--                        </div>-->
+<!--                        <div class="col-8 col-md-7">-->
+<!--                          <input-->
+<!--                            class="form-control"-->
+<!--                            formControlName="delivery_cost"-->
+<!--                            type="number"-->
+<!--                          />-->
+<!--                        </div>-->
+<!--                        <div class="d-none d-md-block col-1">-->
+<!--                          {{ currency }}-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+<!--                      <div class="d-flex align-items-center mt-3">-->
+<!--                        <div class="d-none d-md-block col-1 col-lg-2"></div>-->
+<!--                        <div class="col-4 col-md-3 col-lg-2 pl-md-6">-->
+<!--                          <label class="mb-0" for="">{{-->
+<!--                            "store-setting.minimum_order_for_free" | translate-->
+<!--                          }}</label>-->
+<!--                        </div>-->
+<!--                        <div class="col-8 col-md-7">-->
+<!--                          <input-->
+<!--                            class="form-control"-->
+<!--                            formControlName="min_order_for_free_delivery"-->
+<!--                            type="number"-->
+<!--                          />-->
+<!--                        </div>-->
+<!--                        <div class="d-none d-md-block col-1">-->
+<!--                          {{ currency }}-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </ng-container>-->
+<!--                    &lt;!&ndash; End delivery info &ndash;&gt;-->
 
 
                     <!-- Has distribution array -->

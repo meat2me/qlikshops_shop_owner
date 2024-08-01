@@ -13,6 +13,7 @@ export interface OrderDetail {
   status: number;
   payment_type: string;
   user_comment: string;
+  delivery_cost: number;
   client_message_prefix?: string;
   order_notes: string;
   items: OrderItem[];

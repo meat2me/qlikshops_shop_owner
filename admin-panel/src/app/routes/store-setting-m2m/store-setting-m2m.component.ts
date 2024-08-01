@@ -109,6 +109,9 @@ export class StoreSettingM2mComponent implements OnInit {
   get distributionArrCtrl() {
     return this.storeForm.get('distribution_array') as FormArray;
   }
+get takeAwayHours() {
+    return this.storeForm.get('take_away_hours');
+  }
 
   get deliveryTerms() {
     return this.storeForm.get('delivery_terms');
@@ -485,18 +488,30 @@ export class StoreSettingM2mComponent implements OnInit {
     return true;
   }
   public editCities(index: number) {
+    const takeAway = index === -1;
     const modal = this.modalService.open(CitiesSelectedComponent, {
       centered: true,
     });
     // console.log(this.distributionArrCtrl.value[index]);
     const CityModal = modal.componentInstance as CitiesSelectedComponent;
-    CityModal.allCities = this.allCities;
-    // CityModal.citiesSelected = this.citiesSelected;
-    CityModal.parsItems = this.distributionArrCtrl.value[index].distribution_cities;
-    CityModal.parsTime = this.distributionArrCtrl.value[index].distribution_hours;
-    // CityModal.citiesSelected = this.distributionArrCtrl.value[index].distribution_cities;
-    // addModal.data = this.selectedItem;
+    CityModal.takeAway = takeAway;
+    if (!takeAway)
+    {
+      CityModal.allCities = this.allCities;
+      CityModal.parsItems = this.distributionArrCtrl.value[index].distribution_cities;
+      CityModal.parsTime = this.distributionArrCtrl.value[index].distribution_hours;
+    }
+    else
+    {
+      CityModal.allCities = [];
+      CityModal.parsItems = '';
+      CityModal.parsTime = this.takeAwayHours.value;
+    }
     modal.result.then(res => {
+      if (takeAway && res.destributionTime && res.destributionTime !== '')
+      {
+          this.takeAwayHours.patchValue(res.destributionTime);
+      }
       if (!res.selectedItems && !res.destributionTime)
       {
         return;
@@ -534,6 +549,7 @@ export class StoreSettingM2mComponent implements OnInit {
       .removeOwner( this.ownerPhone.value).subscribe((res: Resp) => {
       console.log(res);
       if (res.rc === 0) {
+        console.log(this.store_id);
         this.successNotify();
       }});
     // });

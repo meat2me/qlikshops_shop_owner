@@ -29,8 +29,10 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   isAmountValid: boolean;
   temp;
   currency;
-  FinishCurrency = 20;
+  discountPrice;
+  FinishPrice;
   orderTime;
+  delivery_cost;
   totalPrice = 0;
   amountChange$ = new EventEmitter();
   reqToProcess$ = new EventEmitter();
@@ -95,6 +97,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     this.itemForm.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((res) => {
+        setTimeout(() => {
         if (
           this.isNew != true &&
           this.isCancelled != true &&
@@ -109,6 +112,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
           }
         }
         this.calTotalPrice(res.items);
+        });
       });
     // call api change amount here
     this.amountChange$
@@ -132,6 +136,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currency = localStorage.getItem('CURRENCY');
+    this.discountPrice = localStorage.getItem('DISCOUNT_CURRENCY');
+
     this.route.paramMap.pipe(takeUntil(this.onDestroy$)).subscribe((params) => {
       this.orderId = params.get('order_id');
       this.orderService
@@ -147,7 +153,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             this.itemControls.push(this.createItemForm());
           });
           this.itemForm.patchValue({ items: this.items });
-          // console.log( this.orderDetail);
+          this.delivery_cost = res.delivery_cost;
         });
     });
   }
@@ -219,6 +225,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       el.is_processed ? (sum += el.price * el.actual_amount) : null;
     });
     this.totalPrice = sum;
+    this.FinishPrice = sum - sum * (this.discountPrice / 100) + this.delivery_cost;
   }
 
   setCost(index) {
@@ -258,6 +265,10 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   confirmChangeStatus(status_code) {
+    if ( status_code === 5 && !this.isReady )
+    {
+      return;
+    }
     const modalRef = this.modalService.open(ConfirmModalComponent, {
       centered: true,
     });
@@ -303,6 +314,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   makePaymentNotify(): void {
+    console.log('clicked');
+    return;
     const modalRef = this.modalService.open(ConfirmModalComponent, {
       centered: true,
     });

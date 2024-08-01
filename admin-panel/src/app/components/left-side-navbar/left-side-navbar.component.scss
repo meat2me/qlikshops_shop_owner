@@ -36,3 +36,9 @@ div::-webkit-scrollbar-track {
   transform: translateX(2%);
   transition-duration: .4s;
 }
+
+@media print {
+  .noPrint {
+    display: none;
+  }
+}

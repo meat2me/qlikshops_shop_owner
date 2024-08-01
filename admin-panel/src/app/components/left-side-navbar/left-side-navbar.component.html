@@ -1,21 +1,20 @@
-<div class="mobile-bars d-block d-lg-none position-fixed">
-  <button (click)="openMobileMenu()" class="btn btn-primary">
+<div class="noPrint mobile-bars d-block d-lg-none position-fixed">
+  <button (click)="openMobileMenu()" class="noPrint btn btn-primary">
     <i class="fas fa-bars"></i>
   </button>
 </div>
-
-<div id="sidebar" class="left-side-bar d-none d-lg-block">
+<div id="sidebar" class="noPrint left-side-bar d-none d-lg-block">
   <div class="row">
     <div class="col-12 py-4 text-center">
       <img [routerLink]="['/']" routerLinkActive="router-link-active" class="w-75 c-pointer"
-        src="/assets/images/m2m.png" />
+           src="/assets/images/m2m.png" />
     </div>
   </div>
-  <div class="row justify-content-end">
+  <div class="noPrint row justify-content-end">
     <div class="col-11">
       <div class="text-left my-3 c-pointer outline-none direction-right" *ngFor="let menu of mainMenu; let i = index">
         <div *ngIf="!(menu?.children?.length); else hasChild" [routerLink]="[menu.route, menu.params]"
-          class="left-nav-item outline-none d-flex justify-content-between" [routerLinkActive]="['active']">
+             class="left-nav-item outline-none d-flex justify-content-between" [routerLinkActive]="['active']">
           <div>
             <i [class]="menu.icon"></i>
             {{menu.name | translate}}
@@ -24,7 +23,7 @@
 
         <ng-template #hasChild>
           <div #hasChild (click)="changeOpenStatus(menu);"
-            class="left-nav-item outline-none d-flex justify-content-between">
+               class="noPrint left-nav-item outline-none d-flex justify-content-between">
             <div>
               <i [class]="menu.icon"></i>
               {{menu.name | translate}}
@@ -33,10 +32,10 @@
           </div>
         </ng-template>
 
-        <div class="row" *ngIf="menu.isOpen">
+        <div class="noPrint row" *ngIf="menu.isOpen">
           <div class="col-12" *ngFor="let child of menu.children">
             <div class="left-nav-item outline-none pl-5" [routerLink]="[child.route, child.params]"
-              [routerLinkActive]="['active']">
+                 [routerLinkActive]="['active']">
               {{child.name | translate}}
             </div>
           </div>
@@ -44,7 +43,7 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-end">
+  <div class="noPrint row justify-content-end">
     <div *ngIf="isAdmin" class="col-11">
       <div (click)="backToAdmin()" class="left-nav-item  direction-right outline-none c-pointer">
         <i class="fas fa-users-cog"></i>
@@ -60,7 +59,8 @@
   </div>
 </div>
 
-<div class="mobile-sidebar left-side-bar d-block d-lg-none" [class.menu-stretch]="isMobile">
+
+<div class="noPrint mobile-sidebar left-side-bar d-block d-lg-none" [class.menu-stretch]="isMobile">
   <div class="row">
     <div class="col-3 py-4 text-center my-auto">
       <button (click)="openMobileMenu()" class="btn btn-primary">

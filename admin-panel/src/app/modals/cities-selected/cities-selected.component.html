@@ -21,6 +21,7 @@
       <div class="col-7 px-0">
         <div class="form-group" style="width: 500px;">
           <!--            <label class="w-100 direction-right" for="name">{{'recipe.recipe_name' | translate}}</label>-->
+          <div *ngIf="!takeAway">
           <label class="w-100 direction-right"  for="">{{"store-setting.distribution_cities"| translate }}</label>
           <ng-multiselect-dropdown
             placeholder="{{'distribution-array.cities'| translate }}"
@@ -32,15 +33,13 @@
             (onSelectAll)="onSelectAll($event)"
           >
           </ng-multiselect-dropdown>
-
+          </div>
           <label
             style="margin-top: 10px"
             class="w-100 direction-right">
 
             {{"store-setting.distribution_hours" | translate }}
           </label>
-
-
 
           <div *ngFor="let day of ['א', 'ב', 'ג', 'ד', 'ה', 'ו']; let i = index" class="row align-items-center mb-3" style="display: flex; gap: 2px;">
             <div class="col-auto">
@@ -49,8 +48,38 @@
             <div class="col-auto">
               <label [for]="'enableTimepicker' + day" class="text-center"> {{'distribution-array.day'| translate }} {{day}} </label>
             </div>
+
+<!--            <div class="col-auto" style="flex-grow: 1; display: flex; justify-content: flex-end;">-->
+<!--              <div [ngClass]="{ 'disabled': formGroup.get('general_from_time_end' + day)?.disabled }">-->
+<!--                <div class="text-center">-->
+<!--                  <label [for]="'enableTimepicker' + day"> {{'distribution-array.end'| translate }} </label>-->
+<!--                </div>-->
+<!--                <div style="direction: ltr;"> &lt;!&ndash; Set direction to left-to-right &ndash;&gt;-->
+<!--                  <ngb-timepicker [formControlName]="'general_from_time_end' + day"></ngb-timepicker>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-auto" style="flex-grow: 1; display: flex; justify-content: flex-end;">-->
+<!--              <div [ngClass]="{ 'disabled': formGroup.get('general_from_time_end' + day)?.disabled }">-->
+<!--                <div style="direction: ltr;"> &lt;!&ndash; Set direction to left-to-right &ndash;&gt;-->
+<!--                  <h2>-</h2>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-auto" style="flex-grow: 1; display: flex; justify-content: flex-start;">-->
+<!--              <div [ngClass]="{ 'disabled': formGroup.get('general_from_time_start' + day)?.disabled }">-->
+<!--                <div class="text-center">-->
+<!--                  <label [for]="'enableTimepicker' + day"> {{'distribution-array.start'| translate }} </label>-->
+<!--                </div>-->
+<!--                <div style="direction: ltr;"> &lt;!&ndash; Set direction to left-to-right &ndash;&gt;-->
+<!--                  <ngb-timepicker [formControlName]="'general_from_time_start' + day"></ngb-timepicker>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+
             <div class="col-auto" style="flex-grow: 1; display: flex; justify-content: flex-end;">
-              <div [ngClass]="{ 'disabled': formGroup.get('general_from_time_end' + day)?.disabled }">
+              <div *ngIf="!formGroup.get('general_from_time_end' + day)?.disabled ">
                 <div class="text-center">
                   <label [for]="'enableTimepicker' + day"> {{'distribution-array.end'| translate }} </label>
                 </div>
@@ -60,14 +89,14 @@
               </div>
             </div>
             <div class="col-auto" style="flex-grow: 1; display: flex; justify-content: flex-end;">
-              <div [ngClass]="{ 'disabled': formGroup.get('general_from_time_end' + day)?.disabled }">
+              <div *ngIf="!formGroup.get('general_from_time_end' + day)?.disabled">
                 <div style="direction: ltr;"> <!-- Set direction to left-to-right -->
                   <h2>-</h2>
                 </div>
               </div>
             </div>
             <div class="col-auto" style="flex-grow: 1; display: flex; justify-content: flex-start;">
-              <div [ngClass]="{ 'disabled': formGroup.get('general_from_time_start' + day)?.disabled }">
+              <div *ngIf="!formGroup.get('general_from_time_start' + day)?.disabled">
                 <div class="text-center">
                   <label [for]="'enableTimepicker' + day"> {{'distribution-array.start'| translate }} </label>
                 </div>
@@ -76,6 +105,7 @@
                 </div>
               </div>
             </div>
+
             <!-- Divider line -->
             <div class="col-12">
               <hr>
@@ -83,7 +113,6 @@
           </div>
         </div>
       </div>
-  >
 
     </div>
     <div class="modal-footer border-0" style="direction: ltr; justify-content: center;">

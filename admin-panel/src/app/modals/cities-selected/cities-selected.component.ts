@@ -41,6 +41,7 @@ export class CitiesSelectedComponent implements OnInit , AfterViewInit{
   dropdownSettings = {};
   formGroup: FormGroup;
   allCities: CityItem [];
+  takeAway: boolean;
   citiesSelected: any;
   private data: any;
   general_from_time: hour;
@@ -52,13 +53,18 @@ export class CitiesSelectedComponent implements OnInit , AfterViewInit{
    ngOnInit() {
     this.dropdownList = this.allCities;
     this.parsItems = this.parsItems.split('\n');
-    if (this.parsItems.length > 0 && this.parsItems[0].length > 0) {
-      this.selectedItems  = this.allCities.filter(item => this.parsItems.some(text => item.item_text.includes(text)));
+    // console.log( this.allCities.length);
+    if ( this.allCities.length > 0 && this.parsItems.length > 0 && this.parsItems[0].length > 0) {
+      this.selectedItems = this.allCities.filter(item =>
+        this.parsItems.some(text => {
+          return new RegExp(`^${text.trim()}$`).test(item.item_text.trim());
+        }));
     }
     else
     {
       this.selectedItems = [];
     }
+    // console.log( this.parsTime );
     this.parsTime = this.parsTime.split('\n');
     const days =  ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
     const time_placeHolder = this.translateService.instant('distribution-array.time_placeHolder');
@@ -112,8 +118,6 @@ export class CitiesSelectedComponent implements OnInit , AfterViewInit{
 
   checkInitialState() {
     // Perform any logic that might trigger change detection errors here
-    console.log('ngAfterViewInit');
-
   }
 
 
@@ -164,7 +168,6 @@ export class CitiesSelectedComponent implements OnInit , AfterViewInit{
       this.formGroup.markAllAsTouched();
       return;
     }
-    console.log(this.formGroup.value);
   }
 
   public resetForm() {
@@ -198,7 +201,6 @@ export class CitiesSelectedComponent implements OnInit , AfterViewInit{
   }
 
   onEditSubmit() {
-    console.log('edit');
     // if (this.form.invalid) {
     //   return;
     // }

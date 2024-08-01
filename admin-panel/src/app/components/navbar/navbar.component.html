@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="noPrint d-flex">
   <div class="col-10 mx-auto text-center mt-3">
     <h1 *ngIf="userType == 1" class="mb-0 text-center">
       {{'ADMIN' | translate}}
@@ -7,7 +7,7 @@
       <h1 class="mb-0 text-center">
         {{store?.name}}
       </h1>
-      <label>
+      <label class="noPrint">
         {{'NAME' | translate}}
       </label>
     </div>
@@ -18,7 +18,7 @@
          alt="">
   </div>
 </div>
-<div class="container">
+<div class="noPrint container">
   <div class="d-flex nav-breadcrumb">
     <div class="nav-breadcrumb-item"
          *ngFor="let breadcrumb of breadCrumbSub | async">

@@ -1,6 +1,6 @@
 <div class="order-detail p-4 direction-right">
   <div class="container bg-light-gray rounded pb-4">
-    <div class="row p-4">
+    <div class="noPrint row p-4">
       <div class="order-info col-12">
         <div class="p-0">
           <i class="far fa-clock mr-2 text-primary"></i>
@@ -60,7 +60,7 @@
       <div
         [class.btn-active]="isReady || orderDetail?.status == 4"
         class="col-20 btn btn-light"
-        (click)="confirmChangeStatus(4)"
+
       >
         <i class="fas fa-circle mx-sm-2"></i>
         <span class="d-none d-sm-inline text-uppercase">{{
@@ -91,12 +91,18 @@
     <div class="row m-2 px-2 py-4 client-info bg-super-light rounded">
       <div class="col-12 col-md-6 col-lg-6">
         <h5 class="pl-2 font-weight-bold">
+          <div class="noPrint">
           {{ "purchase-detail.client_info" | translate }}
+          </div>
+          <div class="print">
+            {{ "purchase-detail.print" | translate }}
+            {{ orderDetail?.order_id }}
+          </div>
         </h5>
       </div>
       <div
         *ngIf="orderDetail"
-        class="col-12 col-md-6 col-lg-6 text-left text-lg-right"
+        class="noPrint col-12 col-md-6 col-lg-6 text-left text-lg-right"
       >
         <a
           target="_blank"
@@ -108,8 +114,14 @@
           class="btn btn-primary py-1 px-3"
           >{{ "purchase-detail.btn_client_detail" | translate }}</a
         >
+        &nbsp;&nbsp;
+        <button
+          class="btn btn-primary py-1 px-3"
+          onclick="window.print();return false;"
+          >{{ "purchase-detail.btn_print_order" | translate }}</button
+        >
       </div>
-      <div class="col-12 col-md-6 col-lg-6 py-2">
+      <div class="noPrint col-12 col-md-6 col-lg-6 py-2">
         {{ "purchase-detail.name" | translate }}:
         <span class="px-4 font-weight-bold">
           {{ orderDetail?.client_name }}
@@ -127,13 +139,13 @@
           {{ orderDetail?.address }}
         </span>
       </div>
-      <div class="col-12 col-md-6 col-lg-6 py-2">
+      <div class="noPrint col-12 col-md-6 col-lg-6 py-2">
         {{ "purchase-detail.email" | translate }}:
         <span class="px-4 font-weight-bold">
           {{ orderDetail?.email }}
         </span>
       </div>
-      <div class="col-12 col-md-6 col-lg-6 py-2">
+      <div class="noPrint col-12 col-md-6 col-lg-6 py-2">
         {{ "purchase-detail.address_notes" | translate }}:
         <span class="px-4 font-weight-bold">
           {{ orderDetail?.address_notes }}
@@ -161,10 +173,10 @@
           {{ orderDetail?.branch }}
         </span>
       </div>
-      <div class="col-12 col-lg-2">
+      <div class="noPrint col-12 col-lg-2">
         {{ "purchase-detail.msg_to" | translate }}
       </div>
-      <div class="col-12 col-lg-10">
+      <div class="noPrint col-12 col-lg-10">
         <form [formGroup]="messageForm" class="">
           <div class="container">
             <div class="row">
@@ -210,17 +222,18 @@
             <table class="table rounded">
               <thead>
                 <tr>
-                  <th scope="col"></th>
+                  <th class="noPrint" scope="col"></th>
                   <th scope="col">
                     {{ "purchase-detail.item_name" | translate }}
                   </th>
                   <th scope="col">
                     {{ "purchase-detail.amount" | translate }}
                   </th>
-                  <th scope="col">
+                  <th scope="col" class="noPrint">
                     {{ "purchase-detail.actual_amount" | translate }}
                   </th>
-                  <th scope="col">{{ "purchase-detail.price" | translate }}</th>
+                  <th class="noPrint" scope="col">{{ "purchase-detail.price" | translate }}</th>
+                  <th class="print"></th>
                 </tr>
               </thead>
               <tbody *ngIf="orderDetail">
@@ -233,7 +246,7 @@
                     "
                   >
                     <tr>
-                      <th class="text-center item-check-box" scope="row">
+                      <td class="noPrint text-center item-check-box" scope="row">
                         <div class="custom-control custom-checkbox">
                           <input
                             (change)="reqToProcess$.emit(i)"
@@ -248,7 +261,7 @@
                             [for]="items[i].item_id"
                           ></label>
                         </div>
-                      </th>
+                      </td>
                       <td class="px-0">
                         {{ items[i].item_name }}
                       </td>
@@ -257,7 +270,7 @@
                           items[i].amount
                         }}</span>
                       </td>
-                      <td>
+                      <td class="noPrint">
                         <div class="d-flex">
                           <div class="amount-button">
                             <button
@@ -306,9 +319,11 @@
                           </div>
                         </div>
                       </td>
-                      <td>
+                      <td class="noPrint">
                         {{ setCost(i) | number: "1.2-2" }}
                       </td>
+                      <td class="print"></td>
+                      <th class="print"></th>
                     </tr>
                     <tr>
                       <td
@@ -327,23 +342,45 @@
           </form>
         </div>
       </div>
-      <div class="col-12 my-2 text-right">
+      <div class="noPrint col-12 my-2 text-right">
         <span class="font-weight-bold mr-2">
           {{ "purchase-detail.total" | translate }}
+          :
+          {{ totalPrice | number: "1.2-2"}}
         </span>
-        <button
+        <span>
+            {{ currency }}
+          </span>
+        <button  *ngIf="isNew || isProcessing"
           [disabled]="isPaying"
           (click)="makePaymentNotify()"
           class="btn btn-primary px-4 py-1"
         >
           <span>
-            {{ currency }}
+<!--            {{ currency }}-->
+            {{ 'לחץ כאן לחיוב' }}
           </span>
-          {{ totalPrice | number: "1.2-2" }}
+<!--          {{ FinishPrice | number: "1.2-2" }}-->
+<!--          {{ totalPrice | number: "1.2-2"}}-->
         </button>
-        <span>
-            {{ FinishCurrency }}
-          </span>
+
+<!--        <span style="margin-right:20px">-->
+<!--          הנחת חנות:-->
+<!--          {{ '%' }}-->
+<!--            {{ discountPrice}}-->
+<!--        </span>-->
+<!--        <span style="margin-right:20px">-->
+<!--          עלות משלוח:-->
+<!--          {{ currency }}-->
+<!--            {{ delivery_cost| number: "1.2-2"}}-->
+<!--        </span>-->
+<!--        <span style="margin-right:20px">-->
+<!--          מחיר לפני הנחת חנות ומשלוח:-->
+<!--          {{ currency }}-->
+<!--            {{ totalPrice | number: "1.2-2"}}-->
+<!--          </span>-->
+
+
       </div>
     </div>
   </div>

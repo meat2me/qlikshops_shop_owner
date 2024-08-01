@@ -95,9 +95,12 @@ export class ContentItemComponent extends BaseComponent implements OnInit {
       this.itemServ.getOwnerItems(this.storeId)
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => {
+          console.log(res.items.filter(item => item.category_name === 'קפואים').map(item => item.name));
+          console.log(res.items);
           this.data = res.items;
           if (this.categoryFilter) {
-            this.listItem = this.data.filter((d: any) => d.category_name === this.categoryFilter);
+            // this.listItem = this.data.filter((d: any) => d.category_name === this.categoryFilter);
+            this.listItem = this.data.filter((d: any) => d.category_name === 'קפואים ');
             this.searcher.init(this.listItem, { fields: ['name', 'categories'] });
           } else {
             this.searcher.init(this.data, { fields: ['name', 'categories'] });

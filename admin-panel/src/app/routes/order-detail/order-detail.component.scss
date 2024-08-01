@@ -51,3 +51,15 @@
   display: grid;
   place-items: center;
 }
+
+.print {
+  display: none;
+}
+@media print {
+  .noPrint {
+    display: none;
+  }
+  .print{
+    display: block;
+  }
+}
