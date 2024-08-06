@@ -24,7 +24,10 @@ export class OrderService extends BaseService {
 
 
   getReadyOrders(filter_delivery_type: ReadyOrderFilter) {
-    this.post<OpenOrders>({ request: 'get_ready_orders', filter_delivery_type }).subscribe((res) => this.readySubj.next(res));
+    this.post<OpenOrders>({ request: 'get_ready_orders', filter_delivery_type }).subscribe((res) => {
+      console.log(res);
+      this.readySubj.next(res);
+    });
     return this.readyOrders$ || (this.readyOrders$ = this.readySubj.asObservable());
   }
 

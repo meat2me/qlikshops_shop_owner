@@ -13,6 +13,7 @@ import { EMPTY, Subject } from 'rxjs';
 import * as moment from 'moment';
 import { modifyTime } from '@utils/modify-date';
 import { HttpErrorResponse } from '@angular/common/http';
+import {any} from 'codelyzer/util/function';
 
 @Component({
   selector: 'app-order-detail',
@@ -31,6 +32,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   currency;
   discountPrice;
   FinishPrice;
+  PriceWithoutDelivery;
   orderTime;
   delivery_cost;
   totalPrice = 0;
@@ -39,6 +41,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   items = [];
   // getting;
   orderDetail: OrderDetail;
+  store_name;
   orderId;
   tempStatus;
   isPaying = false;
@@ -137,6 +140,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currency = localStorage.getItem('CURRENCY');
     this.discountPrice = localStorage.getItem('DISCOUNT_CURRENCY');
+    this.store_name = localStorage.getItem('STORE_NAME');
+    console.log(this.store_name);
 
     this.route.paramMap.pipe(takeUntil(this.onDestroy$)).subscribe((params) => {
       this.orderId = params.get('order_id');
@@ -225,7 +230,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       el.is_processed ? (sum += el.price * el.actual_amount) : null;
     });
     this.totalPrice = sum;
-    this.FinishPrice = sum - sum * (this.discountPrice / 100) + this.delivery_cost;
+    this.PriceWithoutDelivery = sum - sum * (this.discountPrice / 100);
+    this.FinishPrice =  this.PriceWithoutDelivery + this.delivery_cost;
   }
 
   setCost(index) {
@@ -278,26 +284,28 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
 
     modalRef.result.then((result) => {
       if (result) {
-        this.resetValue();
-        if (status_code == 2) {
-          this.isNew = true;
-          this.allItemArr.enable();
-        }
-        if (status_code == 3) {
-          this.isProcessing = true;
-          this.allItemArr.enable();
-        }
-        if (status_code == 4 || status_code == 5 || status_code == 6) {
-          this.temp = false;
-          this.allItemArr.disable();
-        }
-        status_code == 4 ? (this.isReady = true) : null;
-        status_code == 5 ? (this.isShipped = true) : null;
-        status_code == 6 ? (this.isCancelled = true) : null;
         this.orderService
           .setStatus(this.orderDetail.order_id, status_code)
           .subscribe((res: any) => {
             if (res.rc == 0) {
+              // console.log(result);
+              // console.log(status_code);
+              this.resetValue();
+              if (status_code == 2) {
+                this.isNew = true;
+                this.allItemArr.enable();
+              }
+              if (status_code == 3) {
+                this.isProcessing = true;
+                this.allItemArr.enable();
+              }
+              if (status_code == 4 || status_code == 5 || status_code == 6) {
+                this.temp = false;
+                this.allItemArr.disable();
+              }
+              status_code == 4 ? (this.isReady = true) : null;
+              status_code == 5 ? (this.isShipped = true) : null;
+              status_code == 6 ? (this.isCancelled = true) : null;
               this.changedSuccessNotify();
             }
           });
@@ -314,8 +322,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   makePaymentNotify(): void {
-    console.log('clicked');
-    return;
     const modalRef = this.modalService.open(ConfirmModalComponent, {
       centered: true,
     });

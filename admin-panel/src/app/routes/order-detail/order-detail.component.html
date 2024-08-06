@@ -121,7 +121,7 @@
           >{{ "purchase-detail.btn_print_order" | translate }}</button
         >
       </div>
-      <div class="noPrint col-12 col-md-6 col-lg-6 py-2">
+      <div class="col-12 col-md-6 col-lg-6 py-2">
         {{ "purchase-detail.name" | translate }}:
         <span class="px-4 font-weight-bold">
           {{ orderDetail?.client_name }}
@@ -232,7 +232,7 @@
                   <th scope="col" class="noPrint">
                     {{ "purchase-detail.actual_amount" | translate }}
                   </th>
-                  <th class="noPrint" scope="col">{{ "purchase-detail.price" | translate }}</th>
+                  <th scope="col">{{ "purchase-detail.price" | translate }}</th>
                   <th class="print"></th>
                 </tr>
               </thead>
@@ -319,7 +319,7 @@
                           </div>
                         </div>
                       </td>
-                      <td class="noPrint">
+                      <td>
                         {{ setCost(i) | number: "1.2-2" }}
                       </td>
                       <td class="print"></td>
@@ -335,53 +335,67 @@
                         {{ items[i].item_notes }}
                       </td>
                     </tr>
+                    <tr class="print" style=" width: 190%;border-bottom: 1px solid black;padding: 0;margin: 0;"></tr>
                   </ng-container>
                 </ng-container>
               </tbody>
+
             </table>
           </form>
         </div>
       </div>
-      <div class="noPrint col-12 my-2 text-right">
+      <div class="col-12 my-2 text-right">
+
+
+        <span style="margin-right:20px">
+          מחיר מוצרים:
+          {{ currency }}
+          {{ totalPrice | number: "1.2-2"}}
+          </span>
+
+        <span style="margin-right:20px">
+          הנחת חנות:
+          {{ '%' }}
+            {{ discountPrice}}
+        </span>
+
+        <span style="margin-right:20px">
+          מחיר לאחר הנחה:
+          {{ currency }}
+          {{ PriceWithoutDelivery | number: "1.2-2"}}
+          </span>
+        <span style="margin-right:20px">
+          עלות משלוח:
+          {{ currency }}
+            {{ delivery_cost| number: "1.2-2"}}
+        </span>
+
+      </div>
+    </div>
+    <div>
+
         <span class="font-weight-bold mr-2">
           {{ "purchase-detail.total" | translate }}
           :
-          {{ totalPrice | number: "1.2-2"}}
+          <!--          {{ totalPrice | number: "1.2-2"}}-->
+          {{ FinishPrice | number: "1.2-2" }}
         </span>
-        <span>
+      <span>
             {{ currency }}
           </span>
-        <button  *ngIf="isNew || isProcessing"
-          [disabled]="isPaying"
-          (click)="makePaymentNotify()"
-          class="btn btn-primary px-4 py-1"
-        >
+      <button  *ngIf="isNew || isProcessing"
+               [disabled]="isPaying"
+               (click)="makePaymentNotify()"
+               class="noPrint btn btn-primary px-4 py-1"
+      >
           <span>
 <!--            {{ currency }}-->
             {{ 'לחץ כאן לחיוב' }}
           </span>
-<!--          {{ FinishPrice | number: "1.2-2" }}-->
-<!--          {{ totalPrice | number: "1.2-2"}}-->
-        </button>
-
-<!--        <span style="margin-right:20px">-->
-<!--          הנחת חנות:-->
-<!--          {{ '%' }}-->
-<!--            {{ discountPrice}}-->
-<!--        </span>-->
-<!--        <span style="margin-right:20px">-->
-<!--          עלות משלוח:-->
-<!--          {{ currency }}-->
-<!--            {{ delivery_cost| number: "1.2-2"}}-->
-<!--        </span>-->
-<!--        <span style="margin-right:20px">-->
-<!--          מחיר לפני הנחת חנות ומשלוח:-->
-<!--          {{ currency }}-->
-<!--            {{ totalPrice | number: "1.2-2"}}-->
-<!--          </span>-->
-
-
-      </div>
+        <!--          {{ FinishPrice | number: "1.2-2" }}-->
+        <!--          {{ totalPrice | number: "1.2-2"}}-->
+      </button>
     </div>
+
   </div>
 </div>

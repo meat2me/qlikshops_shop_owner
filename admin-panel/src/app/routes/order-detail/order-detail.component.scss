@@ -58,8 +58,10 @@
 @media print {
   .noPrint {
     display: none;
+    //display: block;
   }
   .print{
     display: block;
+    //display: none;
   }
 }

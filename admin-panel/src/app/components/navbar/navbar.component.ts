@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   getStoreInfo() {
     this.storeService.getStoreMetadata().subscribe((res: any) => {
       this.store = res;
+      localStorage.setItem('STORE_NAME', res.name);
       if (res.currency) {
         localStorage.setItem('CURRENCY', res.currency);
         // localStorage.setItem('DISCOUNT_CURRENCY', res.currency);

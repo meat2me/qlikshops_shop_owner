@@ -41,7 +41,7 @@
                 <td class="align-middle"> {{ready?.client_name}} </td>
                 <td class="align-middle"> {{ready?.address}} </td>
                 <td class="align-middle text-center"> {{ready?.num_of_items}} </td>
-                <td class="align-middle"> {{ready?.order_total}} </td>
+                <td class="align-middle"> {{(ready?.order_total + ready?.order_delivery_cent)}} </td>
                 <td class="align-middle text-right">
                   <button (click)="setToShipped($event, ready.order_id)" class="btn btn-primary">
                     {{ 'purchase-detail.shipped' | translate}}

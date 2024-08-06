@@ -16,4 +16,5 @@ export interface OpenOrder {
   order_total: number;
   is_new: number;
   delivery_time: string;
+  order_delivery_cent: number;
 }
